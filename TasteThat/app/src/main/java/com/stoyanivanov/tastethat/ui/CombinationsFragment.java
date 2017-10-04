@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat;
+package com.stoyanivanov.tastethat.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.Combination;
 import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
