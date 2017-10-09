@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public FirebaseUser getCurrentGoogleUser() {
         return mAuth.getCurrentUser();
     }
