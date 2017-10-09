@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.ui.AddCombinationFragment;
 import com.stoyanivanov.tastethat.ui.CombinationsFragment;
 import com.stoyanivanov.tastethat.ui.UserProfileFragment;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Button logout = (Button) findViewById(R.id.logout);
         mAuth = FirebaseAuth.getInstance();
 
@@ -53,15 +56,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         replaceFragment(new CombinationsFragment());
 
 
-        instantiateBottomNav();
-
+        instantiateBottomNavBar();
 
     }
 
-    private void instantiateBottomNav() {
+
+    public FirebaseUser getCurrentGoogleUser() {
+        return mAuth.getCurrentUser();
+    }
+
+    private void instantiateBottomNavBar() {
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -84,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                 replaceFragment(new UserProfileFragment()); break;
 
                              case R.id.nav_button_options:
+                                 // IMPLEMENT SMALL MENU OVERLAY!
                                   ; break;
                         }
                         return true;

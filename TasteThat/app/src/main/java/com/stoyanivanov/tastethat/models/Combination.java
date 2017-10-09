@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat.view_utils;
+package com.stoyanivanov.tastethat.models;
 
 import android.widget.ImageView;
 import android.widget.TextView;
