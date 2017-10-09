@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.models.Combination;
 
 import java.util.ArrayList;
 

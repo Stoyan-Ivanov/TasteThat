@@ -1,13 +1,55 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.stoyanivanov.tastethat.ui.UserProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/iv_profile_picture"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%"
 
-</FrameLayout>
+        app:layout_marginLeftPercent="25%"
+        app:layout_marginTopPercent="10%"
+        />
+
+    <TextView
+        android:id="@+id/tv_username"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="70%"
+
+        app:layout_marginLeftPercent="15%"
+        app:layout_marginTopPercent="5%"
+        android:layout_below="@id/iv_profile_picture"
+
+        />
+
+    <Button
+        android:id="@+id/btn_liked_combinations"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="70%"
+
+        app:layout_marginLeftPercent="15%"
+        app:layout_marginTopPercent="2%"
+        android:layout_below="@id/tv_username"
+
+        android:text="Liked"
+        />
+
+    <Button
+        android:id="@+id/btn_uploaded_combinations"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="70%"
+
+        app:layout_marginLeftPercent="15%"
+        app:layout_marginTopPercent="2%"
+        android:layout_below="@id/btn_liked_combinations"
+
+        android:text="Uploaded"
+        />
+
+
+
+</android.support.percent.PercentRelativeLayout>

@@ -1,8 +1,5 @@
 package com.stoyanivanov.tastethat.ui;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,15 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.view_utils.Combination;
+import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 public class CombinationsFragment extends Fragment {

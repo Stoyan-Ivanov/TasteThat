@@ -56,12 +56,11 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new CombinationsFragment());
 
 
-        instantiateBottomNav();
-
+        instantiateBottomNavBar();
 
     }
 
-    private void instantiateBottomNav() {
+    private void instantiateBottomNavBar() {
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                                 replaceFragment(new UserProfileFragment()); break;
 
                              case R.id.nav_button_options:
+                                 // IMPLEMENT SMALL MENU OVERLAY!
                                   ; break;
                         }
                         return true;
