@@ -15,7 +15,7 @@
         app:layout_marginTopPercent="10%"
         />
 
-    <TextView
+    <com.stoyanivanov.tastethat.view_utils.CustomTextView
         android:id="@+id/tv_username"
         app:layout_heightPercent="10%"
         app:layout_widthPercent="70%"

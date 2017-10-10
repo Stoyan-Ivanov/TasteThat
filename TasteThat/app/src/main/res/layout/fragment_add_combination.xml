@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.stoyanivanov.tastethat.ui.AddCombinationFragment">
 
-    <TextView
+    <com.stoyanivanov.tastethat.view_utils.CustomTextView
         android:id="@+id/tv_add_combination_header"
 
         app:layout_widthPercent = "90%"
@@ -15,12 +15,11 @@
         app:layout_marginLeftPercent = "5%"
 
         android:text="Add your combination"
-        android:textSize="25sp"
         android:lines="1"
         android:gravity="center"
         />
 
-    <TextView
+    <com.stoyanivanov.tastethat.view_utils.CustomTextView
         android:id="@+id/tv_first_ingredient_label"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "10%"
@@ -28,7 +27,7 @@
         app:layout_marginTopPercent = "20%"
         app:layout_marginLeftPercent = "15%"
 
-        android:text="First ingredient:"
+        android:text=" First ingredient: "
         android:gravity="center"
         />
 
@@ -42,7 +41,7 @@
 
         />
 
-    <TextView
+    <com.stoyanivanov.tastethat.view_utils.CustomTextView
         android:id="@+id/tv_second_ingredient_label"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "10%"
