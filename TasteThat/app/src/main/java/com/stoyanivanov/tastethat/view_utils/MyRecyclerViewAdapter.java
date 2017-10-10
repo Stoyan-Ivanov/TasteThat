@@ -26,13 +26,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView combinationName;
+        public CustomTextView combinationName;
         public ImageView leftImg;
         public ImageView rightImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            combinationName = (TextView) itemView.findViewById(R.id.tv_combinationName);
+            combinationName = (CustomTextView) itemView.findViewById(R.id.tv_combinationName);
             leftImg = (ImageView) itemView.findViewById(R.id.iv_leftImg);
             rightImg = (ImageView) itemView.findViewById(R.id.iv_rightImg);
         }

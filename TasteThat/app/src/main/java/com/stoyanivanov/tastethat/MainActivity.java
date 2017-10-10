@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +23,9 @@ import com.stoyanivanov.tastethat.view_utils.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthStateListener;
-    BottomNavigationView bottomNavigationView;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    public static BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onStart() {
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Button logout = (Button) findViewById(R.id.logout);
         mAuth = FirebaseAuth.getInstance();
@@ -57,11 +57,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        replaceFragment(new CombinationsFragment());
-
-
         instantiateBottomNavBar();
 
+        replaceFragment(new CombinationsFragment());
     }
 
     public FirebaseUser getCurrentGoogleUser() {

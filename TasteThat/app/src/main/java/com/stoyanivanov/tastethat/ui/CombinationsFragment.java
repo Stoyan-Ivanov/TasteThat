@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
+import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
@@ -35,6 +37,22 @@ public class CombinationsFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new MyRecyclerViewAdapter(allCombinations));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && MainActivity.bottomNavigationView.isShown()) {
+                    MainActivity.bottomNavigationView.setVisibility(View.GONE);
+                } else if (dy < 0 || dy == 0) {
+                    MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         return view;
     }
