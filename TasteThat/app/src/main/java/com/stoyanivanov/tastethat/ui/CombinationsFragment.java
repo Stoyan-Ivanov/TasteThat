@@ -30,13 +30,13 @@ public class CombinationsFragment extends Fragment {
 
 
         ArrayList<Combination> allCombinations = new ArrayList<>();
-        allCombinations.add(new Combination("Caramel", "Salt"));
-        allCombinations.add(new Combination("Tomato", "Salt"));
-        allCombinations.add(new Combination("Tea", "Salt"));
-        allCombinations.add(new Combination("Caramel", "Chocolate"));
-        allCombinations.add(new Combination("Caramel", "Patlajanche"));
-        allCombinations.add(new Combination("Rakija", "Salad"));
-        allCombinations.add(new Combination("KISELO MLEKO", "Waffles"));
+//        allCombinations.add(new Combination("Caramel", "Salt"));
+//        allCombinations.add(new Combination("Tomato", "Salt"));
+//        allCombinations.add(new Combination("Tea", "Salt"));
+//        allCombinations.add(new Combination("Caramel", "Chocolate"));
+//        allCombinations.add(new Combination("Caramel", "Patlajanche"));
+//        allCombinations.add(new Combination("Rakija", "Salad"));
+//        allCombinations.add(new Combination("KISELO MLEKO", "Waffles"));
 
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);

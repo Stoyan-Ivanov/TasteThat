@@ -10,10 +10,12 @@ import android.widget.TextView;
 public class Combination {
     private String firstComponent;
     private String secondComponent;
+    private String userId;
 
-    public Combination(String firstComponent, String secodComponent) {
+    public Combination(String firstComponent, String secodComponent, String userId) {
         this.firstComponent = firstComponent;
         this.secondComponent = secodComponent;
+        this.userId = userId;
     }
 
     public String getFirstComponent() {
@@ -23,4 +25,9 @@ public class Combination {
     public String getSecondComponent() {
         return secondComponent;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
 }

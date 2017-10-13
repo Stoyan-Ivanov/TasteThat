@@ -55,7 +55,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         Combination currCombination = mData.get(position);
 
         holder.combinationName.setText(currCombination.getFirstComponent() + " & " + currCombination.getSecondComponent());
-        holder.likeCounter.setText("10");
+
+        // if count > 1000 print K
+        holder.likeCounter.setText("1000");
 //        holder.leftImg.setImageDrawable(currCombination.getLeftImage());
 //        holder.rightImg.setImageDrawable(currCombination.getRightImage());
     }

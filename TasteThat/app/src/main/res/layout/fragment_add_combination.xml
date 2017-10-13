@@ -31,7 +31,7 @@
         android:gravity="center"
         />
 
-    <android.support.design.widget.TextInputEditText
+    <EditText
         android:id="@+id/et_first_ingredient"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "12%"
@@ -53,7 +53,7 @@
         android:gravity="center"
         />
 
-    <android.support.design.widget.TextInputEditText
+    <EditText
         android:id="@+id/et_second_ingredient"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "12%"

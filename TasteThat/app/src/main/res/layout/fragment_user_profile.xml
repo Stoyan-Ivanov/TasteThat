@@ -6,14 +6,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.stoyanivanov.tastethat.ui.UserProfileFragment">
 
-    <ImageView
-        android:id="@+id/iv_profile_picture"
-        app:layout_heightPercent="30%"
-        app:layout_widthPercent="50%"
+     <android.support.percent.PercentRelativeLayout
+         android:id="@+id/prl_profile_pic"
+         app:layout_heightPercent="40%"
+         android:layout_width="match_parent"
+         android:background="@color/pastel_blue"
+         android:alpha="50"
+         >
 
-        app:layout_marginLeftPercent="25%"
-        app:layout_marginTopPercent="10%"
-        />
+         <ImageView
+             android:id="@+id/iv_profile_picture"
+             app:layout_heightPercent="70%"
+             app:layout_widthPercent="50%"
+
+             app:layout_marginLeftPercent="25%"
+             app:layout_marginTopPercent="15%"
+             />
+
+
+     </android.support.percent.PercentRelativeLayout>
+
 
     <com.stoyanivanov.tastethat.view_utils.CustomTextView
         android:id="@+id/tv_username"
@@ -21,8 +33,8 @@
         app:layout_widthPercent="70%"
 
         app:layout_marginLeftPercent="15%"
-        app:layout_marginTopPercent="5%"
-        android:layout_below="@id/iv_profile_picture"
+        app:layout_marginTopPercent="2%"
+        android:layout_below="@id/prl_profile_pic"
 
         android:gravity="center"
         android:textSize="30sp"
@@ -38,6 +50,8 @@
         android:layout_below="@id/tv_username"
 
         android:text="Liked"
+        android:textColor="@color/white"
+        android:background="@color/pastel_blue"
         />
 
     <Button
