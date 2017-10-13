@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
+import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -19,10 +20,14 @@ import java.util.ArrayList;
 
 public class CombinationsFragment extends Fragment {
 
+    CustomTextView likeCounter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_combinations, container, false);
+
+
 
         ArrayList<Combination> allCombinations = new ArrayList<>();
         allCombinations.add(new Combination("Caramel", "Salt"));

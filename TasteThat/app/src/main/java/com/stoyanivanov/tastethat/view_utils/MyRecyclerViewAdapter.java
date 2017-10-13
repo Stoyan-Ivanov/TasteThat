@@ -27,11 +27,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
         public CustomTextView combinationName;
+        public CustomTextView likeCounter;
         public ImageView leftImg;
         public ImageView rightImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            likeCounter = (CustomTextView) itemView.findViewById(R.id.tv_like_counter);
             combinationName = (CustomTextView) itemView.findViewById(R.id.tv_combinationName);
             leftImg = (ImageView) itemView.findViewById(R.id.iv_leftImg);
             rightImg = (ImageView) itemView.findViewById(R.id.iv_rightImg);
@@ -53,6 +55,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         Combination currCombination = mData.get(position);
 
         holder.combinationName.setText(currCombination.getFirstComponent() + " & " + currCombination.getSecondComponent());
+        holder.likeCounter.setText("10");
 //        holder.leftImg.setImageDrawable(currCombination.getLeftImage());
 //        holder.rightImg.setImageDrawable(currCombination.getRightImage());
     }
