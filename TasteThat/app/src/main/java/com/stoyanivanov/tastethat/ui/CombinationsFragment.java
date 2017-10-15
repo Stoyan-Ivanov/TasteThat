@@ -4,11 +4,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -29,14 +35,25 @@ public class CombinationsFragment extends Fragment {
 
 
 
-        ArrayList<Combination> allCombinations = new ArrayList<>();
-//        allCombinations.add(new Combination("Caramel", "Salt"));
-//        allCombinations.add(new Combination("Tomato", "Salt"));
-//        allCombinations.add(new Combination("Tea", "Salt"));
-//        allCombinations.add(new Combination("Caramel", "Chocolate"));
-//        allCombinations.add(new Combination("Caramel", "Patlajanche"));
-//        allCombinations.add(new Combination("Rakija", "Salad"));
-//        allCombinations.add(new Combination("KISELO MLEKO", "Waffles"));
+        final ArrayList<Combination> allCombinations = new ArrayList<>();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("combinations");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    Combination currCombination = postSnapshot.getValue(Combination.class);
+                    allCombinations.add(currCombination);
+                    Log.d("SII", "combination" + currCombination);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("SII", "onCancelled: error");
+            }
+        });
 
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);

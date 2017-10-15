@@ -12,6 +12,10 @@ public class Combination {
     private String secondComponent;
     private String userId;
 
+    public Combination() {
+
+    }
+
     public Combination(String firstComponent, String secodComponent, String userId) {
         this.firstComponent = firstComponent;
         this.secondComponent = secodComponent;
