@@ -27,8 +27,7 @@ public class UserProfileFragment extends Fragment {
 
     ImageView ivProfilePic;
     CustomTextView tvUsername;
-    Button btnLiked;
-    Button btnUploaded;
+    Button btnLiked, btnUploaded;
 
     FirebaseUser currUser;
 
