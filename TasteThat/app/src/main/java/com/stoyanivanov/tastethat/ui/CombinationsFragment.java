@@ -38,13 +38,13 @@ public class CombinationsFragment extends Fragment {
         final ArrayList<Combination> allCombinations = new ArrayList<>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("combinations");
+        DatabaseReference dbRef = database.getReference("combinations");
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    Combination currCombination = postSnapshot.getValue(Combination.class);
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Combination currCombination = dataSnapshot.getValue(Combination.class);
                     allCombinations.add(currCombination);
                     Log.d("SII", "combination" + currCombination);
                 }
@@ -54,7 +54,6 @@ public class CombinationsFragment extends Fragment {
                 Log.d("SII", "onCancelled: error");
             }
         });
-
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

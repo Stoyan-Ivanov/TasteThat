@@ -8,9 +8,7 @@ import android.widget.TextView;
  */
 
 public class Combination {
-    private String firstComponent;
-    private String secondComponent;
-    private String userId;
+    String firstComponent, secondComponent, userId;
 
     public Combination() {
 
