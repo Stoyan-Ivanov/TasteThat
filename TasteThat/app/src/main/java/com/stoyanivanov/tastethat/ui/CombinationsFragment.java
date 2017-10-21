@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -30,6 +31,8 @@ public class CombinationsFragment extends Fragment {
     CustomTextView likeCounter;
     ArrayList<Combination> allCombinations;
     RecyclerView recyclerView;
+    FirebaseDatabase database;
+    DatabaseReference dbRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,8 +41,8 @@ public class CombinationsFragment extends Fragment {
 
         allCombinations = new ArrayList<>();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbRef = database.getReference("combinations");
+        database = FirebaseDatabase.getInstance();
+        dbRef = database.getReference("combinations");
 
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override

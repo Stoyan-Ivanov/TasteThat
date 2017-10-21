@@ -26,6 +26,7 @@ public class AddCombinationFragment extends Fragment {
     private EditText secondIngredient;
     private FirebaseUser currUser;
     private Button addCombination;
+    private int DEFAULT_LIKES = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +57,7 @@ public class AddCombinationFragment extends Fragment {
         String firstIng = firstIngredient.getText().toString();
         String secondIng = secondIngredient.getText().toString();
 
-        Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
+        Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid(), DEFAULT_LIKES);
 
         myRef.child("combinations").child(firstIng + secondIng).setValue(newCombination);
         myRef.child("users").child(currUser.getUid()).child("userCombinations").push().setValue(firstIng + secondIng);

@@ -9,15 +9,17 @@ import android.widget.TextView;
 
 public class Combination {
     String firstComponent, secondComponent, userId;
+    int likes;
 
     public Combination() {
 
     }
 
-    public Combination(String firstComponent, String secodComponent, String userId) {
+    public Combination(String firstComponent, String secodComponent, String userId, int likes) {
         this.firstComponent = firstComponent;
         this.secondComponent = secodComponent;
         this.userId = userId;
+        this.likes = likes;
     }
 
     public String getFirstComponent() {
@@ -30,6 +32,10 @@ public class Combination {
 
     public String getUserId() {
         return userId;
+    }
+
+    public int getLikes() {
+        return likes;
     }
 
 }

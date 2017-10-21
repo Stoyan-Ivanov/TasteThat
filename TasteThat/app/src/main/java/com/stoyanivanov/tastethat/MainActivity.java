@@ -30,8 +30,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    private static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    public static FirebaseUser currUser;
     private BottomNavigationView bottomNavigationView;
     private ViewPager pager;
     private MenuItem prevMenuItem;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        mAuth.addAuthStateListener(mAuthStateListener);
+       // mAuth.addAuthStateListener(mAuthStateListener);
     }
 
     @Override
@@ -50,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button logout = (Button) findViewById(R.id.logout);
         mAuth = FirebaseAuth.getInstance();
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            }
-        };
+//
+//        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//            }
+//        };
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         instantiateViewPager();
     }
 
-    public FirebaseUser getCurrentGoogleUser() {
+    public static FirebaseUser getCurrentGoogleUser() {
         return mAuth.getCurrentUser();
     }
 
