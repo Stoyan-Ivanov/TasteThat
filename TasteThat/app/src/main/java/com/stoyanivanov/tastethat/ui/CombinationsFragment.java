@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.MainActivity;
+import com.stoyanivanov.tastethat.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
@@ -42,9 +44,9 @@ public class CombinationsFragment extends Fragment {
         allCombinations = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
-        dbRef = database.getReference("combinations");
+        dbRef = database.getReference();
 
-        dbRef.addValueEventListener(new ValueEventListener() {
+        dbRef.child("combinations").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
@@ -61,7 +63,32 @@ public class CombinationsFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(allCombinations));
+        recyclerView.setAdapter(new MyRecyclerViewAdapter(allCombinations, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Combination combination, final CustomTextView likeCounter) {
+                final String nameOfCombination = combination.getFirstComponent() + combination.getSecondComponent();
+
+                dbRef.child("combinations").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        int likes = dataSnapshot.child(nameOfCombination).child("likes").getValue(Integer.class);
+
+                        dbRef.child("combinations").child(nameOfCombination).child("likes").setValue(++likes);
+                        likeCounter.setText(String.valueOf(likes));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+                dbRef.child("users").child(currUser.getUid()).child("liked").push().setValue(nameOfCombination);
+            }
+        }));
+
         addControlToBottomNavigation();
 
         return view;
