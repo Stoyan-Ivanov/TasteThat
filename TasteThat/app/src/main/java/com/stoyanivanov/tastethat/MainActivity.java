@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.ui.AddCombinationFragment;
 import com.stoyanivanov.tastethat.ui.CombinationsFragment;
+import com.stoyanivanov.tastethat.ui.OptionsFragment;
 import com.stoyanivanov.tastethat.ui.UserProfileFragment;
 import com.stoyanivanov.tastethat.view_utils.BottomNavigationViewHelper;
 import com.stoyanivanov.tastethat.view_utils.MyPagerAdapter;
@@ -100,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                              case R.id.nav_button_options:
-                                 // IMPLEMENT SMALL MENU OVERLAY!
-                                  ; break;
+                                 pager.setCurrentItem(3);
+                                 break;
                         }
                         return true;
                     }
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new AddCombinationFragment());
         fragments.add(new CombinationsFragment());
         fragments.add(new UserProfileFragment());
+        fragments.add(new OptionsFragment());
 
         return fragments;
     }
