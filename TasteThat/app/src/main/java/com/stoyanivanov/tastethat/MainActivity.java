@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     public static FirebaseUser currUser;
     private BottomNavigationView bottomNavigationView;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-       // mAuth.addAuthStateListener(mAuthStateListener);
+        mAuth.addAuthStateListener(mAuthStateListener);
     }
 
     @Override
@@ -50,22 +50,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button logout = (Button) findViewById(R.id.logout);
         mAuth = FirebaseAuth.getInstance();
-//
-//        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//            }
-//        };
 
-        logout.setOnClickListener(new View.OnClickListener() {
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
             }
-        });
+        };
+
 
         instantiateBottomNavBar();
         instantiateViewPager();
@@ -115,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.view_pager);
         pager.setAdapter(fragmentPagerAdapter);
         pager.setCurrentItem(1);
+        pager.setOffscreenPageLimit(4);
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
