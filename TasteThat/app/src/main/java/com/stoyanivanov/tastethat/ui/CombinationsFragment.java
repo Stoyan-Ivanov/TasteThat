@@ -85,7 +85,7 @@ public class CombinationsFragment extends Fragment {
                 });
 
                 FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
-                dbRef.child("users").child(currUser.getUid()).child("liked").push().setValue(nameOfCombination);
+                dbRef.child("users").child(currUser.getUid()).child("liked").push().setValue(combination);
             }
         }));
 

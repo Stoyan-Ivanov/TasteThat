@@ -20,21 +20,6 @@ public class OptionsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_options, container, false);
 
-        Button logout = (Button) view.findViewById(R.id.btn_logout);
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
-
         return view;
     }
-
-    private void signOut() {
-        MainActivity.mAuth.signOut();
-        startActivity(new Intent(getActivity(), LoginActivity.class));
-    }
-
 }

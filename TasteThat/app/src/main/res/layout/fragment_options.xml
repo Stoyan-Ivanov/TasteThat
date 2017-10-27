@@ -5,18 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.stoyanivanov.tastethat.ui.OptionsFragment">
 
-    <Button
-        android:id="@+id/btn_logout"
-        app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "10%"
-
-        app:layout_marginTopPercent = "15%"
-        app:layout_marginLeftPercent = "15%"
-
-        android:text="Logout"
-        android:textColor="@color/red"
-        />
-
     <Switch
         android:id="@+id/sw_notifications"
         app:layout_widthPercent = "70%"

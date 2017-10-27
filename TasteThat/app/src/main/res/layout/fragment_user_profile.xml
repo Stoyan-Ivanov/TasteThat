@@ -14,7 +14,7 @@
          android:alpha="50"
          >
 
-         <ImageView
+         <de.hdodenhof.circleimageview.CircleImageView
              android:id="@+id/iv_profile_picture"
              app:layout_heightPercent="70%"
              app:layout_widthPercent="50%"
@@ -29,24 +29,23 @@
 
     <com.stoyanivanov.tastethat.view_utils.CustomTextView
         android:id="@+id/tv_username"
-        app:layout_heightPercent="10%"
+        app:layout_heightPercent="9%"
         app:layout_widthPercent="70%"
 
         app:layout_marginLeftPercent="15%"
-        app:layout_marginTopPercent="2%"
+        app:layout_marginTopPercent="0%"
         android:layout_below="@id/prl_profile_pic"
 
         android:gravity="center"
-        android:textSize="30sp"
         />
 
     <Button
         android:id="@+id/btn_liked_combinations"
-        app:layout_heightPercent="10%"
+        app:layout_heightPercent="9%"
         app:layout_widthPercent="70%"
 
         app:layout_marginLeftPercent="15%"
-        app:layout_marginTopPercent="2%"
+        app:layout_marginTopPercent="1%"
         android:layout_below="@id/tv_username"
 
         android:text="Liked"
@@ -56,14 +55,39 @@
 
     <Button
         android:id="@+id/btn_uploaded_combinations"
-        app:layout_heightPercent="10%"
+        app:layout_heightPercent="9%"
         app:layout_widthPercent="70%"
 
         app:layout_marginLeftPercent="15%"
-        app:layout_marginTopPercent="2%"
+        app:layout_marginTopPercent="1%"
         android:layout_below="@id/btn_liked_combinations"
 
         android:text="Uploaded"
+        />
+
+    <Button
+        android:id="@+id/btn_achievements"
+        app:layout_heightPercent="9%"
+        app:layout_widthPercent="70%"
+
+        app:layout_marginLeftPercent="15%"
+        app:layout_marginTopPercent="1%"
+        android:layout_below="@id/btn_uploaded_combinations"
+
+        android:text="Achievements"
+        />
+
+    <Button
+        android:id="@+id/btn_logout"
+        app:layout_widthPercent = "70%"
+        app:layout_heightPercent = "9%"
+
+        app:layout_marginTopPercent = "1%"
+        app:layout_marginLeftPercent = "15%"
+        android:layout_below="@+id/btn_achievements"
+
+        android:text="Logout"
+        android:textColor="@color/red"
         />
 
 

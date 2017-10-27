@@ -38,4 +38,16 @@ public class Combination {
         return likes;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Combination)) return false;
+
+        Combination that = (Combination) o;
+
+        if (!firstComponent.equals(that.firstComponent)) return false;
+        if (!secondComponent.equals(that.secondComponent)) return false;
+        return userId.equals(that.userId);
+
+    }
 }

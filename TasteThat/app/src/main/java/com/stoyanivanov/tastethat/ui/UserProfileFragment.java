@@ -1,6 +1,7 @@
 package com.stoyanivanov.tastethat.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,14 +19,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseUser;
+import com.stoyanivanov.tastethat.LoginActivity;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class UserProfileFragment extends Fragment {
 
-    ImageView ivProfilePic;
+    CircleImageView ivProfilePic;
     CustomTextView tvUsername;
     Button btnLiked, btnUploaded;
 
@@ -40,7 +44,7 @@ public class UserProfileFragment extends Fragment {
         tvUsername = (CustomTextView) view.findViewById(R.id.tv_username);
         btnLiked = (Button) view.findViewById(R.id.btn_liked_combinations);
         btnUploaded = (Button) view.findViewById(R.id.btn_uploaded_combinations);
-        ivProfilePic = (ImageView) view.findViewById(R.id.iv_profile_picture);
+        ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_profile_picture);
 
         currUser = ((MainActivity) getActivity()).getCurrentGoogleUser();
 
@@ -48,9 +52,25 @@ public class UserProfileFragment extends Fragment {
 
         String userPhotoUrl = currUser.getPhotoUrl().toString();
         Glide.with(getActivity().getApplicationContext()).load(userPhotoUrl)
-                .centerCrop()
+                //.centerCrop()
                 .into(ivProfilePic);
 
+
+        Button logout = (Button) view.findViewById(R.id.btn_logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
+
+
         return view;
+    }
+
+    private void signOut() {
+        MainActivity.mAuth.signOut();
+        startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 }
