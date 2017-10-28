@@ -31,7 +31,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private LayoutInflater mInflater;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private final DatabaseReference dbRef = database.getReference();
+    private final DatabaseReference mDatabaseLikes = database.getReference().child("likes");
 
     public MyRecyclerViewAdapter(ArrayList<Combination> data, OnItemClickListener listener) {
         this.mData = data;
@@ -53,14 +53,26 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             rightImg = (ImageView) itemView.findViewById(R.id.iv_rightImg);
         }
 
-        public void bind(final Combination combination, final OnItemClickListener listener) {
+        public void bind(final Combination combination, final OnItemClickListener listener, final int position) {
             final String nameOfCombination = combination.getFirstComponent() + " & " + combination.getSecondComponent();
             combinationName.setText(nameOfCombination);
-            likeCounter.setText(String.valueOf(combination.getLikes()));
+
+            mDatabaseLikes
+                    .child(combination.getFirstComponent()+combination.getSecondComponent())
+                    .addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    likeCounter.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    listener.onItemClick(combination, likeCounter);
+                    listener.onItemClick(combination, likeCounter, position);
                 }
             });
         }
@@ -79,7 +91,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // binds the data to the textview in each cel
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(mData.get(position), listener);
+        holder.bind(mData.get(position), listener, position);
     }
 
     @Override

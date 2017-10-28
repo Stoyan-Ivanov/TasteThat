@@ -8,5 +8,5 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
  */
 
 public interface OnItemClickListener {
-    void onItemClick(Combination combination, CustomTextView likeCounter);
+    void onItemClick(Combination combination, CustomTextView likeCounter, int position);
 }

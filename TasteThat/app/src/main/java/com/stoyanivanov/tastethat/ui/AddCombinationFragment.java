@@ -26,7 +26,6 @@ public class AddCombinationFragment extends Fragment {
     private EditText secondIngredient;
     private FirebaseUser currUser;
     private Button addCombination;
-    private int DEFAULT_LIKES = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,15 +51,17 @@ public class AddCombinationFragment extends Fragment {
 
     private void setDataToDB () {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
+        DatabaseReference mDatabaseCombination = database.getReference().child("combinations");
+        DatabaseReference mDatabaseUsers = database.getReference().child("users");
 
         String firstIng = firstIngredient.getText().toString();
         String secondIng = secondIngredient.getText().toString();
+        String combinationName = firstIng + secondIng;
 
-        Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid(), DEFAULT_LIKES);
+        Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
 
-        myRef.child("combinations").child(firstIng + secondIng).setValue(newCombination);
-        myRef.child("users").child(currUser.getUid()).child("userCombinations").push().setValue(firstIng + secondIng);
+       mDatabaseCombination.child(firstIng + secondIng).setValue(newCombination);
+       mDatabaseUsers.child(currUser.getUid()).child("userCombinations").push().setValue(combinationName);
         
         clearForm();
         showSuccesToast();

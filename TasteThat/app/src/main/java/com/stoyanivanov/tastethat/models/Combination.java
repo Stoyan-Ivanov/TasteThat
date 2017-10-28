@@ -1,5 +1,6 @@
 package com.stoyanivanov.tastethat.models;
 
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -8,18 +9,16 @@ import android.widget.TextView;
  */
 
 public class Combination {
-    String firstComponent, secondComponent, userId;
-    int likes;
+    private String firstComponent, secondComponent, userId;
 
     public Combination() {
 
     }
 
-    public Combination(String firstComponent, String secodComponent, String userId, int likes) {
+    public Combination(String firstComponent, String secodComponent, String userId) {
         this.firstComponent = firstComponent;
         this.secondComponent = secodComponent;
         this.userId = userId;
-        this.likes = likes;
     }
 
     public String getFirstComponent() {
@@ -34,20 +33,4 @@ public class Combination {
         return userId;
     }
 
-    public int getLikes() {
-        return likes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Combination)) return false;
-
-        Combination that = (Combination) o;
-
-        if (!firstComponent.equals(that.firstComponent)) return false;
-        if (!secondComponent.equals(that.secondComponent)) return false;
-        return userId.equals(that.userId);
-
-    }
 }
