@@ -61,7 +61,7 @@ public class AddCombinationFragment extends Fragment {
         Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
 
        mDatabaseCombination.child(firstIng + secondIng).setValue(newCombination);
-       mDatabaseUsers.child(currUser.getUid()).child("userCombinations").push().setValue(combinationName);
+       mDatabaseUsers.child(currUser.getUid()).child("uploadedCombinations").push().setValue(newCombination);
         
         clearForm();
         showSuccesToast();

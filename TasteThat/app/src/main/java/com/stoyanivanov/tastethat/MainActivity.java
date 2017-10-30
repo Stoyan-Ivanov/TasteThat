@@ -115,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                if(pager.getVisibility() == View.GONE) {
+                    pager.setVisibility(View.VISIBLE);
+                    removeFragment();
+                }
+
                 if (prevMenuItem != null) {
                     prevMenuItem.setChecked(false);
                 } else {
@@ -139,6 +144,24 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new OptionsFragment());
 
         return fragments;
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager =  getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+
+        pager.setVisibility(View.GONE);
+        transaction.commit();
+    }
+
+    private void removeFragment() {
+        Fragment currentFragment = this.getSupportFragmentManager().findFragmentById(R.id.container);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.remove(currentFragment);
+        fragmentTransaction.commit();
     }
 
     public BottomNavigationView getBottomNavigation() {

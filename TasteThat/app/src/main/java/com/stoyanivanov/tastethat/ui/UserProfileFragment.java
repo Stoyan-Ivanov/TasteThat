@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,21 +34,20 @@ public class UserProfileFragment extends Fragment {
     CircleImageView ivProfilePic;
     CustomTextView tvUsername;
     Button btnLiked, btnUploaded;
+    View view;
 
-    FirebaseUser currUser;
+    FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        view  = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
 
         tvUsername = (CustomTextView) view.findViewById(R.id.tv_username);
         btnLiked = (Button) view.findViewById(R.id.btn_liked_combinations);
         btnUploaded = (Button) view.findViewById(R.id.btn_uploaded_combinations);
         ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_profile_picture);
-
-        currUser = ((MainActivity) getActivity()).getCurrentGoogleUser();
 
         tvUsername.setText(currUser.getDisplayName());
 
@@ -65,8 +66,18 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
+        setUploadBtn();
 
         return view;
+    }
+
+    private void setUploadBtn() {
+        btnUploaded.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).replaceFragment(new UploadedCombinationsFragment());
+            }
+        });
     }
 
     private void signOut() {
