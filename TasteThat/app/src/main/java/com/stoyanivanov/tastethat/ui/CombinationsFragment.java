@@ -1,16 +1,13 @@
 package com.stoyanivanov.tastethat.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,14 +18,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.RVScrollController;
+import com.stoyanivanov.tastethat.view_utils.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
-
-import static com.stoyanivanov.tastethat.MainActivity.currUser;
 
 
 public class CombinationsFragment extends Fragment {

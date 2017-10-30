@@ -1,8 +1,10 @@
-package com.stoyanivanov.tastethat;
+package com.stoyanivanov.tastethat.view_utils;
 
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.stoyanivanov.tastethat.MainActivity;
 
 /**
  * Created by stoyan-ivanov on 30.10.17.

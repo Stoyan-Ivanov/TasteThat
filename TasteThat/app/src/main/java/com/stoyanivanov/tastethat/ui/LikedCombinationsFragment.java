@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.RVScrollController;
+import com.stoyanivanov.tastethat.view_utils.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
