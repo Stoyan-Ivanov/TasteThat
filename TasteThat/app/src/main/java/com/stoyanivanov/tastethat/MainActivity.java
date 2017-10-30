@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     public static FirebaseUser currUser;
-    private BottomNavigationView bottomNavigationView;
+    private static BottomNavigationView bottomNavigationView;
     private ViewPager pager;
     private MenuItem prevMenuItem;
 
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public BottomNavigationView getBottomNavigation() {
+    public static BottomNavigationView getBottomNavigation() {
         return bottomNavigationView;
     }
 }

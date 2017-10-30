@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
@@ -82,7 +83,9 @@ public class CombinationsFragment extends Fragment {
             }
         }));
 
-        addControlToBottomNavigation();
+        RVScrollController scrollController = new RVScrollController();
+        scrollController.addControlToBottomNavigation(recyclerView);
+
 
         return view;
     }
@@ -113,25 +116,7 @@ public class CombinationsFragment extends Fragment {
         return likes;
     }
 
-    private void addControlToBottomNavigation() {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                BottomNavigationView bottomNavigationView = ((MainActivity) getActivity()).getBottomNavigation();
-
-                if (dy > 0 && bottomNavigationView.isShown()) {
-                    bottomNavigationView.setVisibility(View.GONE);
-                } else if (dy < 0 || dy == 0) {
-                    bottomNavigationView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-    }
 
     public boolean combinationIsLiked(final String nameOfCombination) {
 

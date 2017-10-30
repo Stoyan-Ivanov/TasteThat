@@ -33,7 +33,7 @@ public class UserProfileFragment extends Fragment {
 
     CircleImageView ivProfilePic;
     CustomTextView tvUsername;
-    Button btnLiked, btnUploaded;
+    Button btnLiked, btnUploaded, logout;
     View view;
 
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
@@ -43,11 +43,11 @@ public class UserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         view  = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
-
+        ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_profile_picture);
         tvUsername = (CustomTextView) view.findViewById(R.id.tv_username);
         btnLiked = (Button) view.findViewById(R.id.btn_liked_combinations);
         btnUploaded = (Button) view.findViewById(R.id.btn_uploaded_combinations);
-        ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_profile_picture);
+        logout = (Button) view.findViewById(R.id.btn_logout);
 
         tvUsername.setText(currUser.getDisplayName());
 
@@ -56,29 +56,31 @@ public class UserProfileFragment extends Fragment {
                 //.centerCrop()
                 .into(ivProfilePic);
 
-
-        Button logout = (Button) view.findViewById(R.id.btn_logout);
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
-
-        setUploadBtn();
+        btnLiked.setOnClickListener(clickListener);
+        btnUploaded.setOnClickListener(clickListener);
+        logout.setOnClickListener(clickListener);
 
         return view;
     }
 
-    private void setUploadBtn() {
-        btnUploaded.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).replaceFragment(new UploadedCombinationsFragment());
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            switch(v.getId()) {
+                case R.id.btn_liked_combinations:
+                    ((MainActivity) getActivity()).replaceFragment(new LikedCombinationsFragment());
+                    break;
+
+                case R.id.btn_uploaded_combinations:
+                    ((MainActivity) getActivity()).replaceFragment(new UploadedCombinationsFragment());
+                    break;
+
+                case R.id.btn_logout:
+                    signOut();
+                    break;
             }
-        });
-    }
+        }
+    };
+
 
     private void signOut() {
         MainActivity.mAuth.signOut();

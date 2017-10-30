@@ -26,30 +26,33 @@ import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class UploadedCombinationsFragment extends Fragment {
-
-    ArrayList<Combination> uploadedCombinations;
+public class LikedCombinationsFragment extends Fragment {
+    ArrayList<Combination> likedCombinations;
     FirebaseDatabase database;
     DatabaseReference mDatabaseUsers ;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
+    public LikedCombinationsFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_uploaded_combinations, container, false);
+        View view = inflater.inflate(R.layout.fragment_liked_combinations, container, false);
 
         database = FirebaseDatabase.getInstance();
         mDatabaseUsers = database.getReference().child("users").child(currUser.getUid());
-        uploadedCombinations = new ArrayList<>();
+        likedCombinations = new ArrayList<>();
 
-        getUploadedCombinations();
+        getLikedCombinations();
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_liked);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(uploadedCombinations, new OnItemClickListener() {
+        recyclerView.setAdapter(new MyRecyclerViewAdapter(likedCombinations, new OnItemClickListener() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
+
             }
         }));
 
@@ -59,15 +62,15 @@ public class UploadedCombinationsFragment extends Fragment {
         return view;
     }
 
-    private void getUploadedCombinations() {
-        mDatabaseUsers.child("uploadedCombinations").addValueEventListener(new ValueEventListener() {
+    private void getLikedCombinations() {
+        mDatabaseUsers.child("likedCombinations").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
-                    uploadedCombinations.add(currCombination);
+                    likedCombinations.add(currCombination);
                 }
-                Log.d("SII", uploadedCombinations.toString());
+                Log.d("SII", likedCombinations.toString());
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -75,6 +78,4 @@ public class UploadedCombinationsFragment extends Fragment {
             }
         });
     }
-
-
 }
