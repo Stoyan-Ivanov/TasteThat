@@ -30,7 +30,7 @@ public class UploadedCombinationsFragment extends Fragment {
 
     ArrayList<Combination> uploadedCombinations;
     FirebaseDatabase database;
-    DatabaseReference mDatabaseUsers ;
+    DatabaseReference mDatabaseUsers;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
     @Override

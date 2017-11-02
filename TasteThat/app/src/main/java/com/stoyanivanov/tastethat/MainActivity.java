@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
                                 pager.setCurrentItem(2);
                                 break;
 
-                             case R.id.nav_button_options:
-                                 pager.setCurrentItem(3);
-                                 break;
+                            case R.id.nav_button_options:
+                                pager.setCurrentItem(3);
+                                break;
                         }
                         return true;
                     }

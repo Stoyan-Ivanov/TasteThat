@@ -1,7 +1,7 @@
 package com.stoyanivanov.tastethat;
 
 import android.content.Intent;
-import android.os.Parcelable;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -20,14 +21,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.stoyanivanov.tastethat.view_utils.CustomTextView;
+
+import org.w3c.dom.Text;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private TextView header;
 
     @Override
     protected void onStart() {
@@ -51,8 +54,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        header = (TextView) findViewById(R.id.tv_intro_header);
+        Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), "font/Allura-Regular.ttf");
+        header.setTypeface(custom_font);
+
         mAuth = FirebaseAuth.getInstance();
         googleSignInBtn = (SignInButton) findViewById(R.id.google_sign_in_button);
+
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null) {
+                    //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    //finish();
+                }
+            }
+        };
 
         googleSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,15 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
-            }
-        };
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -125,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             Toast.makeText(LoginActivity.this,"Welcome back " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
-                            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                         } else {
                             // If sign in fails, display a message to the user.

@@ -29,16 +29,16 @@ import java.util.ArrayList;
 public class CombinationsFragment extends Fragment {
 
     CustomTextView likeCounter;
-    ArrayList<Combination> allCombinations;
-    RecyclerView recyclerView;
     FirebaseDatabase database;
     DatabaseReference mDatabaseUsers;
     DatabaseReference mDatabaseCombinations;
     DatabaseReference mDatabaseLikes;
-
-    boolean processLike = false;
-    boolean isLiked = false;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+
+    ArrayList<Combination> allCombinations;
+    RecyclerView recyclerView;
+    boolean processLike = false;
+    boolean isLiked;
     long likes;
 
     @Override
@@ -69,6 +69,7 @@ public class CombinationsFragment extends Fragment {
                         likes = dataSnapshot.child(nameOfCombination).getChildrenCount();
 
                         long manipulatedLikes = (controlLikesInDB(likes, nameOfCombination));
+                        Log.d("SII", "manipulated likes: " + manipulatedLikes);
                         likeCounter.setText(String.valueOf(manipulatedLikes));
                     }
 
@@ -81,7 +82,7 @@ public class CombinationsFragment extends Fragment {
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
 
-
+        Log.d("zxc", "Instance: "+this.hashCode());
         return view;
     }
 
@@ -96,47 +97,50 @@ public class CombinationsFragment extends Fragment {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d("SII", "onCancelled: error");
+                Log.d("SII", "onCancelled: error getAllCombinations");
             }
         });
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {
-        if(combinationIsLiked(nameOfCombination)) {
-            likes--;
-        } else {
+        if(!combinationIsLiked(nameOfCombination)) {
             likes++;
+        } else {
+            likes--;
         }
 
         return likes;
     }
 
 
-
     public boolean combinationIsLiked(final String nameOfCombination) {
 
         processLike = true;
+        isLiked = false;
 
-        mDatabaseLikes.addValueEventListener(new ValueEventListener() {
+        mDatabaseLikes.child(nameOfCombination).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(processLike) {
-                    if (dataSnapshot.child(nameOfCombination).hasChild(currUser.getUid())) {
-                        mDatabaseLikes.child(nameOfCombination).child(currUser.getUid()).removeValue();
-                        isLiked = true;
-                        processLike = false;
-                    } else {
-                        mDatabaseLikes.child(nameOfCombination).child(currUser.getUid()).setValue(currUser.getEmail());
-                        isLiked = false;
-                        processLike = false;
+                if (processLike) {
+                        if (dataSnapshot.hasChild(currUser.getUid())) {
+                            mDatabaseLikes.child(nameOfCombination).child(currUser.getUid()).removeValue();
+                            isLiked = true;
+                            processLike = false;
+                        } else {
+                            mDatabaseLikes.child(nameOfCombination).child(currUser.getUid()).setValue(currUser.getEmail());
+                            isLiked = false;
+                            processLike = false;
+                        }
                     }
                 }
-            }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("SII", "OnCancel: combinationIsLiked");
+            }
         });
+        Log.d("SII", "combinationIsLiked: " + isLiked);
         return isLiked;
     }
 }
