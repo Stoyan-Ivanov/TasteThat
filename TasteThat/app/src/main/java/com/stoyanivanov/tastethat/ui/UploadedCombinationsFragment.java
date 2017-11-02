@@ -16,8 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.stoyanivanov.tastethat.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
-import com.stoyanivanov.tastethat.OnItemClickListener;
+import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -41,7 +42,7 @@ public class UploadedCombinationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_uploaded_combinations, container, false);
 
         database = FirebaseDatabase.getInstance();
-        mDatabaseUsers = database.getReference().child("users").child(currUser.getUid());
+        mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE).child(currUser.getUid());
         uploadedCombinations = new ArrayList<>();
 
         getUploadedCombinations();
@@ -62,7 +63,7 @@ public class UploadedCombinationsFragment extends Fragment {
     }
 
     private void getUploadedCombinations() {
-        mDatabaseUsers.child("uploadedCombinations").addValueEventListener(new ValueEventListener() {
+        mDatabaseUsers.child(Constants.USER_UPLOADED_COMBINATIONS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {

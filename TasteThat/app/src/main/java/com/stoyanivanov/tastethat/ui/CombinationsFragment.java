@@ -15,8 +15,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.stoyanivanov.tastethat.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
-import com.stoyanivanov.tastethat.OnItemClickListener;
+import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -51,9 +52,9 @@ public class CombinationsFragment extends Fragment {
         likeCounter = (CustomTextView) view.findViewById(R.id.tv_like_counter);
 
         database = FirebaseDatabase.getInstance();
-        mDatabaseCombinations = database.getReference().child("combinations");
-        mDatabaseUsers = database.getReference().child("users");
-        mDatabaseLikes = database.getReference().child("likes");
+        mDatabaseCombinations = database.getReference().child(Constants.COMBINATIONS_DATABASE);
+        mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE);
+        mDatabaseLikes = database.getReference().child(Constants.LIKES_DATABASE);
 
         getAllCombinations();
 

@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private TextView header;
+    private String ALLURA_FONT_PATH = "font/Allura-Regular.ttf";
 
     @Override
     protected void onStart() {
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         header = (TextView) findViewById(R.id.tv_intro_header);
-        Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), "font/Allura-Regular.ttf");
+        Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), ALLURA_FONT_PATH);
         header.setTypeface(custom_font);
 
         mAuth = FirebaseAuth.getInstance();

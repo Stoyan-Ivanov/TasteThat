@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.stoyanivanov.tastethat.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -51,8 +52,8 @@ public class AddCombinationFragment extends Fragment {
 
     private void setDataToDB () {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabaseCombination = database.getReference().child("combinations");
-        DatabaseReference mDatabaseUsers = database.getReference().child("users");
+        DatabaseReference mDatabaseCombination = database.getReference().child(Constants.COMBINATIONS_DATABASE);
+        DatabaseReference mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE);
 
         String firstIng = firstIngredient.getText().toString();
         String secondIng = secondIngredient.getText().toString();
@@ -61,7 +62,7 @@ public class AddCombinationFragment extends Fragment {
         Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
 
        mDatabaseCombination.child(firstIng + secondIng).setValue(newCombination);
-       mDatabaseUsers.child(currUser.getUid()).child("uploadedCombinations").push().setValue(newCombination);
+       mDatabaseUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).push().setValue(newCombination);
         
         clearForm();
         showSuccesToast();
@@ -73,7 +74,7 @@ public class AddCombinationFragment extends Fragment {
     }
     
     private void showSuccesToast() {
-        Toast toast=Toast.makeText(getActivity(),"Combination uploaded!",Toast.LENGTH_SHORT);
+        Toast toast=Toast.makeText(getActivity(), Constants.TOAST_SUCCESSFUL_UPLOAD,Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
     }
