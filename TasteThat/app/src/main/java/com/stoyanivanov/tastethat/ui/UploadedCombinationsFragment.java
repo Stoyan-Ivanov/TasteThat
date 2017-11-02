@@ -32,6 +32,7 @@ public class UploadedCombinationsFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference mDatabaseUsers;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+    MyRecyclerViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,15 +48,16 @@ public class UploadedCombinationsFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(uploadedCombinations, new OnItemClickListener() {
+        adapter = new MyRecyclerViewAdapter(uploadedCombinations, new OnItemClickListener() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
             }
-        }));
+        });
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
 
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -67,7 +69,7 @@ public class UploadedCombinationsFragment extends Fragment {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
                     uploadedCombinations.add(currCombination);
                 }
-                Log.d("SII", uploadedCombinations.toString());
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

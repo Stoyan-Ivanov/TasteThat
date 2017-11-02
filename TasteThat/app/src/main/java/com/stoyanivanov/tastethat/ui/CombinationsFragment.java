@@ -35,6 +35,7 @@ public class CombinationsFragment extends Fragment {
     DatabaseReference mDatabaseLikes;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
+    MyRecyclerViewAdapter adapter;
     ArrayList<Combination> allCombinations;
     RecyclerView recyclerView;
     boolean processLike = false;
@@ -58,7 +59,7 @@ public class CombinationsFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(allCombinations, new OnItemClickListener() {
+        adapter = new MyRecyclerViewAdapter(allCombinations, new OnItemClickListener() {
             @Override
             public void onItemClick(final Combination combination, final CustomTextView likeCounter, int position) {
                 final String nameOfCombination = combination.getFirstComponent() + combination.getSecondComponent();
@@ -69,7 +70,6 @@ public class CombinationsFragment extends Fragment {
                         likes = dataSnapshot.child(nameOfCombination).getChildrenCount();
 
                         long manipulatedLikes = (controlLikesInDB(likes, nameOfCombination));
-                        Log.d("SII", "manipulated likes: " + manipulatedLikes);
                         likeCounter.setText(String.valueOf(manipulatedLikes));
                     }
 
@@ -77,12 +77,12 @@ public class CombinationsFragment extends Fragment {
                     public void onCancelled(DatabaseError databaseError) {}
                 });
             }
-        }));
+        });
+        recyclerView.setAdapter(adapter);
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
 
-        Log.d("zxc", "Instance: "+this.hashCode());
         return view;
     }
 
@@ -94,6 +94,7 @@ public class CombinationsFragment extends Fragment {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
                     allCombinations.add(currCombination);
                 }
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -103,13 +104,11 @@ public class CombinationsFragment extends Fragment {
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {
-        if(!combinationIsLiked(nameOfCombination)) {
-            likes++;
-        } else {
-            likes--;
+        if(combinationIsLiked(nameOfCombination)) {
+            return --likes;
         }
 
-        return likes;
+        return ++likes;
     }
 
 
@@ -140,7 +139,7 @@ public class CombinationsFragment extends Fragment {
                 Log.d("SII", "OnCancel: combinationIsLiked");
             }
         });
-        Log.d("SII", "combinationIsLiked: " + isLiked);
+
         return isLiked;
     }
 }
