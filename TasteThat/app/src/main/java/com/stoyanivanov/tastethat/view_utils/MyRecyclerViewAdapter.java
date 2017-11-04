@@ -1,16 +1,21 @@
 package com.stoyanivanov.tastethat.view_utils;
 
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.stoyanivanov.tastethat.Constants;
 import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -27,31 +32,52 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private LayoutInflater mInflater;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private final DatabaseReference mDatabaseLikes = database.getReference().child("likes");
+    private final DatabaseReference mDatabaseLikes = database.getReference().child(Constants.LIKES_DATABASE);
+    private final DatabaseReference mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE);
 
     public MyRecyclerViewAdapter(ArrayList<Combination> data, OnItemClickListener listener) {
         this.mData = data;
         this.listener = listener;
     }
 
+    public void setNewData(ArrayList<Combination> data) {
+        this.mData = new ArrayList<>(data);
+        notifyDataSetChanged();
+    }
+
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
         public CustomTextView combinationName;
         public CustomTextView likeCounter;
+        public CustomTextView user;
         public ImageView leftImg;
         public ImageView rightImg;
+        public ImageView options;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            likeCounter = (CustomTextView) itemView.findViewById(R.id.tv_like_counter);
-            combinationName = (CustomTextView) itemView.findViewById(R.id.tv_combinationName);
-            leftImg = (ImageView) itemView.findViewById(R.id.iv_leftImg);
-            rightImg = (ImageView) itemView.findViewById(R.id.iv_rightImg);
+            likeCounter = (CustomTextView) itemView.findViewById(R.id.vh_tv_like_counter);
+            combinationName = (CustomTextView) itemView.findViewById(R.id.vh_tv_combinationName);
+            user = (CustomTextView) itemView.findViewById(R.id.vh_username);
+            leftImg = (ImageView) itemView.findViewById(R.id.vh_iv_leftImg);
+            rightImg = (ImageView) itemView.findViewById(R.id.vh_iv_rightImg);
+            options = (ImageView) itemView.findViewById(R.id.vh_options);
         }
 
         public void bind(final Combination combination, final OnItemClickListener listener, final int position) {
             final String nameOfCombination = combination.getFirstComponent() + " & " + combination.getSecondComponent();
             combinationName.setText(nameOfCombination);
+
+            mDatabaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
             mDatabaseLikes
                     .child(combination.getFirstComponent()+combination.getSecondComponent())
@@ -71,6 +97,37 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     listener.onItemClick(combination, likeCounter, position);
                 }
             });
+
+        }
+
+        private void setPopUpMenu(final int position) {
+            options.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                    popupMenu.show();
+
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch(item.getItemId()) {
+                                case R.id.pmenu_remove_combination:
+                                    removeCombination(position);
+                                    break;
+
+                            }
+                            return true;
+                        }
+                    });
+                }
+            });
+        }
+
+        private void removeCombination(final int position) {
+            mData.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, getItemCount());
         }
     }
 
@@ -88,6 +145,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(mData.get(position), listener, position);
+        holder.setPopUpMenu(position);
     }
 
     @Override

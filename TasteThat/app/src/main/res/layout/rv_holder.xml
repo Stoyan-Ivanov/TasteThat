@@ -34,19 +34,48 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/ll_images"
+                android:id="@+id/user_details_and_options"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="25dp"
+                android:weightSum="1">
+
+                <com.stoyanivanov.tastethat.view_utils.CustomTextView
+                    android:id="@+id/vh_username"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.9"
+
+                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+
+                    android:textSize="20sp"
+                    android:text="stoyan" />
 
                 <ImageView
-                    android:id="@+id/iv_leftImg"
+                    android:id="@+id/vh_options"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_top_options"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/vh_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_details_and_options">
+
+                <ImageView
+                    android:id="@+id/vh_iv_leftImg"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="0.5"
                     android:background="@color/white" />
 
                 <ImageView
-                    android:id="@+id/iv_rightImg"
+                    android:id="@+id/vh_iv_rightImg"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="0.5"
@@ -58,10 +87,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:weightSum="1"
-                android:layout_below="@+id/ll_images">
+                android:layout_below="@+id/vh_images">
 
                 <com.stoyanivanov.tastethat.view_utils.CustomTextView
-                    android:id="@+id/tv_combinationName"
+                    android:id="@+id/vh_tv_combinationName"
                     android:layout_height="match_parent"
 
                     android:layout_width="0dp"
@@ -100,7 +129,7 @@
                             />
 
                         <com.stoyanivanov.tastethat.view_utils.CustomTextView
-                            android:id="@+id/tv_like_counter"
+                            android:id="@+id/vh_tv_like_counter"
                             android:layout_width="40dp"
                             android:layout_height="35dp"
                             android:gravity="center"

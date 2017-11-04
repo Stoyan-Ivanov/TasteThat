@@ -49,7 +49,7 @@ public class CombinationsFragment extends Fragment {
         View view  = inflater.inflate(R.layout.fragment_combinations, container, false);
 
         allCombinations = new ArrayList<>();
-        likeCounter = (CustomTextView) view.findViewById(R.id.tv_like_counter);
+        likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
 
         database = FirebaseDatabase.getInstance();
         mDatabaseCombinations = database.getReference().child(Constants.COMBINATIONS_DATABASE);

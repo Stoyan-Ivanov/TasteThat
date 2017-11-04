@@ -4,9 +4,11 @@ package com.stoyanivanov.tastethat.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,9 +36,10 @@ public class UploadedCombinationsFragment extends Fragment {
     DatabaseReference mDatabaseUsers;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
     MyRecyclerViewAdapter adapter;
+    RecyclerView recyclerView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_uploaded_combinations, container, false);
@@ -47,7 +50,7 @@ public class UploadedCombinationsFragment extends Fragment {
 
         getUploadedCombinations();
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(uploadedCombinations, new OnItemClickListener() {
             @Override
@@ -60,6 +63,14 @@ public class UploadedCombinationsFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    private void inflatePopUpMenu(final int position) {
+
+    }
+
+    private void removeCombination(int position) {
+
     }
 
     private void getUploadedCombinations() {
