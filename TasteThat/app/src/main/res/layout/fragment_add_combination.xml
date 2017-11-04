@@ -35,6 +35,8 @@
         android:id="@+id/et_first_ingredient"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "12%"
+        android:maxLines="1"
+        android:inputType="text"
 
         android:layout_below="@+id/tv_first_ingredient_label"
         app:layout_marginLeftPercent = "15%"
@@ -57,6 +59,8 @@
         android:id="@+id/et_second_ingredient"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "12%"
+        android:maxLines="1"
+        android:inputType="text"
 
         android:layout_below="@+id/tv_second_ingredient_label"
         app:layout_marginLeftPercent = "15%"

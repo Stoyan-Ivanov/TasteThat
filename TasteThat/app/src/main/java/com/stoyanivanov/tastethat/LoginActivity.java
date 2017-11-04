@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private TextView header;
-    private String ALLURA_FONT_PATH = "font/Allura-Regular.ttf";
 
     @Override
     protected void onStart() {
@@ -56,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         header = (TextView) findViewById(R.id.tv_intro_header);
-        Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), ALLURA_FONT_PATH);
+        Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), Constants.LOGIN_HEADER_TV_FONT);
         header.setTypeface(custom_font);
 
         mAuth = FirebaseAuth.getInstance();
@@ -120,9 +119,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(final GoogleSignInAccount account) {
-        Log.d("TAG", "firebaseAuthWithGoogle:" + account.getId());
-        Log.d("TAG", "PhotoURL: " + account.getPhotoUrl().toString());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

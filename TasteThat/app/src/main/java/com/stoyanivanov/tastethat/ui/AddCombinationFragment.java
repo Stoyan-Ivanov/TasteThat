@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,18 @@ public class AddCombinationFragment extends Fragment {
 
         currUser = ((MainActivity) getActivity()).getCurrentGoogleUser();
 
+        secondIngredient.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    setDataToDB();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         addCombination = (Button) view.findViewById(R.id.btn_add_combination);
         addCombination.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +58,6 @@ public class AddCombinationFragment extends Fragment {
                 setDataToDB();
             }
         });
-
 
         return view;
     }
@@ -57,15 +69,20 @@ public class AddCombinationFragment extends Fragment {
 
         String firstIng = firstIngredient.getText().toString();
         String secondIng = secondIngredient.getText().toString();
-        String combinationName = firstIng + secondIng;
 
-        Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
+        if(firstIng.equals("") || secondIng.equals("")) {
+            showFailToast();
+        } else {
+            String combinationName = firstIng + secondIng;
 
-       mDatabaseCombination.child(firstIng + secondIng).setValue(newCombination);
-       mDatabaseUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).push().setValue(newCombination);
-        
-        clearForm();
-        showSuccesToast();
+            Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
+
+            mDatabaseCombination.child(firstIng + secondIng).setValue(newCombination);
+            mDatabaseUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).push().setValue(newCombination);
+
+            clearForm();
+            showSuccesToast();
+        }
     }
 
     private void clearForm() {
@@ -79,4 +96,9 @@ public class AddCombinationFragment extends Fragment {
         toast.show();
     }
 
+    private void showFailToast() {
+        Toast toast=Toast.makeText(getActivity(), Constants.TOAST_FAILED_UPLOAD,Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.show();
+    }
 }
