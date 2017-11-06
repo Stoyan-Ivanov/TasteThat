@@ -29,13 +29,15 @@ import java.util.ArrayList;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
     private ArrayList<Combination> mData = new ArrayList<>();
     private OnItemClickListener listener;
+    private String rvTag;
 
     private LayoutInflater mInflater;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference mDatabaseLikes = database.getReference().child(Constants.LIKES_DATABASE);
     private final DatabaseReference mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE);
 
-    public MyRecyclerViewAdapter(ArrayList<Combination> data, OnItemClickListener listener) {
+    public MyRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnItemClickListener listener) {
+        this.rvTag = rvTag;
         this.mData = data;
         this.listener = listener;
     }
@@ -105,26 +107,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 @Override
                 public void onClick(View v) {
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
-                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-                    popupMenu.show();
 
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch(item.getItemId()) {
-                                case R.id.pmenu_remove_combination:
-                                    removeCombination(position);
-                                    break;
-
-                            }
-                            return true;
-                        }
-                    });
+                    PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag, ViewHolder.this);
+                    popUpMenuController.inflatePopupMenu(position);
                 }
             });
         }
 
-        private void removeCombination(final int position) {
+        public void deleteCombination(final int position) {
             mData.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, getItemCount());

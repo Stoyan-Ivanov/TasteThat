@@ -52,7 +52,7 @@ public class UploadedCombinationsFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyRecyclerViewAdapter(uploadedCombinations, new OnItemClickListener() {
+        adapter = new MyRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnItemClickListener() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
             }

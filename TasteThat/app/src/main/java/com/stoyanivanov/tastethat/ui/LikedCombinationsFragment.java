@@ -50,7 +50,7 @@ public class LikedCombinationsFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_liked);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(likedCombinations, new OnItemClickListener() {
+        recyclerView.setAdapter(new MyRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, likedCombinations, new OnItemClickListener() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
 

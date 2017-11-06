@@ -60,7 +60,7 @@ public class CombinationsFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyRecyclerViewAdapter(allCombinations, new OnItemClickListener() {
+        adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnItemClickListener() {
             @Override
             public void onItemClick(final Combination combination, final CustomTextView likeCounter, int position) {
                 final String nameOfCombination = combination.getFirstComponent() + combination.getSecondComponent();

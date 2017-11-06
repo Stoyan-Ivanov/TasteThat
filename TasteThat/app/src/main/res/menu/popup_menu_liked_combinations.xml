@@ -2,8 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/pmenu_remove_combination"
-        android:title="Remove">
+        android:id="@+id/pm_rv_liked_share"
+        android:title="Share">
     </item>
-
 </menu>

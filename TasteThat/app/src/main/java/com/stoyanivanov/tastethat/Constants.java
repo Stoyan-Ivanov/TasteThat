@@ -17,4 +17,8 @@ public class Constants {
     public static String TOAST_FAILED_UPLOAD = "Please provide a valid input";
 
     public static String LOGIN_HEADER_TV_FONT = "font/Allura-Regular.ttf";
+
+    public static String RV_ALL_COMBINATIONS = "rvAllCombinations";
+    public static String RV_UPLOADED_COMBINATIONS = "rvUploadedCombinations";
+    public static String RV_LIKED_COMBINATIONS = "rvLikedCombinations";
 }
