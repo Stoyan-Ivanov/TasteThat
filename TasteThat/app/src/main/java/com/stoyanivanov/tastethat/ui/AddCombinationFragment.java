@@ -1,9 +1,7 @@
 package com.stoyanivanov.tastethat.ui;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -64,8 +62,8 @@ public class AddCombinationFragment extends Fragment {
 
     private void setDataToDB () {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabaseCombination = database.getReference().child(Constants.COMBINATIONS_DATABASE);
-        DatabaseReference mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE);
+        DatabaseReference tableCombinations = database.getReference().child(Constants.COMBINATIONS_TABLE);
+        DatabaseReference tableUsers = database.getReference().child(Constants.USER_TABLE);
 
         String firstIng = firstIngredient.getText().toString();
         String secondIng = secondIngredient.getText().toString();
@@ -77,8 +75,8 @@ public class AddCombinationFragment extends Fragment {
 
             Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
 
-            mDatabaseCombination.child(firstIng + secondIng).setValue(newCombination);
-            mDatabaseUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).push().setValue(newCombination);
+            tableCombinations.child(firstIng + secondIng).setValue(newCombination);
+            tableUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationName).setValue(newCombination);
 
             clearForm();
             showSuccesToast();

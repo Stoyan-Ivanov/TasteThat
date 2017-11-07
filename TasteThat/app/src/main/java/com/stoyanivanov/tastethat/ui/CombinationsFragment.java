@@ -31,9 +31,9 @@ public class CombinationsFragment extends Fragment {
 
     CustomTextView likeCounter;
     FirebaseDatabase database;
-    DatabaseReference mDatabaseUsers;
-    DatabaseReference mDatabaseCombinations;
-    DatabaseReference mDatabaseLikes;
+    DatabaseReference tableUsers;
+    DatabaseReference tableCombinations;
+    DatabaseReference tableLikes;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
     MyRecyclerViewAdapter adapter;
@@ -46,15 +46,15 @@ public class CombinationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_combinations, container, false);
+        View view  = inflater.inflate(R.layout.fragment_all_combinations, container, false);
 
         allCombinations = new ArrayList<>();
         likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
 
         database = FirebaseDatabase.getInstance();
-        mDatabaseCombinations = database.getReference().child(Constants.COMBINATIONS_DATABASE);
-        mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE);
-        mDatabaseLikes = database.getReference().child(Constants.LIKES_DATABASE);
+        tableCombinations = database.getReference().child(Constants.COMBINATIONS_TABLE);
+        tableUsers = database.getReference().child(Constants.USER_TABLE);
+        tableLikes = database.getReference().child(Constants.LIKES_TABLE);
 
         getAllCombinations();
 
@@ -65,7 +65,7 @@ public class CombinationsFragment extends Fragment {
             public void onItemClick(final Combination combination, final CustomTextView likeCounter, int position) {
                 final String nameOfCombination = combination.getFirstComponent() + combination.getSecondComponent();
 
-                mDatabaseLikes.addListenerForSingleValueEvent(new ValueEventListener() {
+                tableLikes.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         likes = dataSnapshot.child(nameOfCombination).getChildrenCount();
@@ -88,7 +88,7 @@ public class CombinationsFragment extends Fragment {
     }
 
     private void getAllCombinations() {
-        mDatabaseCombinations.addValueEventListener(new ValueEventListener() {
+        tableCombinations.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
@@ -118,17 +118,17 @@ public class CombinationsFragment extends Fragment {
         processLike = true;
         isLiked = false;
 
-        mDatabaseLikes.child(nameOfCombination).addValueEventListener(new ValueEventListener() {
+        tableLikes.child(nameOfCombination).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (processLike) {
                         if (dataSnapshot.hasChild(currUser.getUid())) {
-                            mDatabaseLikes.child(nameOfCombination).child(currUser.getUid()).removeValue();
+                            tableLikes.child(nameOfCombination).child(currUser.getUid()).removeValue();
                             isLiked = true;
                             processLike = false;
                         } else {
-                            mDatabaseLikes.child(nameOfCombination).child(currUser.getUid()).setValue(currUser.getEmail());
+                            tableLikes.child(nameOfCombination).child(currUser.getUid()).setValue(currUser.getEmail());
                             isLiked = false;
                             processLike = false;
                         }

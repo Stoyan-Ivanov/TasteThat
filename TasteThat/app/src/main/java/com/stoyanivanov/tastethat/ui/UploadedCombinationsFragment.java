@@ -4,11 +4,9 @@ package com.stoyanivanov.tastethat.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,7 +31,7 @@ public class UploadedCombinationsFragment extends Fragment {
 
     ArrayList<Combination> uploadedCombinations;
     FirebaseDatabase database;
-    DatabaseReference mDatabaseUsers;
+    DatabaseReference tableUsers;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
     MyRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
@@ -45,7 +43,7 @@ public class UploadedCombinationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_uploaded_combinations, container, false);
 
         database = FirebaseDatabase.getInstance();
-        mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE).child(currUser.getUid());
+        tableUsers = database.getReference().child(Constants.USER_TABLE).child(currUser.getUid());
         uploadedCombinations = new ArrayList<>();
 
         getUploadedCombinations();
@@ -65,16 +63,8 @@ public class UploadedCombinationsFragment extends Fragment {
         return view;
     }
 
-    private void inflatePopUpMenu(final int position) {
-
-    }
-
-    private void removeCombination(int position) {
-
-    }
-
     private void getUploadedCombinations() {
-        mDatabaseUsers.child(Constants.USER_UPLOADED_COMBINATIONS).addValueEventListener(new ValueEventListener() {
+        tableUsers.child(Constants.USER_UPLOADED_COMBINATIONS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {

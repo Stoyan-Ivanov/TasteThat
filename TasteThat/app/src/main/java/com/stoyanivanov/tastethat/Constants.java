@@ -6,10 +6,10 @@ package com.stoyanivanov.tastethat;
 
 public class Constants {
 
-    public static String COMBINATIONS_DATABASE = "combinations";
-    public static String LIKES_DATABASE = "likes";
+    public static String COMBINATIONS_TABLE = "combinations";
+    public static String LIKES_TABLE = "likes";
 
-    public static String USER_DATABASE = "users";
+    public static String USER_TABLE = "users";
     public static String USER_UPLOADED_COMBINATIONS = "uploadedCombinations";
     public static String USER_LIKED_COMBINATIONS = "likedCombinations";
 

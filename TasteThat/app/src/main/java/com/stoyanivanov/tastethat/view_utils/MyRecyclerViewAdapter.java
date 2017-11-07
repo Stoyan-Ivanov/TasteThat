@@ -3,19 +3,17 @@ package com.stoyanivanov.tastethat.view_utils;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.Constants;
+import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -33,13 +31,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private LayoutInflater mInflater;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private final DatabaseReference mDatabaseLikes = database.getReference().child(Constants.LIKES_DATABASE);
-    private final DatabaseReference mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE);
+    private final DatabaseReference tableLikes = database.getReference().child(Constants.LIKES_TABLE);
+    private final DatabaseReference tableUsers = database.getReference().child(Constants.USER_TABLE);
+    private final DatabaseReference tableCombinations = database.getReference().child(Constants.COMBINATIONS_TABLE);
 
     public MyRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnItemClickListener listener) {
         this.rvTag = rvTag;
         this.mData = data;
         this.listener = listener;
+
+        setHasStableIds(true);
     }
 
     public void setNewData(ArrayList<Combination> data) {
@@ -55,6 +56,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         public ImageView leftImg;
         public ImageView rightImg;
         public ImageView options;
+        public String combinationNameKey;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -67,10 +69,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
 
         public void bind(final Combination combination, final OnItemClickListener listener, final int position) {
+            combinationNameKey = combination.getFirstComponent() + combination.getSecondComponent();
             final String nameOfCombination = combination.getFirstComponent() + " & " + combination.getSecondComponent();
             combinationName.setText(nameOfCombination);
 
-            mDatabaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            tableUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                 }
@@ -81,7 +84,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 }
             });
 
-            mDatabaseLikes
+            tableLikes
                     .child(combination.getFirstComponent()+combination.getSecondComponent())
                     .addValueEventListener(new ValueEventListener() {
 
@@ -114,10 +117,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             });
         }
 
-        public void deleteCombination(final int position) {
-            mData.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, getItemCount());
+        public void deleteCombinationFromRV(final int position) {
+            mData.remove(getAdapterPosition());
+            deleteCombinationFromDB();
+            notifyItemRemoved(getAdapterPosition());
+            notifyItemRangeChanged(getAdapterPosition(), getItemCount());
+            //notifyItemChanged(position);
+        }
+
+        public void deleteCombinationFromDB() {
+            tableCombinations.child(combinationNameKey).removeValue();
+            tableUsers.child(MainActivity.getCurrentGoogleUser().getUid())
+                    .child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationNameKey).removeValue();
         }
     }
 
@@ -143,10 +154,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return mData.size();
     }
 
+    public long getItemId(int position) {
+        return position;
+    }
 
-    // convenience method for getting data at click position
-    public Combination getItem(int id) {
-        return mData.get(id);
+    public int getItemViewType(int position) {
+        return position;
     }
 
 }

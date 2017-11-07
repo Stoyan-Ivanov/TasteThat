@@ -68,7 +68,8 @@ public class PopUpMenuController {
                         break;
 
                     case R.id.pm_rv_uploaded_delete:
-                        viewHolder.deleteCombination(position);
+                        viewHolder.deleteCombinationFromRV(position);
+                        //viewHolder.deleteCombinationFromDB();
                         break;
 
                 }

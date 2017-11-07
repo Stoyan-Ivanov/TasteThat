@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class LikedCombinationsFragment extends Fragment {
     ArrayList<Combination> likedCombinations;
     FirebaseDatabase database;
-    DatabaseReference mDatabaseUsers ;
+    DatabaseReference tableUsers ;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
     public LikedCombinationsFragment() {
@@ -43,7 +43,7 @@ public class LikedCombinationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_liked_combinations, container, false);
 
         database = FirebaseDatabase.getInstance();
-        mDatabaseUsers = database.getReference().child(Constants.USER_DATABASE).child(currUser.getUid());
+        tableUsers = database.getReference().child(Constants.USER_TABLE).child(currUser.getUid());
         likedCombinations = new ArrayList<>();
 
         getLikedCombinations();
@@ -64,7 +64,7 @@ public class LikedCombinationsFragment extends Fragment {
     }
 
     private void getLikedCombinations() {
-        mDatabaseUsers.child(Constants.USER_LIKED_COMBINATIONS).addValueEventListener(new ValueEventListener() {
+        tableUsers.child(Constants.USER_LIKED_COMBINATIONS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
