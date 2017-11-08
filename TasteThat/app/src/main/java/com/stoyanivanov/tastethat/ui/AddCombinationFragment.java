@@ -13,12 +13,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.stoyanivanov.tastethat.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
+
+import static com.stoyanivanov.tastethat.DatabaseReferences.*;
 
 
 public class AddCombinationFragment extends Fragment {
@@ -40,7 +40,7 @@ public class AddCombinationFragment extends Fragment {
         secondIngredient.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_ENTER)) {
+                if ((keyCode == KeyEvent.KEYCODE_ENTER) && event.getAction() == KeyEvent.ACTION_DOWN) {
                     setDataToDB();
                     return true;
                 }
@@ -61,9 +61,6 @@ public class AddCombinationFragment extends Fragment {
     }
 
     private void setDataToDB () {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference tableCombinations = database.getReference().child(Constants.COMBINATIONS_TABLE);
-        DatabaseReference tableUsers = database.getReference().child(Constants.USER_TABLE);
 
         String firstIng = firstIngredient.getText().toString();
         String secondIng = secondIngredient.getText().toString();
@@ -78,8 +75,8 @@ public class AddCombinationFragment extends Fragment {
             tableCombinations.child(firstIng + secondIng).setValue(newCombination);
             tableUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationName).setValue(newCombination);
 
-            clearForm();
             showSuccesToast();
+            clearForm();
         }
     }
 

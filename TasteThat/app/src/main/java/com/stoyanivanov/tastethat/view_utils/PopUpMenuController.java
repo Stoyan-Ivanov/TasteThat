@@ -3,7 +3,12 @@ package com.stoyanivanov.tastethat.view_utils;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 
+import com.stoyanivanov.tastethat.Constants;
+import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
+
+import static com.stoyanivanov.tastethat.DatabaseReferences.*;
+
 
 /**
  * Created by stoyan-ivanov on 06.11.17.
@@ -13,6 +18,7 @@ public class PopUpMenuController {
     private PopupMenu popupMenu;
     private String rvTag;
     private MyRecyclerViewAdapter.ViewHolder viewHolder;
+    private String combinationNameKey = "";
 
     public PopUpMenuController(PopupMenu popupMenu, String rvTag, MyRecyclerViewAdapter.ViewHolder viewHolder) {
         this.popupMenu = popupMenu;
@@ -20,7 +26,8 @@ public class PopUpMenuController {
         this.viewHolder = viewHolder;
     }
 
-    public void inflatePopupMenu(final int position) {
+    public void inflatePopupMenu(final int position, final String combinationNameKey) {
+        this.combinationNameKey = combinationNameKey;
 
         switch (rvTag) {
             case "rvAllCombinations":
@@ -69,7 +76,7 @@ public class PopUpMenuController {
 
                     case R.id.pm_rv_uploaded_delete:
                         viewHolder.deleteCombinationFromRV(position);
-                        //viewHolder.deleteCombinationFromDB();
+                        deleteCombinationFromDB();
                         break;
 
                 }
@@ -99,6 +106,12 @@ public class PopUpMenuController {
     private void showPopup(int menuId) {
         popupMenu.getMenuInflater().inflate(menuId, popupMenu.getMenu());
         popupMenu.show();
+    }
+
+    public void deleteCombinationFromDB() {
+        tableCombinations.child(combinationNameKey).removeValue();
+        tableUsers.child(MainActivity.getCurrentGoogleUser().getUid())
+                .child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationNameKey).removeValue();
     }
 
 }

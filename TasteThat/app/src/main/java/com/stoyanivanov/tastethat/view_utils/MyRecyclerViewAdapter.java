@@ -9,16 +9,14 @@ import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.stoyanivanov.tastethat.Constants;
-import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
 
 import java.util.ArrayList;
+
+import static com.stoyanivanov.tastethat.DatabaseReferences.*;
 
 /**
  * Created by stoyan-ivanov on 03.10.17.
@@ -30,17 +28,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private String rvTag;
 
     private LayoutInflater mInflater;
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private final DatabaseReference tableLikes = database.getReference().child(Constants.LIKES_TABLE);
-    private final DatabaseReference tableUsers = database.getReference().child(Constants.USER_TABLE);
-    private final DatabaseReference tableCombinations = database.getReference().child(Constants.COMBINATIONS_TABLE);
 
     public MyRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnItemClickListener listener) {
         this.rvTag = rvTag;
         this.mData = data;
         this.listener = listener;
 
-        setHasStableIds(true);
     }
 
     public void setNewData(ArrayList<Combination> data) {
@@ -112,23 +105,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
 
                     PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag, ViewHolder.this);
-                    popUpMenuController.inflatePopupMenu(position);
+                    popUpMenuController.inflatePopupMenu(position, combinationNameKey);
                 }
             });
         }
 
         public void deleteCombinationFromRV(final int position) {
-            mData.remove(getAdapterPosition());
-            deleteCombinationFromDB();
+            mData.remove(position);
             notifyItemRemoved(getAdapterPosition());
-            notifyItemRangeChanged(getAdapterPosition(), getItemCount());
-            //notifyItemChanged(position);
-        }
-
-        public void deleteCombinationFromDB() {
-            tableCombinations.child(combinationNameKey).removeValue();
-            tableUsers.child(MainActivity.getCurrentGoogleUser().getUid())
-                    .child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationNameKey).removeValue();
+            notifyItemRangeChanged(position, getItemCount());
         }
     }
 
@@ -154,12 +139,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return mData.size();
     }
 
-    public long getItemId(int position) {
-        return position;
+    public Combination getItem(int position) {
+        return mData.get(position);
     }
 
-    public int getItemViewType(int position) {
-        return position;
-    }
+//    public int getItemViewType(int position) {
+//        return position;
+//    }
 
 }

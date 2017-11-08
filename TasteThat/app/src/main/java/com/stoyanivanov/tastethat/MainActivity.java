@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    public static FirebaseUser currUser;
     private static BottomNavigationView bottomNavigationView;
     private ViewPager pager;
     private MenuItem prevMenuItem;

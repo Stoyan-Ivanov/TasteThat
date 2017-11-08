@@ -27,23 +27,20 @@ import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import static com.stoyanivanov.tastethat.DatabaseReferences.tableUsers;
+
 public class LikedCombinationsFragment extends Fragment {
     ArrayList<Combination> likedCombinations;
-    FirebaseDatabase database;
-    DatabaseReference tableUsers ;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
-    public LikedCombinationsFragment() {
-        // Required empty public constructor
-    }
+    public LikedCombinationsFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_liked_combinations, container, false);
 
-        database = FirebaseDatabase.getInstance();
-        tableUsers = database.getReference().child(Constants.USER_TABLE).child(currUser.getUid());
+
         likedCombinations = new ArrayList<>();
 
         getLikedCombinations();
@@ -64,7 +61,10 @@ public class LikedCombinationsFragment extends Fragment {
     }
 
     private void getLikedCombinations() {
-        tableUsers.child(Constants.USER_LIKED_COMBINATIONS).addValueEventListener(new ValueEventListener() {
+        tableUsers.child(currUser.getUid())
+                .child(Constants.USER_LIKED_COMBINATIONS)
+                .addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {

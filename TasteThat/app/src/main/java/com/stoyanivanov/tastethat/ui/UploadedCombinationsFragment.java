@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
@@ -27,11 +25,11 @@ import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import static com.stoyanivanov.tastethat.DatabaseReferences.tableUsers;
+
 public class UploadedCombinationsFragment extends Fragment {
 
     ArrayList<Combination> uploadedCombinations;
-    FirebaseDatabase database;
-    DatabaseReference tableUsers;
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
     MyRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
@@ -42,8 +40,6 @@ public class UploadedCombinationsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_uploaded_combinations, container, false);
 
-        database = FirebaseDatabase.getInstance();
-        tableUsers = database.getReference().child(Constants.USER_TABLE).child(currUser.getUid());
         uploadedCombinations = new ArrayList<>();
 
         getUploadedCombinations();
@@ -64,7 +60,9 @@ public class UploadedCombinationsFragment extends Fragment {
     }
 
     private void getUploadedCombinations() {
-        tableUsers.child(Constants.USER_UPLOADED_COMBINATIONS).addValueEventListener(new ValueEventListener() {
+        tableUsers.child(currUser.getUid())
+                .child(Constants.USER_UPLOADED_COMBINATIONS)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {

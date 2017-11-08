@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
@@ -26,14 +24,13 @@ import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import static com.stoyanivanov.tastethat.DatabaseReferences.*;
+
 
 public class CombinationsFragment extends Fragment {
 
     CustomTextView likeCounter;
-    FirebaseDatabase database;
-    DatabaseReference tableUsers;
-    DatabaseReference tableCombinations;
-    DatabaseReference tableLikes;
+
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
 
     MyRecyclerViewAdapter adapter;
@@ -50,11 +47,6 @@ public class CombinationsFragment extends Fragment {
 
         allCombinations = new ArrayList<>();
         likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
-
-        database = FirebaseDatabase.getInstance();
-        tableCombinations = database.getReference().child(Constants.COMBINATIONS_TABLE);
-        tableUsers = database.getReference().child(Constants.USER_TABLE);
-        tableLikes = database.getReference().child(Constants.LIKES_TABLE);
 
         getAllCombinations();
 
