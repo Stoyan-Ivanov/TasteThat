@@ -4,6 +4,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.stoyanivanov.tastethat.BaseBottomNavigationActivity;
 import com.stoyanivanov.tastethat.MainActivity;
 
 /**
@@ -24,7 +25,7 @@ public class RVScrollController {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                BottomNavigationView bottomNavigationView = MainActivity.getBottomNavigation();
+                BottomNavigationView bottomNavigationView = BaseBottomNavigationActivity.bottomNavigationView;
 
                 if (dy > 0 && bottomNavigationView.isShown()) {
                     bottomNavigationView.setVisibility(View.GONE);

@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.LoginActivity;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.UserProfileActivity;
+import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
+import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,13 +68,17 @@ public class UserProfileFragment extends Fragment {
 
     View.OnClickListener clickListener = new View.OnClickListener() {
         public void onClick(View v) {
+            Intent intent;
+
             switch(v.getId()) {
                 case R.id.btn_liked_combinations:
-                    ((MainActivity) getActivity()).replaceFragment(new LikedCombinationsFragment());
+                    intent = getIntentWithExtras(BottomNavigationOptions.USER_PROFILE, FragmentTags.LIKED_FRAGMENT);
+                    startActivity(intent);
                     break;
 
                 case R.id.btn_uploaded_combinations:
-                    ((MainActivity) getActivity()).replaceFragment(new UploadedCombinationsFragment());
+                    intent = getIntentWithExtras(BottomNavigationOptions.USER_PROFILE, FragmentTags.UPLOADS_FRAGMENT);
+                    startActivity(intent);
                     break;
 
                 case R.id.btn_logout:
@@ -85,5 +92,13 @@ public class UserProfileFragment extends Fragment {
     private void signOut() {
         MainActivity.mAuth.signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
+    }
+
+    private Intent getIntentWithExtras(final int bottomNavOption, final String fragmentTag) {
+        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+        intent.putExtra("bottom_nav_option", bottomNavOption);
+        intent.putExtra("fragment_tag", fragmentTag);
+
+        return intent;
     }
 }

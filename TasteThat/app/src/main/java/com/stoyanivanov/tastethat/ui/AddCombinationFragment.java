@@ -13,12 +13,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.stoyanivanov.tastethat.Constants;
+import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
 
-import static com.stoyanivanov.tastethat.DatabaseReferences.*;
+import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
 public class AddCombinationFragment extends Fragment {

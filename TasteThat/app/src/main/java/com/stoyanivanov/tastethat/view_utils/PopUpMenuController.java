@@ -3,11 +3,11 @@ package com.stoyanivanov.tastethat.view_utils;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 
-import com.stoyanivanov.tastethat.Constants;
+import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.R;
 
-import static com.stoyanivanov.tastethat.DatabaseReferences.*;
+import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
 /**

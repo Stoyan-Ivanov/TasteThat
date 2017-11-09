@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat;
+package com.stoyanivanov.tastethat.constants;
 
 /**
  * Created by stoyan-ivanov on 02.11.17.

@@ -27,9 +27,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.stoyanivanov.tastethat.view_utils.CustomTextView;
-
-import org.w3c.dom.Text;
+import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
+import com.stoyanivanov.tastethat.constants.Constants;
+import com.stoyanivanov.tastethat.constants.FragmentTags;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(getIntentWithExtras());
                     finish();
                 }
             }
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             Toast.makeText(LoginActivity.this,"Welcome back " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(getIntentWithExtras());
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -141,5 +141,13 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private Intent getIntentWithExtras() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("bottom_nav_option", BottomNavigationOptions.HOME);
+        intent.putExtra("fragment_tag", FragmentTags.HOME_FRAGMENT);
+
+        return intent;
     }
 }

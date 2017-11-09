@@ -24,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".BaseBottomNavigationActivity"></activity>
+        <activity android:name=".BaseBottomNavigationActivity" />
+        <activity android:name=".UserProfileActivity"></activity>
     </application>
 
 </manifest>

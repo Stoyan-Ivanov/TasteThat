@@ -16,7 +16,7 @@ import com.stoyanivanov.tastethat.models.Combination;
 
 import java.util.ArrayList;
 
-import static com.stoyanivanov.tastethat.DatabaseReferences.*;
+import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 /**
  * Created by stoyan-ivanov on 03.10.17.

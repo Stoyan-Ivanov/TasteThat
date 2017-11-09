@@ -13,10 +13,9 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.stoyanivanov.tastethat.Constants;
+import com.stoyanivanov.tastethat.UserProfileActivity;
+import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.MainActivity;
 import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
@@ -27,11 +26,11 @@ import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-import static com.stoyanivanov.tastethat.DatabaseReferences.tableUsers;
+import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
 public class LikedCombinationsFragment extends Fragment {
     ArrayList<Combination> likedCombinations;
-    FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+    FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
 
     public LikedCombinationsFragment() {}
 
