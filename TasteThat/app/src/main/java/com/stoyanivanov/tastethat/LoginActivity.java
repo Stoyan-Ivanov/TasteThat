@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(getIntentWithExtras());
+                    startMainActivity();
                     finish();
                 }
             }
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             Toast.makeText(LoginActivity.this,"Welcome back " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
-                            startActivity(getIntentWithExtras());
+                            startMainActivity();
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -143,11 +143,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private Intent getIntentWithExtras() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("bottom_nav_option", BottomNavigationOptions.HOME);
-        intent.putExtra("fragment_tag", FragmentTags.HOME_FRAGMENT);
-
-        return intent;
+    private void startMainActivity() {
+        startActivity(MainActivity.getIntent(this, BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
     }
+
 }

@@ -1,19 +1,20 @@
 package com.stoyanivanov.tastethat;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.constants.ViewPagerPages;
 import com.stoyanivanov.tastethat.ui.AddCombinationFragment;
 import com.stoyanivanov.tastethat.ui.CombinationsFragment;
 import com.stoyanivanov.tastethat.ui.OptionsFragment;
@@ -28,6 +29,15 @@ public class MainActivity extends BaseBottomNavigationActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ViewPager pager;
     private MenuItem prevMenuItem;
+
+    public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(StartActivityConstants.extraNavOption, bottomNavOption);
+        intent.putExtra(StartActivityConstants.extraFragmentTag, fragmentTag);
+        intent.putExtra(StartActivityConstants.extraFlag, "started_properly");
+
+        return intent;
+    }
 
     @Override
     protected void onStart() {
@@ -66,19 +76,19 @@ public class MainActivity extends BaseBottomNavigationActivity {
                         item.setEnabled(true);
                         switch (item.getItemId()) {
                             case R.id.nav_button_add:
-                                pager.setCurrentItem(0);
+                                pager.setCurrentItem(ViewPagerPages.ADD);
                                 break;
 
                             case R.id.nav_button_home:
-                                pager.setCurrentItem(1);
+                                pager.setCurrentItem(ViewPagerPages.HOME);
                                 break;
 
                             case R.id.nav_button_profile:
-                                pager.setCurrentItem(2);
+                                pager.setCurrentItem(ViewPagerPages.USER_PROFILE);
                                 break;
 
                             case R.id.nav_button_options:
-                                pager.setCurrentItem(3);
+                                pager.setCurrentItem(ViewPagerPages.OPTIONS);
                                 break;
                         }
                         return true;
@@ -122,10 +132,10 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     private void beginViewPagerPage() {
         switch (fragmentTag) {
-            case "add_fragment" : pager.setCurrentItem(0); break;
-            case "home_fragment" : pager.setCurrentItem(1); break;
-            case "user_fragment" : pager.setCurrentItem(2); break;
-            case "options_fragment" : pager.setCurrentItem(3); break;
+            case "add_fragment" : pager.setCurrentItem(ViewPagerPages.ADD); break;
+            case "home_fragment" : pager.setCurrentItem(ViewPagerPages.HOME); break;
+            case "user_fragment" : pager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
+            case "options_fragment" : pager.setCurrentItem(ViewPagerPages.OPTIONS); break;
         }
     }
 

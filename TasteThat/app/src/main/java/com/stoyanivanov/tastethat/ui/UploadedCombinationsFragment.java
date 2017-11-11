@@ -66,11 +66,12 @@ public class UploadedCombinationsFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                uploadedCombinations.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
                     uploadedCombinations.add(currCombination);
                 }
-                adapter.notifyDataSetChanged();
+                adapter.setNewData(uploadedCombinations);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

@@ -1,5 +1,6 @@
 package com.stoyanivanov.tastethat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
+import com.stoyanivanov.tastethat.constants.StartActivityConstants;
 import com.stoyanivanov.tastethat.ui.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.UploadedCombinationsFragment;
 
@@ -22,6 +24,14 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
     public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
+        Intent intent = new Intent(context, UserProfileActivity.class);
+        intent.putExtra(StartActivityConstants.extraNavOption, bottomNavOption);
+        intent.putExtra(StartActivityConstants.extraFragmentTag, fragmentTag);
+        intent.putExtra(StartActivityConstants.extraFlag, "started_properly");
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,38 +84,28 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
                         item.setEnabled(true);
-                        Intent intent = null;
 
                         switch (item.getItemId()) {
                             case R.id.nav_button_add:
-                                intent = getIntentWithExtras(BottomNavigationOptions.ADD, FragmentTags.ADD_FRAGMENT);
+                                startActivity(MainActivity.getIntent(getBaseContext(), BottomNavigationOptions.ADD, FragmentTags.ADD_FRAGMENT));
                                 break;
 
                             case R.id.nav_button_home:
-                                intent = getIntentWithExtras(BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT);
+                                startActivity(MainActivity.getIntent(getBaseContext(), BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
                                 break;
 
                             case R.id.nav_button_profile:
-                                intent = getIntentWithExtras(BottomNavigationOptions.USER_PROFILE, FragmentTags.USER_FRAGMENT);
+                                startActivity(MainActivity.getIntent(getBaseContext(), BottomNavigationOptions.USER_PROFILE, FragmentTags.USER_FRAGMENT));
                                 break;
 
                             case R.id.nav_button_options:
-                                intent = getIntentWithExtras(BottomNavigationOptions.OPTIONS, FragmentTags.OPTIONS_FRAGMENT);
+                                startActivity(MainActivity.getIntent(getBaseContext(), BottomNavigationOptions.OPTIONS, FragmentTags.OPTIONS_FRAGMENT));
                                 break;
                         }
-                        startActivity(intent);
 
                         return true;
                     }
                 });
-    }
-
-    private Intent getIntentWithExtras(final int bottomNavOption, final String fragmentTag) {
-        Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
-        intent.putExtra("bottom_nav_option", bottomNavOption);
-        intent.putExtra("fragment_tag", fragmentTag);
-
-        return intent;
     }
 
     public static FirebaseUser getCurrentGoogleUser() {

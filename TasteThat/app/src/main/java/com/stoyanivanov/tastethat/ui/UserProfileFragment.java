@@ -68,17 +68,14 @@ public class UserProfileFragment extends Fragment {
 
     View.OnClickListener clickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Intent intent;
 
             switch(v.getId()) {
                 case R.id.btn_liked_combinations:
-                    intent = getIntentWithExtras(BottomNavigationOptions.USER_PROFILE, FragmentTags.LIKED_FRAGMENT);
-                    startActivity(intent);
+                    startActivity(UserProfileActivity.getIntent(getActivity(), BottomNavigationOptions.USER_PROFILE, FragmentTags.LIKED_FRAGMENT));
                     break;
 
                 case R.id.btn_uploaded_combinations:
-                    intent = getIntentWithExtras(BottomNavigationOptions.USER_PROFILE, FragmentTags.UPLOADS_FRAGMENT);
-                    startActivity(intent);
+                    startActivity(UserProfileActivity.getIntent(getActivity(), BottomNavigationOptions.USER_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
                     break;
 
                 case R.id.btn_logout:
@@ -94,11 +91,4 @@ public class UserProfileFragment extends Fragment {
         startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
-    private Intent getIntentWithExtras(final int bottomNavOption, final String fragmentTag) {
-        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-        intent.putExtra("bottom_nav_option", bottomNavOption);
-        intent.putExtra("fragment_tag", fragmentTag);
-
-        return intent;
-    }
 }

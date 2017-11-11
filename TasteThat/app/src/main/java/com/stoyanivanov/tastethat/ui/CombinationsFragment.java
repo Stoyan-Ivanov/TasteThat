@@ -83,11 +83,13 @@ public class CombinationsFragment extends Fragment {
         tableCombinations.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                allCombinations.clear();
+
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
                     allCombinations.add(currCombination);
                 }
-                adapter.notifyDataSetChanged();
+                adapter.setNewData(allCombinations);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
