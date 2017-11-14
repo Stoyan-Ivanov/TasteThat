@@ -25,7 +25,7 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_base_bottom_navigation);
     }
 
-    public void init() {
+    protected void init() {
         Intent intent = getIntent();
         if(intent.getStringExtra(StartActivityConstants.extraFlag) == null) {
             try {
@@ -42,11 +42,11 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
         setSelectedBottomNavOption(bottomNavOption);
     }
 
-    private void setSelectedBottomNavOption(int bottomNavOption) {
+    protected void setSelectedBottomNavOption(int bottomNavOption) {
         bottomNavigationView.setSelectedItemId(bottomNavOption);
     }
 
-    private void instantiateBottomNavBar() {
+    protected void instantiateBottomNavBar() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
     }
