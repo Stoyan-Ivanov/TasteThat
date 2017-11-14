@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.MainActivity;
+import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
 

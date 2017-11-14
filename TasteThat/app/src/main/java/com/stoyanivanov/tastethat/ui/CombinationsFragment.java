@@ -14,7 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.MainActivity;
+import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.RVScrollController;

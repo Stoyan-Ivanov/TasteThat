@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat;
+package com.stoyanivanov.tastethat.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
 import com.stoyanivanov.tastethat.constants.ViewPagerPages;
 import com.stoyanivanov.tastethat.ui.AddCombinationFragment;

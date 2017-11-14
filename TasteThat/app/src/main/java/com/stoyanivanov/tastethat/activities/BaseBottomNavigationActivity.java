@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat;
+package com.stoyanivanov.tastethat.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
 import com.stoyanivanov.tastethat.view_utils.BottomNavigationViewHelper;
 
