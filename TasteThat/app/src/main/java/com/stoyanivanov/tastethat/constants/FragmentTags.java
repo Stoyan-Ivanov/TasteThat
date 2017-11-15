@@ -13,4 +13,5 @@ public class FragmentTags {
     public static final String LIKED_FRAGMENT = "liked_fragment";
     public static final String UPLOADS_FRAGMENT = "uploads_fragment";
     public static final String ACHIEVEMENTS_FRAGMENT = "achievements_fragment";
+    public static final String CHOOSE_IMAGE_FRAGMENT = "uploads_fragment";
 }

@@ -138,13 +138,4 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public int getItemCount() {
         return mData.size();
     }
-
-    public Combination getItem(int position) {
-        return mData.get(position);
-    }
-
-//    public int getItemViewType(int position) {
-//        return position;
-//    }
-
 }

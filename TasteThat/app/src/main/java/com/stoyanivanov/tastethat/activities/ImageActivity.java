@@ -10,8 +10,14 @@ import android.os.Bundle;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.network.TasteThatAPI;
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.network.network_models.NextImagesResponse;
+import com.stoyanivanov.tastethat.ui.ChooseImageFragment;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 public class ImageActivity extends BaseBottomNavigationActivity {
     private ArrayList<String> ingredients;
@@ -33,11 +39,14 @@ public class ImageActivity extends BaseBottomNavigationActivity {
 
         init();
         ingredients = getIntent().getStringArrayListExtra("ingredients");
-
-
+        replaceFragment(new ChooseImageFragment());
     }
 
     public void replaceFragment(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putString("extraIngredient", ingredients.get(0));
+        fragment.setArguments(bundle);
+
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
