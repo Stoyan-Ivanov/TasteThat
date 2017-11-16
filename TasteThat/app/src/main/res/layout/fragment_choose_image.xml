@@ -8,13 +8,15 @@
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/image_selection_header"
         android:layout_width="match_parent"
-        app:layout_heightPercent="20%">
+        app:layout_heightPercent="12%">
 
         <com.stoyanivanov.tastethat.view_utils.CustomTextView
             android:id="@+id/tv_image_selection_header"
             app:layout_heightPercent = "75%"
             app:layout_widthPercent = "80%"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+
     </android.support.percent.PercentRelativeLayout>
 
     <android.support.v7.widget.RecyclerView
