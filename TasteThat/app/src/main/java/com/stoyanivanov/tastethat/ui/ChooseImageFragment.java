@@ -4,7 +4,6 @@ package com.stoyanivanov.tastethat.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.interfaces.OnClickItemListener;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.network_models.NextImagesResponse;
 import com.stoyanivanov.tastethat.network.network_models.Picture;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
-import com.stoyanivanov.tastethat.view_utils.ImagesRecyclerviewAdapter;
-import com.stoyanivanov.tastethat.view_utils.RVScrollController;
+import com.stoyanivanov.tastethat.view_utils.rv_adapters.ImagesRecyclerviewAdapter;
+import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 
 import java.util.ArrayList;
 
@@ -68,7 +68,12 @@ public class ChooseImageFragment extends Fragment {
 
     private void configRecyclerview(ArrayList<Picture> pictures) {
         recyclerView.setLayoutManager(new GridLayoutManager(TasteThatApplication.getStaticContext(), 3));
-        recyclerView.setAdapter(new ImagesRecyclerviewAdapter(pictures));
+        recyclerView.setAdapter(new ImagesRecyclerviewAdapter(pictures, new OnClickItemListener() {
+            @Override
+            public void onItemClick(int position) {
+
+            }
+        }));
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);

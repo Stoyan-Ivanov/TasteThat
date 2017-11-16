@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat.view_utils;
+package com.stoyanivanov.tastethat.view_utils.controllers;
 
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.RecyclerView;

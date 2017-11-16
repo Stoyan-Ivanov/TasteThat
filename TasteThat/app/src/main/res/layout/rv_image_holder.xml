@@ -12,5 +12,4 @@
         android:adjustViewBounds="true"
         android:background="@color/accent_500"/>
 
-
 </LinearLayout>

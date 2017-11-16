@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat.view_utils;
+package com.stoyanivanov.tastethat.view_utils.controllers;
 
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.view_utils.rv_viewholders.NormalViewHolder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
@@ -17,10 +18,10 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 public class PopUpMenuController {
     private PopupMenu popupMenu;
     private String rvTag;
-    private MyRecyclerViewAdapter.ViewHolder viewHolder;
+    private NormalViewHolder viewHolder;
     private String combinationNameKey = "";
 
-    public PopUpMenuController(PopupMenu popupMenu, String rvTag, MyRecyclerViewAdapter.ViewHolder viewHolder) {
+    public PopUpMenuController(PopupMenu popupMenu, String rvTag, NormalViewHolder viewHolder) {
         this.popupMenu = popupMenu;
         this.rvTag = rvTag;
         this.viewHolder = viewHolder;
@@ -75,7 +76,7 @@ public class PopUpMenuController {
                         break;
 
                     case R.id.pm_rv_uploaded_delete:
-                        viewHolder.deleteCombinationFromRV(position);
+                        viewHolder.deleteViewHolderFromRV(position);
                         deleteCombinationFromDB();
                         break;
 

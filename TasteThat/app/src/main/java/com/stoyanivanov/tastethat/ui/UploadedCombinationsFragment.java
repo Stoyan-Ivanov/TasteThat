@@ -16,12 +16,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.activities.UserProfileActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.interfaces.OnItemClickListener;
+import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.view_utils.RVScrollController;
+import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
-import com.stoyanivanov.tastethat.view_utils.MyRecyclerViewAdapter;
+import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -46,7 +46,7 @@ public class UploadedCombinationsFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnItemClickListener() {
+        adapter = new MyRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickItemLikeListener() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
             }
