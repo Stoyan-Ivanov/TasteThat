@@ -5,13 +5,13 @@ package com.stoyanivanov.tastethat.constants;
  */
 
 public class FragmentTags {
-    public static final String ADD_FRAGMENT = "add_fragment";
-    public static final String HOME_FRAGMENT = "home_fragment";
-    public static final String USER_FRAGMENT = "user_fragment";
-    public static final String OPTIONS_FRAGMENT = "options_fragment";
+    public static final String ADD_FRAGMENT = "addFragment";
+    public static final String HOME_FRAGMENT = "homeFragment";
+    public static final String USER_FRAGMENT = "userFragment";
+    public static final String OPTIONS_FRAGMENT = "optionsFragment";
 
-    public static final String LIKED_FRAGMENT = "liked_fragment";
-    public static final String UPLOADS_FRAGMENT = "uploads_fragment";
-    public static final String ACHIEVEMENTS_FRAGMENT = "achievements_fragment";
-    public static final String CHOOSE_IMAGE_FRAGMENT = "uploads_fragment";
+    public static final String LIKED_FRAGMENT = "likedFragment";
+    public static final String UPLOADS_FRAGMENT = "uploadsFragment";
+    public static final String ACHIEVEMENTS_FRAGMENT = "achievementsFragment";
+    public static final String CHOOSE_IMAGE_FRAGMENT = "uploadsFragment";
 }

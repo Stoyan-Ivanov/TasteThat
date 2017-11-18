@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.activities.ImageActivity;
+import com.stoyanivanov.tastethat.constants.StartActivityConstants;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemListener;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.network_models.NextImagesResponse;
@@ -32,14 +33,13 @@ public class ChooseImageFragment extends Fragment {
     private RecyclerView recyclerView;
     private NextImagesResponse nextImagesResponse;
     private String ingredient;
-    public static final String EXTRA_INGREDIENT = "extraIngredient";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_image, container, false);
 
-        ingredient = getArguments().getString(EXTRA_INGREDIENT);
+        ingredient = getArguments().getString(StartActivityConstants.EXTRA_FRAGMENT_INGREDIENT);
         header = (CustomTextView) view.findViewById(R.id.tv_image_selection_header);
         header.setText(ingredient);
 

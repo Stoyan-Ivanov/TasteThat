@@ -5,7 +5,11 @@ package com.stoyanivanov.tastethat.constants;
  */
 
 public class StartActivityConstants {
-    public static final String extraNavOption = "bottom_navigation_option";
-    public static final String extraFragmentTag = "fragment_tag";
-    public static final String extraFlag = "flag";
+    public static final String EXTRA_NAV_OPTION = "bottomNavigationOption";
+    public static final String EXTRA_FRAGMENT_TAG = "fragmentTag";
+    public static final String EXTRA_FLAG = "flag";
+    public static final String EXTRA_FLAG_VALUE = "startedProperly";
+
+    public static final String EXTRA_INGREDIENTS = "extraIngredients";
+    public static final String EXTRA_FRAGMENT_INGREDIENT = "extraIngredient";
 }

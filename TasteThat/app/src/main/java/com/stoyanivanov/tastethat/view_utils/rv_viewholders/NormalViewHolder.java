@@ -51,17 +51,10 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
     public void bind(final Combination combination, final OnClickItemLikeListener listener, final int position) {
         combinationNameKey = combination.getFirstComponent() + combination.getSecondComponent();
         final String nameOfCombination = combination.getFirstComponent() + " & " + combination.getSecondComponent();
+
         combinationName.setText(nameOfCombination);
-
-        Glide.with(TasteThatApplication.getStaticContext())
-                .load("https:" + combination.getFirstComponentUrl())
-                .centerCrop()
-                .into(leftImg);
-
-        Glide.with(TasteThatApplication.getStaticContext())
-                .load("https:" + combination.getSecondComponentUrl())
-                .centerCrop()
-                .into(rightImg);
+        loadImage(leftImg, combination.getFirstComponentUrl());
+        loadImage(rightImg, combination.getSecondComponentUrl());
 
         tableLikes.child(combination.getFirstComponent()+combination.getSecondComponent())
                 .addValueEventListener(new ValueEventListener() {
@@ -81,6 +74,13 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+    }
+
+    private void loadImage(ImageView imageView, String url) {
+        Glide.with(TasteThatApplication.getStaticContext())
+                .load(url)
+                .centerCrop()
+                .into(imageView);
     }
 
     public void deleteViewHolderFromRV(final int position) {

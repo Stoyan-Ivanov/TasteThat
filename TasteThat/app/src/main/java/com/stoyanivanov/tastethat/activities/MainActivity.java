@@ -33,9 +33,9 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(StartActivityConstants.extraNavOption, bottomNavOption);
-        intent.putExtra(StartActivityConstants.extraFragmentTag, fragmentTag);
-        intent.putExtra(StartActivityConstants.extraFlag, "started_properly");
+        intent.putExtra(StartActivityConstants.EXTRA_NAV_OPTION, bottomNavOption);
+        intent.putExtra(StartActivityConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
+        intent.putExtra(StartActivityConstants.EXTRA_FLAG, StartActivityConstants.EXTRA_FLAG_VALUE);
 
         return intent;
     }
@@ -133,10 +133,10 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     private void beginViewPagerPage() {
         switch (fragmentTag) {
-            case "add_fragment" : pager.setCurrentItem(ViewPagerPages.ADD); break;
-            case "home_fragment" : pager.setCurrentItem(ViewPagerPages.HOME); break;
-            case "user_fragment" : pager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
-            case "options_fragment" : pager.setCurrentItem(ViewPagerPages.OPTIONS); break;
+            case "addFragment" : pager.setCurrentItem(ViewPagerPages.ADD); break;
+            case "homeFragment" : pager.setCurrentItem(ViewPagerPages.HOME); break;
+            case "userFragment" : pager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
+            case "optionsFragment" : pager.setCurrentItem(ViewPagerPages.OPTIONS); break;
         }
     }
 

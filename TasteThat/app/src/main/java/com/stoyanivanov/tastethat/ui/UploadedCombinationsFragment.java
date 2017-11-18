@@ -42,18 +42,18 @@ public class UploadedCombinationsFragment extends Fragment {
 
         uploadedCombinations = new ArrayList<>();
 
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
+        RVScrollController scrollController = new RVScrollController();
+        scrollController.addControlToBottomNavigation(recyclerView);
+
         getUploadedCombinations();
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_uploaded);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickItemLikeListener() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
             }
         });
-
-        RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
 
         recyclerView.setAdapter(adapter);
         return view;

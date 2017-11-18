@@ -106,7 +106,6 @@ public class CombinationsFragment extends Fragment {
         return ++likes;
     }
 
-
     public boolean combinationIsLiked(final String nameOfCombination) {
 
         processLike = true;
@@ -118,11 +117,13 @@ public class CombinationsFragment extends Fragment {
 
                 if (processLike) {
                         if (dataSnapshot.hasChild(currUser.getUid())) {
-                            tableLikes.child(nameOfCombination).child(currUser.getUid()).removeValue();
+                            tableLikes.child(nameOfCombination)
+                                    .child(currUser.getUid()).removeValue();
                             isLiked = true;
                             processLike = false;
                         } else {
-                            tableLikes.child(nameOfCombination).child(currUser.getUid()).setValue(currUser.getEmail());
+                            tableLikes.child(nameOfCombination)
+                                    .child(currUser.getUid()).setValue(currUser.getEmail());
                             isLiked = false;
                             processLike = false;
                         }

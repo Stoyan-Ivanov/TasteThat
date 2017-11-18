@@ -25,9 +25,9 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
         Intent intent = new Intent(context, UserProfileActivity.class);
-        intent.putExtra(StartActivityConstants.extraNavOption, bottomNavOption);
-        intent.putExtra(StartActivityConstants.extraFragmentTag, fragmentTag);
-        intent.putExtra(StartActivityConstants.extraFlag, "started_properly");
+        intent.putExtra(StartActivityConstants.EXTRA_NAV_OPTION, bottomNavOption);
+        intent.putExtra(StartActivityConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
+        intent.putExtra(StartActivityConstants.EXTRA_FLAG, "started_properly");
 
         return intent;
     }

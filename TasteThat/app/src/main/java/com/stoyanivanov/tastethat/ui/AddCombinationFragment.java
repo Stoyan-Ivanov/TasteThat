@@ -42,7 +42,7 @@ public class AddCombinationFragment extends Fragment {
 
         firstIngredient = (EditText) view.findViewById(R.id.et_first_ingredient);
         secondIngredient = (EditText) view.findViewById(R.id.et_second_ingredient);
-
+        addCombination = (Button) view.findViewById(R.id.btn_add_combination);
         currUser = ((MainActivity) getActivity()).getCurrentGoogleUser();
 
         secondIngredient.setOnKeyListener(new View.OnKeyListener() {
@@ -58,7 +58,6 @@ public class AddCombinationFragment extends Fragment {
             }
         });
 
-        addCombination = (Button) view.findViewById(R.id.btn_add_combination);
         addCombination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +81,10 @@ public class AddCombinationFragment extends Fragment {
             Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
 
             tableCombinations.child(firstIng + secondIng).setValue(newCombination);
-            tableUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationName).setValue(newCombination);
+
+            tableUsers.child(currUser.getUid())
+                    .child(Constants.USER_UPLOADED_COMBINATIONS)
+                    .child(combinationName).setValue(newCombination);
 
             startImageActivity();
             clearForm();
