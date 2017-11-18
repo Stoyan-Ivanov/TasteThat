@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.activities.ImageActivity;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemListener;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.network_models.NextImagesResponse;
@@ -70,8 +71,10 @@ public class ChooseImageFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(TasteThatApplication.getStaticContext(), 3));
         recyclerView.setAdapter(new ImagesRecyclerviewAdapter(pictures, new OnClickItemListener() {
             @Override
-            public void onItemClick(int position) {
-
+            public void onItemClick(int position, Picture picture) {
+                ((ImageActivity) getActivity()).savePicture(picture);
+                ImageActivity.ingredientNum++;
+                ((ImageActivity) getActivity()).replaceFragment(new ChooseImageFragment());
             }
         }));
 

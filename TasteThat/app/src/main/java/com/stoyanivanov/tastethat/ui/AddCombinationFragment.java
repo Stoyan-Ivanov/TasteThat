@@ -63,7 +63,6 @@ public class AddCombinationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setDataToDB();
-                startImageActivity();
             }
         });
 
@@ -85,7 +84,7 @@ public class AddCombinationFragment extends Fragment {
             tableCombinations.child(firstIng + secondIng).setValue(newCombination);
             tableUsers.child(currUser.getUid()).child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationName).setValue(newCombination);
 
-            showSuccesToast();
+            startImageActivity();
             clearForm();
         }
     }
@@ -94,19 +93,12 @@ public class AddCombinationFragment extends Fragment {
         ArrayList<String> ingredients = new ArrayList<>();
         ingredients.add(firstIng);
         ingredients.add(secondIng);
-        Log.d("SII", "startImageActivity: " + ingredients.toString());
         startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD, FragmentTags.CHOOSE_IMAGE_FRAGMENT,ingredients));
     }
 
     private void clearForm() {
         firstIngredient.setText("");
         secondIngredient.setText("");
-    }
-    
-    private void showSuccesToast() {
-        Toast toast=Toast.makeText(getActivity(), Constants.TOAST_SUCCESSFUL_UPLOAD,Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-        toast.show();
     }
 
     private void showFailToast() {

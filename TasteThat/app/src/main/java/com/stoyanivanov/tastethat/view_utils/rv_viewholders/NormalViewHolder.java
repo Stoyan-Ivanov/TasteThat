@@ -2,15 +2,18 @@ package com.stoyanivanov.tastethat.view_utils.rv_viewholders;
 
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
 import com.stoyanivanov.tastethat.models.Combination;
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.controllers.PopUpMenuController;
 import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
@@ -50,16 +53,15 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
         final String nameOfCombination = combination.getFirstComponent() + " & " + combination.getSecondComponent();
         combinationName.setText(nameOfCombination);
 
-        tableUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-            }
+        Glide.with(TasteThatApplication.getStaticContext())
+                .load("https:" + combination.getFirstComponentUrl())
+                .centerCrop()
+                .into(leftImg);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        Glide.with(TasteThatApplication.getStaticContext())
+                .load("https:" + combination.getSecondComponentUrl())
+                .centerCrop()
+                .into(rightImg);
 
         tableLikes.child(combination.getFirstComponent()+combination.getSecondComponent())
                 .addValueEventListener(new ValueEventListener() {

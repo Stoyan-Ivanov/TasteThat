@@ -41,7 +41,7 @@ public class ImagesRecyclerviewAdapter extends RecyclerView.Adapter<ImageViewHol
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-        holder.bind(data.get(position).getThumbnailUrl(), listener, position);
+        holder.bind(data.get(position), listener, position);
     }
 
     @Override

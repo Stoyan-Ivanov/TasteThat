@@ -26,16 +26,16 @@ public class ImageViewHolder extends RecyclerView.ViewHolder{
         return vhImg;
     }
 
-    public void bind(final String url, final OnClickItemListener listener, final int position) {
+    public void bind(final Picture picture, final OnClickItemListener listener, final int position) {
         Glide.with(TasteThatApplication.getStaticContext())
-                .load("https:" + url)
+                .load("https:" + picture.getThumbnailUrl())
                 .centerCrop()
                 .into(vhImg);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(position);
+                listener.onItemClick(position, picture);
             }
         });
 
