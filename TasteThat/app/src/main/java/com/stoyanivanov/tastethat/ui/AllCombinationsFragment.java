@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
-public class CombinationsFragment extends Fragment {
+public class AllCombinationsFragment extends Fragment {
 
     CustomTextView likeCounter;
 

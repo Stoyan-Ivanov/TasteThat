@@ -9,13 +9,15 @@ import android.widget.TextView;
  */
 
 public class Combination {
-    private String firstComponent, secondComponent, userId;
+    private String firstComponent, secondComponent, userId, username;
     private String firstComponentUrl, secondComponentUrl;
 
-    public Combination(String firstComponent, String secondComponent, String userId, String firstComponentUrl, String secondComponentUrl) {
+    public Combination(String firstComponent, String secondComponent, String userId, String username,
+                       String firstComponentUrl, String secondComponentUrl) {
         this.firstComponent = firstComponent;
         this.secondComponent = secondComponent;
         this.userId = userId;
+        this.username = username;
         this.firstComponentUrl = firstComponentUrl;
         this.secondComponentUrl = secondComponentUrl;
     }
@@ -23,10 +25,11 @@ public class Combination {
     public Combination() {
     }
 
-    public Combination(String firstComponent, String secodComponent, String userId) {
+    public Combination(String firstComponent, String secodComponent, String userId, String username) {
         this.firstComponent = firstComponent;
         this.secondComponent = secodComponent;
         this.userId = userId;
+        this.username= username;
     }
 
     public String getFirstComponent() {
@@ -39,6 +42,10 @@ public class Combination {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getFirstComponentUrl() {

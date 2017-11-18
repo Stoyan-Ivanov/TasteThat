@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,7 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers
 public class NormalViewHolder extends RecyclerView.ViewHolder {
     private CustomTextView combinationName;
     private CustomTextView likeCounter;
-    private CustomTextView user;
+    private TextView user;
     private ImageView leftImg;
     private ImageView rightImg;
     private ImageView options;
@@ -40,7 +41,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         likeCounter = (CustomTextView) itemView.findViewById(R.id.vh_tv_like_counter);
         combinationName = (CustomTextView) itemView.findViewById(R.id.vh_tv_combinationName);
-        user = (CustomTextView) itemView.findViewById(R.id.vh_username);
+        user = (TextView) itemView.findViewById(R.id.vh_username);
         leftImg = (ImageView) itemView.findViewById(R.id.vh_iv_leftImg);
         rightImg = (ImageView) itemView.findViewById(R.id.vh_iv_rightImg);
         options = (ImageView) itemView.findViewById(R.id.vh_options);
@@ -52,6 +53,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
         combinationNameKey = combination.getFirstComponent() + combination.getSecondComponent();
         final String nameOfCombination = combination.getFirstComponent() + " & " + combination.getSecondComponent();
 
+        user.setText("@"+combination.getUsername());
         combinationName.setText(nameOfCombination);
         loadImage(leftImg, combination.getFirstComponentUrl());
         loadImage(rightImg, combination.getSecondComponentUrl());

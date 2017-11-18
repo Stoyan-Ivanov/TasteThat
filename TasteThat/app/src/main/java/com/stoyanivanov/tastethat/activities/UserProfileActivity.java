@@ -27,7 +27,7 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
         Intent intent = new Intent(context, UserProfileActivity.class);
         intent.putExtra(StartActivityConstants.EXTRA_NAV_OPTION, bottomNavOption);
         intent.putExtra(StartActivityConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
-        intent.putExtra(StartActivityConstants.EXTRA_FLAG, "started_properly");
+        intent.putExtra(StartActivityConstants.EXTRA_FLAG, StartActivityConstants.EXTRA_FLAG_VALUE);
 
         return intent;
     }
@@ -65,9 +65,9 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
         Fragment fragment = null;
 
         switch(fragmentTag) {
-            case "liked_fragment": fragment = new LikedCombinationsFragment(); break;
+            case FragmentTags.LIKED_FRAGMENT : fragment = new LikedCombinationsFragment(); break;
 
-            case "uploads_fragment" : fragment = new UploadedCombinationsFragment(); break;
+            case FragmentTags.UPLOADS_FRAGMENT : fragment = new UploadedCombinationsFragment(); break;
 
            // case "achivements_fragment" : fragment = new AchivementsFragment(); break;
         }

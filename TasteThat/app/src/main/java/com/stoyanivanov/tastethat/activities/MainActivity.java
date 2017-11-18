@@ -14,10 +14,11 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
 import com.stoyanivanov.tastethat.constants.ViewPagerPages;
 import com.stoyanivanov.tastethat.ui.AddCombinationFragment;
-import com.stoyanivanov.tastethat.ui.CombinationsFragment;
+import com.stoyanivanov.tastethat.ui.AllCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.OptionsFragment;
 import com.stoyanivanov.tastethat.ui.UserProfileFragment;
 import com.stoyanivanov.tastethat.view_utils.MyPagerAdapter;
@@ -133,10 +134,10 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     private void beginViewPagerPage() {
         switch (fragmentTag) {
-            case "addFragment" : pager.setCurrentItem(ViewPagerPages.ADD); break;
-            case "homeFragment" : pager.setCurrentItem(ViewPagerPages.HOME); break;
-            case "userFragment" : pager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
-            case "optionsFragment" : pager.setCurrentItem(ViewPagerPages.OPTIONS); break;
+            case FragmentTags.ADD_FRAGMENT : pager.setCurrentItem(ViewPagerPages.ADD); break;
+            case FragmentTags.HOME_FRAGMENT : pager.setCurrentItem(ViewPagerPages.HOME); break;
+            case FragmentTags.USER_FRAGMENT : pager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
+            case FragmentTags.OPTIONS_FRAGMENT : pager.setCurrentItem(ViewPagerPages.OPTIONS); break;
         }
     }
 
@@ -144,7 +145,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
         ArrayList<Fragment> fragments = new ArrayList<>();
 
         fragments.add(new AddCombinationFragment());
-        fragments.add(new CombinationsFragment());
+        fragments.add(new AllCombinationsFragment());
         fragments.add(new UserProfileFragment());
         fragments.add(new OptionsFragment());
 

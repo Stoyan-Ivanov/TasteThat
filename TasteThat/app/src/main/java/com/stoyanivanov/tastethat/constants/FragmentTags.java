@@ -4,7 +4,7 @@ package com.stoyanivanov.tastethat.constants;
  * Created by stoyan-ivanov on 09.11.17.
  */
 
-public class FragmentTags {
+public abstract class FragmentTags {
     public static final String ADD_FRAGMENT = "addFragment";
     public static final String HOME_FRAGMENT = "homeFragment";
     public static final String USER_FRAGMENT = "userFragment";

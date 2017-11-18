@@ -78,7 +78,7 @@ public class AddCombinationFragment extends Fragment {
         } else {
             String combinationName = firstIng + secondIng;
 
-            Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid());
+            Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid(),currUser.getDisplayName() );
 
             tableCombinations.child(firstIng + secondIng).setValue(newCombination);
 
