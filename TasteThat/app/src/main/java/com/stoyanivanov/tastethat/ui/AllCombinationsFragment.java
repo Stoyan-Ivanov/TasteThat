@@ -29,16 +29,15 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 public class AllCombinationsFragment extends Fragment {
 
-    CustomTextView likeCounter;
-
-    FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
-
-    MyRecyclerViewAdapter adapter;
-    ArrayList<Combination> allCombinations;
-    RecyclerView recyclerView;
-    boolean processLike = false;
-    boolean isLiked;
-    long likes;
+    private CustomTextView likeCounter;
+    private FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+    private MyRecyclerViewAdapter adapter;
+    private ArrayList<Combination> allCombinations;
+    private Combination currentCombination;
+    private RecyclerView recyclerView;
+    private boolean processLike = false;
+    private boolean isLiked;
+    private long likes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +55,7 @@ public class AllCombinationsFragment extends Fragment {
             @Override
             public void onItemClick(final Combination combination, final CustomTextView likeCounter, int position) {
                 final String nameOfCombination = combination.getFirstComponent() + combination.getSecondComponent();
+                currentCombination = combination;
 
                 tableLikes.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -119,11 +119,15 @@ public class AllCombinationsFragment extends Fragment {
                         if (dataSnapshot.hasChild(currUser.getUid())) {
                             tableLikes.child(nameOfCombination)
                                     .child(currUser.getUid()).removeValue();
+                            tableUsers.child(currUser.getUid()).
+                                    child(Constants.USER_LIKED_COMBINATIONS).child(nameOfCombination).removeValue();
                             isLiked = true;
                             processLike = false;
                         } else {
                             tableLikes.child(nameOfCombination)
                                     .child(currUser.getUid()).setValue(currUser.getEmail());
+                            tableUsers.child(currUser.getUid()).
+                                    child(Constants.USER_LIKED_COMBINATIONS).child(nameOfCombination).setValue(currentCombination);
                             isLiked = false;
                             processLike = false;
                         }
