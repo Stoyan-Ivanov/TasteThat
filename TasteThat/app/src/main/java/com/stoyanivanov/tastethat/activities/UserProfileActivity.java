@@ -16,6 +16,7 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.ui.AchievementsFragment;
 import com.stoyanivanov.tastethat.ui.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.UploadedCombinationsFragment;
 
@@ -69,7 +70,7 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
 
             case FragmentTags.UPLOADS_FRAGMENT : fragment = new UploadedCombinationsFragment(); break;
 
-           // case "achivements_fragment" : fragment = new AchivementsFragment(); break;
+           case FragmentTags.ACHIEVEMENTS_FRAGMENT : fragment = new AchievementsFragment(); break;
         }
 
         return fragment;

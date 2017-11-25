@@ -21,12 +21,12 @@ import java.util.ArrayList;
  * Created by stoyan-ivanov on 15.11.17.
  */
 
-public class ImagesRecyclerviewAdapter extends RecyclerView.Adapter<ImageViewHolder> {
+public class ImagesRecyclerViewAdapter extends RecyclerView.Adapter<ImageViewHolder> {
     private ArrayList<Picture> data;
     private OnClickItemListener listener;
     private LayoutInflater mInflater;
 
-    public ImagesRecyclerviewAdapter(ArrayList<Picture> data, OnClickItemListener onItemClickListener) {
+    public ImagesRecyclerViewAdapter(ArrayList<Picture> data, OnClickItemListener onItemClickListener) {
         this.data = data;
         this.listener = onItemClickListener;
     }

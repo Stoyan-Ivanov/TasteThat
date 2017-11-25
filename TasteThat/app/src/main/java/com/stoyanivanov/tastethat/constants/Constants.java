@@ -12,6 +12,7 @@ public class Constants {
     public static final String USER_TABLE = "users";
     public static final String USER_UPLOADED_COMBINATIONS = "uploadedCombinations";
     public static final String USER_LIKED_COMBINATIONS = "likedCombinations";
+    public static final String USER_ACHIEVEMENTS = "achievements";
 
     public static final String COMBINATION_FIRST_COMPONENT_URL = "firstComponentUrl";
     public static final String COMBINATION_SECOND_COMPONENT_URL = "secondComponentUrl";
@@ -24,4 +25,5 @@ public class Constants {
     public static final String RV_ALL_COMBINATIONS = "rvAllCombinations";
     public static final String RV_UPLOADED_COMBINATIONS = "rvUploadedCombinations";
     public static final String RV_LIKED_COMBINATIONS = "rvLikedCombinations";
+
 }

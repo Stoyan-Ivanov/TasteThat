@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_achievement"
+            app:layout_heightPercent="70%"
+            app:layout_widthPercent="25%"
+
+            app:layout_marginLeftPercent="5%"
+            app:layout_marginTopPercent="15%"
+            />
+
+        <com.stoyanivanov.tastethat.view_utils.CustomTextView
+            android:id="@+id/tv_achievement_name"
+            app:layout_heightPercent="80%"
+            app:layout_widthPercent="60%"
+
+            app:layout_marginLeftPercent="35%"
+            app:layout_marginTopPercent="10%"
+
+            android:gravity="center"
+            />
+    </android.support.percent.PercentRelativeLayout>
+
+</RelativeLayout>

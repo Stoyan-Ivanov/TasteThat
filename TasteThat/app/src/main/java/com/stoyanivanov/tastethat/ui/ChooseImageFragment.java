@@ -18,7 +18,7 @@ import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.network_models.NextImagesResponse;
 import com.stoyanivanov.tastethat.network.network_models.Picture;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
-import com.stoyanivanov.tastethat.view_utils.rv_adapters.ImagesRecyclerviewAdapter;
+import com.stoyanivanov.tastethat.view_utils.rv_adapters.ImagesRecyclerViewAdapter;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class ChooseImageFragment extends Fragment {
 
     private void configRecyclerview(ArrayList<Picture> pictures) {
         recyclerView.setLayoutManager(new GridLayoutManager(TasteThatApplication.getStaticContext(), 3));
-        recyclerView.setAdapter(new ImagesRecyclerviewAdapter(pictures, new OnClickItemListener() {
+        recyclerView.setAdapter(new ImagesRecyclerViewAdapter(pictures, new OnClickItemListener() {
             @Override
             public void onItemClick(int position, Picture picture) {
                 ((ImageActivity) getActivity()).savePicture(picture);

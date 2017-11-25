@@ -82,11 +82,11 @@ public class AllCombinationsFragment extends Fragment {
     private void getAllCombinations() {
         tableCombinations.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 allCombinations.clear();
 
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                    Combination currCombination = dataSnapshot.getValue(Combination.class);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Combination currCombination = snapshot.getValue(Combination.class);
                     allCombinations.add(currCombination);
                 }
                 adapter.setNewData(allCombinations);

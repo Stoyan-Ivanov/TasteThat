@@ -25,7 +25,7 @@ public class UserProfileFragment extends Fragment {
 
     CircleImageView ivProfilePic;
     CustomTextView tvUsername;
-    Button btnLiked, btnUploaded, logout;
+    Button btnLiked, btnUploaded,btnAchievements, logout;
     View view;
 
     FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
@@ -39,6 +39,7 @@ public class UserProfileFragment extends Fragment {
         tvUsername = (CustomTextView) view.findViewById(R.id.tv_username);
         btnLiked = (Button) view.findViewById(R.id.btn_liked_combinations);
         btnUploaded = (Button) view.findViewById(R.id.btn_uploaded_combinations);
+        btnAchievements =(Button) view.findViewById(R.id.btn_achievements);
         logout = (Button) view.findViewById(R.id.btn_logout);
 
         tvUsername.setText(currUser.getDisplayName());
@@ -50,6 +51,8 @@ public class UserProfileFragment extends Fragment {
 
         btnLiked.setOnClickListener(clickListener);
         btnUploaded.setOnClickListener(clickListener);
+        btnAchievements.setOnClickListener(clickListener);
+
         logout.setOnClickListener(clickListener);
 
         return view;
@@ -65,6 +68,10 @@ public class UserProfileFragment extends Fragment {
 
                 case R.id.btn_uploaded_combinations:
                     startActivity(UserProfileActivity.getIntent(getActivity(), BottomNavigationOptions.USER_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
+                    break;
+
+                case R.id.btn_achievements:
+                    startActivity(UserProfileActivity.getIntent(getActivity(), BottomNavigationOptions.USER_PROFILE, FragmentTags.ACHIEVEMENTS_FRAGMENT));
                     break;
 
                 case R.id.btn_logout:
