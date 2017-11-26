@@ -3,8 +3,10 @@ package com.stoyanivanov.tastethat.view_utils.rv_viewholders;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Achievement;
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,5 +28,8 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Achievement achievement) {
         ctvAchievementName.setText(achievement.getName());
+        Glide.with(TasteThatApplication.getStaticContext())
+                .load(achievement.getImageUrl())
+                .into(ivAchievement);
     }
 }
