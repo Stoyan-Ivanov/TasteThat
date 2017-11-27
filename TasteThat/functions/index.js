@@ -71,3 +71,18 @@ exports.uploadAchievementsChecker = functions.database
 		});
 	});
 });
+
+exports.componentAdding = functions.database.ref('combinations').onWrite(event => {
+	
+	const combination = event.data;
+	const firstComponent = combination.val()['firstComponent'];
+	const secondComponent = combination.val()['secondComponent'];
+
+	event.data.ref.parent.child('components').child(firstComponent).set(secondComponent);
+	event.data.ref.parent.child('components').child(secondComponent).set(firstComponent);
+
+});
+
+
+
+
