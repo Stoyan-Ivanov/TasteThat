@@ -30,6 +30,7 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
         ctvAchievementName.setText(achievement.getName());
         Glide.with(TasteThatApplication.getStaticContext())
                 .load(achievement.getImageUrl())
+                .fitCenter()
                 .into(ivAchievement);
     }
 }

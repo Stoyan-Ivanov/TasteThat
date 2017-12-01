@@ -2,10 +2,16 @@ package com.stoyanivanov.tastethat.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -46,10 +52,19 @@ public class AllCombinationsFragment extends Fragment {
 
         allCombinations = new ArrayList<>();
         likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
 
         getAllCombinations();
+        setHasOptionsMenu(true);
+        instantiateRV();
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
+        RVScrollController scrollController = new RVScrollController();
+        scrollController.addControlToBottomNavigation(recyclerView);
+
+        return view;
+    }
+
+    private void instantiateRV() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickItemLikeListener() {
             @Override
@@ -72,11 +87,6 @@ public class AllCombinationsFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
-
-        RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
-
-        return view;
     }
 
     private void getAllCombinations() {
@@ -96,6 +106,16 @@ public class AllCombinationsFragment extends Fragment {
                 Log.d("SII", "onCancelled: error getAllCombinations");
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search, menu);
+        MenuItem search = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        searchView.setQueryHint("What goes with...");
+        //searchView.setIconifiedByDefault(false);
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {
