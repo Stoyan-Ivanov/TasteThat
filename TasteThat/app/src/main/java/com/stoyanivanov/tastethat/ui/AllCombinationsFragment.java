@@ -55,7 +55,6 @@ public class AllCombinationsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
 
         getAllCombinations();
-        setHasOptionsMenu(true);
         instantiateRV();
 
         RVScrollController scrollController = new RVScrollController();
@@ -106,16 +105,6 @@ public class AllCombinationsFragment extends Fragment {
                 Log.d("SII", "onCancelled: error getAllCombinations");
             }
         });
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_search, menu);
-        MenuItem search = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
-        searchView.setQueryHint("What goes with...");
-        //searchView.setIconifiedByDefault(false);
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {

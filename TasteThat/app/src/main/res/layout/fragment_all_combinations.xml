@@ -10,12 +10,47 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageView
+                android:id="@+id/iv_search_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_marginLeftPercent = "4%"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_search"
+                />
+
+            <EditText
+                app:layout_widthPercent="65%"
+                android:layout_height="match_parent"
+
+                android:layout_toRightOf="@+id/iv_search_icon"
+                android:layout_toLeftOf="@+id/ib_cancel_search"
+                app:layout_marginLeftPercent="4%"
+                app:layout_marginRightPercent="4%"
+                app:layout_marginTopPercent="15%"
+                app:layout_marginBottomPercent="15%"
+
+                android:maxLines="1"
+                android:inputType="text"
+                android:background="@color/white"
+                />
+
+            <ImageButton
+                android:id="@+id/ib_cancel_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_cancel_search"
+                />
+
+        </android.support.percent.PercentRelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -26,8 +61,6 @@
         android:layout_height="match_parent"
 
         android:layout_marginTop="?attr/actionBarSize"
-
-        android:background="@color/aluminum"
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>

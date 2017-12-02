@@ -30,6 +30,7 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers
 public class LikedCombinationsFragment extends Fragment {
     ArrayList<Combination> likedCombinations;
     FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
+    MyRecyclerViewAdapter adapter;
 
     public LikedCombinationsFragment() {}
 
@@ -45,12 +46,13 @@ public class LikedCombinationsFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_liked);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, likedCombinations, new OnClickItemLikeListener() {
+        adapter = new MyRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, likedCombinations, new OnClickItemLikeListener() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
 
             }
-        }));
+        });
+        recyclerView.setAdapter(adapter);
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
@@ -70,6 +72,7 @@ public class LikedCombinationsFragment extends Fragment {
                     likedCombinations.add(currCombination);
                 }
                 Log.d("SII", likedCombinations.toString());
+                adapter.setNewData(likedCombinations);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
