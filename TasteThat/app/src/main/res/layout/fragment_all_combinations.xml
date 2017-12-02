@@ -1,7 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_all_combinations"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode ="true"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.stoyanivanov.tastethat.ui.AllCombinationsFragment">
 
@@ -12,7 +17,10 @@
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
 
             <ImageView
                 android:id="@+id/iv_search_icon"
@@ -25,6 +33,7 @@
                 />
 
             <EditText
+                android:id="@+id/et_search"
                 app:layout_widthPercent="65%"
                 android:layout_height="match_parent"
 
@@ -37,6 +46,7 @@
 
                 android:maxLines="1"
                 android:inputType="text"
+                android:textColor="@color/black"
                 android:background="@color/white"
                 />
 

@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +31,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private ViewPager pager;
+    private ViewPager viewPager;
     private MenuItem prevMenuItem;
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
@@ -78,19 +80,19 @@ public class MainActivity extends BaseBottomNavigationActivity {
                         item.setEnabled(true);
                         switch (item.getItemId()) {
                             case R.id.nav_button_add:
-                                pager.setCurrentItem(ViewPagerPages.ADD);
+                                viewPager.setCurrentItem(ViewPagerPages.ADD);
                                 break;
 
                             case R.id.nav_button_home:
-                                pager.setCurrentItem(ViewPagerPages.HOME);
+                                viewPager.setCurrentItem(ViewPagerPages.HOME);
                                 break;
 
                             case R.id.nav_button_profile:
-                                pager.setCurrentItem(ViewPagerPages.USER_PROFILE);
+                                viewPager.setCurrentItem(ViewPagerPages.USER_PROFILE);
                                 break;
 
                             case R.id.nav_button_options:
-                                pager.setCurrentItem(ViewPagerPages.OPTIONS);
+                                viewPager.setCurrentItem(ViewPagerPages.OPTIONS);
                                 break;
                         }
                         return true;
@@ -106,13 +108,15 @@ public class MainActivity extends BaseBottomNavigationActivity {
     public void instantiateViewPager () {
         FragmentPagerAdapter fragmentPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getFragments());
 
-        pager = (ViewPager) findViewById(R.id.view_pager);
-        pager.setAdapter(fragmentPagerAdapter);
-        pager.setOffscreenPageLimit(4);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setAdapter(fragmentPagerAdapter);
+        viewPager.setOffscreenPageLimit(4);
 
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                hideVirtualKeyboard();
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -134,10 +138,10 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     private void beginViewPagerPage() {
         switch (fragmentTag) {
-            case FragmentTags.ADD_FRAGMENT : pager.setCurrentItem(ViewPagerPages.ADD); break;
-            case FragmentTags.HOME_FRAGMENT : pager.setCurrentItem(ViewPagerPages.HOME); break;
-            case FragmentTags.USER_FRAGMENT : pager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
-            case FragmentTags.OPTIONS_FRAGMENT : pager.setCurrentItem(ViewPagerPages.OPTIONS); break;
+            case FragmentTags.ADD_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.ADD); break;
+            case FragmentTags.HOME_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.HOME); break;
+            case FragmentTags.USER_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
+            case FragmentTags.OPTIONS_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.OPTIONS); break;
         }
     }
 
@@ -150,5 +154,10 @@ public class MainActivity extends BaseBottomNavigationActivity {
         fragments.add(new OptionsFragment());
 
         return fragments;
+    }
+
+    private void hideVirtualKeyboard() {
+        ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
     }
 }
