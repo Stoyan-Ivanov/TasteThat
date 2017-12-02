@@ -21,6 +21,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder
     private ArrayList<Combination> mData = new ArrayList<>();
     private OnClickItemLikeListener listener;
     private String rvTag;
+    private CustomFilter customFilter;
 
     private LayoutInflater mInflater;
 
@@ -29,6 +30,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder
         this.mData = data;
         this.listener = listener;
 
+        customFilter = new CustomFilter(this);
     }
 
     public void setNewData(ArrayList<Combination> data) {
@@ -64,9 +66,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder
         notifyItemRangeChanged(position, getItemCount());
     }
 
-
-
     public void filterData(String searched) {
-        new CustomFilter(mData, searched, this);
+        customFilter.filter(mData, searched);
     }
 }

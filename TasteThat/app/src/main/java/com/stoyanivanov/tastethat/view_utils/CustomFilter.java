@@ -19,11 +19,13 @@ public class CustomFilter implements Filterable {
     String searched;
     MyRecyclerViewAdapter adapter;
 
-    public CustomFilter(ArrayList<Combination> mData, String searched, MyRecyclerViewAdapter adapter) {
-        this.data = mData;
-        this.searched = searched;
+    public CustomFilter(MyRecyclerViewAdapter adapter) {
         this.adapter = adapter;
+    }
 
+    public void filter(ArrayList<Combination> data, String searched) {
+        this.data = data;
+        this.searched = searched;
         getFilter().filter(searched);
     }
 

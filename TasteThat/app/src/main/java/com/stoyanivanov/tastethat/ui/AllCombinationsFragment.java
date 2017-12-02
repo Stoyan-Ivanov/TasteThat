@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +43,8 @@ public class AllCombinationsFragment extends Fragment {
     private Combination currentCombination;
     private RecyclerView recyclerView;
     private EditText searchBar;
-    private ImageButton cancelSearch;
+    private ImageView cancelSearch;
+    private ImageView searchIcon;
     private boolean processLike = false;
     private boolean isLiked;
     private long likes;
@@ -56,7 +58,8 @@ public class AllCombinationsFragment extends Fragment {
         likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         searchBar = (EditText) view.findViewById(R.id.et_search);
-        cancelSearch = (ImageButton) view.findViewById(R.id.ib_cancel_search);
+        cancelSearch = (ImageView) view.findViewById(R.id.iv_cancel_search);
+        searchIcon = (ImageView) view.findViewById(R.id.iv_search_icon);
 
         getAllCombinations();
         instantiateRV();
@@ -128,12 +131,18 @@ public class AllCombinationsFragment extends Fragment {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
 
-                    adapter.setNewData(allCombinations);
-                    adapter.filterData(searchBar.getText().toString());
-
+                    startFilteringContent();
                     return true;
                 }
                 return false;
+            }
+        });
+
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFilteringContent();
+                hideVirtualKeyboard(v);
             }
         });
 
@@ -144,6 +153,11 @@ public class AllCombinationsFragment extends Fragment {
                 searchBar.setText("");
             }
         });
+    }
+
+    private void startFilteringContent() {
+        adapter.setNewData(allCombinations);
+        adapter.filterData(searchBar.getText().toString());
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {

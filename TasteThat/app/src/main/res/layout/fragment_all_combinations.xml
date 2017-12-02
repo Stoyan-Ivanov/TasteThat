@@ -38,25 +38,27 @@
                 android:layout_height="match_parent"
 
                 android:layout_toRightOf="@+id/iv_search_icon"
-                android:layout_toLeftOf="@+id/ib_cancel_search"
+                android:layout_toLeftOf="@+id/iv_cancel_search"
                 app:layout_marginLeftPercent="4%"
                 app:layout_marginRightPercent="4%"
-                app:layout_marginTopPercent="15%"
-                app:layout_marginBottomPercent="15%"
+                app:layout_marginTopPercent="18%"
+                app:layout_marginBottomPercent="18%"
 
                 android:maxLines="1"
                 android:inputType="text"
                 android:textColor="@color/black"
-                android:background="@color/white"
+                android:background="@drawable/custom_rect_rounded_corners"
                 />
 
-            <ImageButton
-                android:id="@+id/ib_cancel_search"
+            <ImageView
+                android:id="@+id/iv_cancel_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                app:layout_marginRightPercent="4%"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/ic_cancel_search"
                 />
 
