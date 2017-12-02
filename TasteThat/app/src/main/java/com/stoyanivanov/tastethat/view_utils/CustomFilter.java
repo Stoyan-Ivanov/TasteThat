@@ -14,12 +14,12 @@ import java.util.List;
  * Created by stoyan-ivanov on 02.12.17.
  */
 
-public class CustomFiltering implements Filterable {
+public class CustomFilter implements Filterable {
     ArrayList<Combination> data;
     String searched;
     MyRecyclerViewAdapter adapter;
 
-    public CustomFiltering(ArrayList<Combination> mData, String searched, MyRecyclerViewAdapter adapter) {
+    public CustomFilter(ArrayList<Combination> mData, String searched, MyRecyclerViewAdapter adapter) {
         this.data = mData;
         this.searched = searched;
         this.adapter = adapter;

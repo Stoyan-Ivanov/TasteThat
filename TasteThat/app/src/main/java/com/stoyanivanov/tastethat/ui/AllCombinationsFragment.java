@@ -1,7 +1,7 @@
 package com.stoyanivanov.tastethat.ui;
 
-import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -42,6 +41,8 @@ public class AllCombinationsFragment extends Fragment {
     private ArrayList<Combination> allCombinations;
     private Combination currentCombination;
     private RecyclerView recyclerView;
+    private EditText searchBar;
+    private ImageButton cancelSearch;
     private boolean processLike = false;
     private boolean isLiked;
     private long likes;
@@ -54,46 +55,36 @@ public class AllCombinationsFragment extends Fragment {
         allCombinations = new ArrayList<>();
         likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
+        searchBar = (EditText) view.findViewById(R.id.et_search);
+        cancelSearch = (ImageButton) view.findViewById(R.id.ib_cancel_search);
 
         getAllCombinations();
         instantiateRV();
+        configureEditText();
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
 
-        final EditText editText = (EditText) view.findViewById(R.id.et_search);
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        return view;
+    }
+
+    private void getAllCombinations() {
+        tableCombinations.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
-                    hideVirtualKeyboard(v);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                allCombinations.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Combination currCombination = snapshot.getValue(Combination.class);
+                    allCombinations.add(currCombination);
                 }
-            }
-        });
-
-        editText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
-                    adapter.filterData(editText.getText().toString());
-
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        ImageButton cancelSearch = (ImageButton) view.findViewById(R.id.ib_cancel_search);
-        cancelSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 adapter.setNewData(allCombinations);
             }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("SII", "onCancelled: error getAllCombinations");
+            }
         });
-
-        return view;
     }
 
     private void instantiateRV() {
@@ -121,21 +112,36 @@ public class AllCombinationsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void getAllCombinations() {
-        tableCombinations.addValueEventListener(new ValueEventListener() {
+    private void configureEditText() {
+        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                allCombinations.clear();
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Combination currCombination = snapshot.getValue(Combination.class);
-                    allCombinations.add(currCombination);
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    hideVirtualKeyboard(v);
                 }
-                adapter.setNewData(allCombinations);
             }
+        });
+
+        searchBar.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("SII", "onCancelled: error getAllCombinations");
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                    adapter.setNewData(allCombinations);
+                    adapter.filterData(searchBar.getText().toString());
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        cancelSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setNewData(allCombinations);
+                searchBar.setText("");
             }
         });
     }

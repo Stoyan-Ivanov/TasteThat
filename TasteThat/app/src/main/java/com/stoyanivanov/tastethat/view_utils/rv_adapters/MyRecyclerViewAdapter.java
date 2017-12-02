@@ -1,25 +1,17 @@
 package com.stoyanivanov.tastethat.view_utils.rv_adapters;
 
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
-import com.stoyanivanov.tastethat.view_utils.CustomFiltering;
+import com.stoyanivanov.tastethat.view_utils.CustomFilter;
 import com.stoyanivanov.tastethat.view_utils.rv_viewholders.NormalViewHolder;
 
 import java.util.ArrayList;
-
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 /**
  * Created by stoyan-ivanov on 03.10.17.
@@ -75,6 +67,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder
 
 
     public void filterData(String searched) {
-        new CustomFiltering(mData, searched, this);
+        new CustomFilter(mData, searched, this);
     }
 }
