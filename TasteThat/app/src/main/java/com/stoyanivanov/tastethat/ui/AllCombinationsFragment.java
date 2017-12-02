@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -59,13 +61,35 @@ public class AllCombinationsFragment extends Fragment {
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
 
-        EditText editText = (EditText) view.findViewById(R.id.et_search);
+        final EditText editText = (EditText) view.findViewById(R.id.et_search);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
                     hideVirtualKeyboard(v);
                 }
+            }
+        });
+
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                    adapter.filterData(editText.getText().toString());
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        ImageButton cancelSearch = (ImageButton) view.findViewById(R.id.ib_cancel_search);
+        cancelSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setNewData(allCombinations);
             }
         });
 
