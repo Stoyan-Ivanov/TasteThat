@@ -76,6 +76,7 @@
         app:layout_marginLeftPercent = "15%"
 
         android:text="Add Combination"
+        android:background="@drawable/custom_rect_rounded_corners"
         />
 
 

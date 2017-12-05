@@ -50,7 +50,7 @@
 
         android:text="Liked"
         android:textColor="@color/white"
-        android:background="@color/pastel_blue"
+        android:background="@drawable/custom_rect_rounded_corners"
         />
 
     <Button
@@ -63,6 +63,7 @@
         android:layout_below="@id/btn_liked_combinations"
 
         android:text="Uploaded"
+        android:background="@drawable/custom_rect_rounded_corners"
         />
 
     <Button
@@ -75,6 +76,7 @@
         android:layout_below="@id/btn_uploaded_combinations"
 
         android:text="Achievements"
+        android:background="@drawable/custom_rect_rounded_corners"
         />
 
     <Button
@@ -88,6 +90,7 @@
 
         android:text="Logout"
         android:textColor="@color/red"
+        android:background="@drawable/custom_rect_rounded_corners"
         />
 
 

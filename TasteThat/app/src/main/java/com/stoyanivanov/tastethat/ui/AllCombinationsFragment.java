@@ -3,6 +3,7 @@ package com.stoyanivanov.tastethat.ui;
 import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.view_utils.CustomFilter;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
@@ -48,6 +50,7 @@ public class AllCombinationsFragment extends Fragment {
     private EditText searchBar;
     private ImageView cancelSearch;
     private ImageView searchIcon;
+    private CustomTextView selectedSectionHeader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +64,9 @@ public class AllCombinationsFragment extends Fragment {
         searchBar = (EditText) view.findViewById(R.id.et_search);
         cancelSearch = (ImageView) view.findViewById(R.id.iv_cancel_search);
         searchIcon = (ImageView) view.findViewById(R.id.iv_search_icon);
+        selectedSectionHeader = (CustomTextView) view.findViewById(R.id.ctv_selected_section_header);
+
+        selectedSectionHeader.setText("All Combinations");
 
         getAllCombinations();
         instantiateRV();
@@ -120,7 +126,9 @@ public class AllCombinationsFragment extends Fragment {
         searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
+                if(hasFocus) {
+                    showVirtualKeyboard();
+                } else {
                     hideVirtualKeyboard(v);
                 }
             }
@@ -142,8 +150,12 @@ public class AllCombinationsFragment extends Fragment {
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFilteringContent();
-                hideVirtualKeyboard(v);
+                if(searchBar.getVisibility() == View.VISIBLE) {
+                    startFilteringContent();
+                    hideVirtualKeyboard(v);
+                } else {
+                    showAppBarSearch();
+                }
             }
         });
 
@@ -152,8 +164,19 @@ public class AllCombinationsFragment extends Fragment {
             public void onClick(View v) {
                 notifyAdapterOnSearchCancel();
                 searchBar.setText("");
+                hideVirtualKeyboard(v);
+                showAppBarHeader();
             }
         });
+    }
+
+    private void startFilteringContent() {
+        adapter.setNewData(allCombinations);
+        adapter.filterData(searchBar.getText().toString());
+    }
+
+    private void notifyAdapterOnSearchCancel() {
+        adapter.setNewData(allCombinations);
     }
 
     private void hideVirtualKeyboard(View view) {
@@ -165,13 +188,22 @@ public class AllCombinationsFragment extends Fragment {
         }
     }
 
-    private void startFilteringContent() {
-        adapter.setNewData(allCombinations);
-        adapter.filterData(searchBar.getText().toString());
+    private void showVirtualKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
     }
 
-    private void notifyAdapterOnSearchCancel() {
-        adapter.setNewData(allCombinations);
+    private void showAppBarHeader() {
+        searchBar.setVisibility(View.INVISIBLE);
+        cancelSearch.setVisibility(View.INVISIBLE);
+        selectedSectionHeader.setVisibility(View.VISIBLE);
+    }
+
+    private void showAppBarSearch() {
+        selectedSectionHeader.setVisibility(View.INVISIBLE);
+        searchBar.setVisibility(View.VISIBLE);
+        cancelSearch.setVisibility(View.VISIBLE);
+        searchBar.requestFocus();
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {
