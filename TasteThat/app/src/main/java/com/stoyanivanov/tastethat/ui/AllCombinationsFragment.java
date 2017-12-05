@@ -42,17 +42,18 @@ public class AllCombinationsFragment extends Fragment {
     private ArrayList<Combination> allCombinations;
     private Combination currentCombination;
     private RecyclerView recyclerView;
-    private EditText searchBar;
-    private ImageView cancelSearch;
-    private ImageView searchIcon;
     private boolean processLike = false;
     private boolean isLiked;
     private long likes;
+    private EditText searchBar;
+    private ImageView cancelSearch;
+    private ImageView searchIcon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_all_combinations, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view  = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
 
         allCombinations = new ArrayList<>();
         likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
@@ -63,7 +64,7 @@ public class AllCombinationsFragment extends Fragment {
 
         getAllCombinations();
         instantiateRV();
-        configureEditText();
+        configureSearchBar();
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
@@ -115,7 +116,7 @@ public class AllCombinationsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void configureEditText() {
+    private void configureSearchBar() {
         searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -130,7 +131,7 @@ public class AllCombinationsFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
+                    Log.d("SII", "onKey: entering");
                     startFilteringContent();
                     return true;
                 }
@@ -149,15 +150,28 @@ public class AllCombinationsFragment extends Fragment {
         cancelSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.setNewData(allCombinations);
+                notifyAdapterOnSearchCancel();
                 searchBar.setText("");
             }
         });
     }
 
+    private void hideVirtualKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if(imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     private void startFilteringContent() {
         adapter.setNewData(allCombinations);
         adapter.filterData(searchBar.getText().toString());
+    }
+
+    private void notifyAdapterOnSearchCancel() {
+        adapter.setNewData(allCombinations);
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {
@@ -203,14 +217,5 @@ public class AllCombinationsFragment extends Fragment {
         });
 
         return isLiked;
-    }
-
-    private void hideVirtualKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if(imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
     }
 }

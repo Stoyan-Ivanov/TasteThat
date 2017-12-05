@@ -13,8 +13,8 @@
 
     android:layout_marginTop="1dp"
     android:layout_marginBottom="0dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
+    android:layout_marginRight="7dp"
+    android:layout_marginLeft="7dp"
     android:focusableInTouchMode="true"
     >
 
@@ -94,7 +94,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.77"
 
-                    android:background= "@color/pastel_blue"
+                    android:background= "#5a4dae"
 
                     android:gravity="center"
                     android:textColor="@color/cardview_light_background"
@@ -106,7 +106,7 @@
                     android:layout_weight="0.23"
                     android:weightSum="1"
 
-                    android:background="@color/pastel_blue"
+                    android:background="#5a4dae"
                     >
 
                     <LinearLayout

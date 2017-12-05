@@ -8,7 +8,7 @@
     android:focusableInTouchMode ="true"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.stoyanivanov.tastethat.ui.AllCombinationsFragment">
+    tools:context="com.stoyanivanov.tastethat.ui.BaseRecyclerviewFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
