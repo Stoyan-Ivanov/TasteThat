@@ -6,31 +6,34 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.network.network_models.Picture;
 import com.stoyanivanov.tastethat.ui.ChooseImageFragment;
 
 import java.util.ArrayList;
 
 public class ImageActivity extends BaseBottomNavigationActivity {
-    private ArrayList<String> ingredients;
+    private ArrayList<String> components;
     private ArrayList<Picture> pictures = new ArrayList<>();
-    public static int ingredientNum;
+    public static int currComponent;
 
-    public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag, ArrayList<String> ingredients) {
+    public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag, ArrayList<String> components) {
         Intent intent = new Intent(context, ImageActivity.class);
         intent.putExtra(StartActivityConstants.EXTRA_NAV_OPTION, bottomNavOption);
         intent.putExtra(StartActivityConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
         intent.putExtra(StartActivityConstants.EXTRA_FLAG, StartActivityConstants.EXTRA_FLAG_VALUE);
-        intent.putStringArrayListExtra(StartActivityConstants.EXTRA_INGREDIENTS, ingredients);
+        intent.putStringArrayListExtra(StartActivityConstants.EXTRA_COMPONENTS, components);
 
         return intent;
     }
@@ -41,16 +44,15 @@ public class ImageActivity extends BaseBottomNavigationActivity {
         setContentView(R.layout.activity_image);
 
         init();
-        ingredientNum = 0;
-        ingredients = getIntent().getStringArrayListExtra(StartActivityConstants.EXTRA_INGREDIENTS);
+        currComponent = 0;
+        components = getIntent().getStringArrayListExtra(StartActivityConstants.EXTRA_COMPONENTS);
         replaceFragment(new ChooseImageFragment());
     }
 
     public void replaceFragment(Fragment fragment) {
-
-        if(ingredientNum <= 1) {
+        if(currComponent < components.size()) {
             Bundle bundle = new Bundle();
-            bundle.putString(StartActivityConstants.EXTRA_FRAGMENT_INGREDIENT, ingredients.get(ingredientNum));
+            bundle.putString(StartActivityConstants.EXTRA_FRAGMENT_COMPONENT, components.get(currComponent));
             fragment.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -71,36 +73,32 @@ public class ImageActivity extends BaseBottomNavigationActivity {
         pictures.add(picture);
     }
 
-    // TODO: REFACTOR ALL OF THAT
     private void saveUrlsToDB() {
-        String combinationName;
-        String firstComponentUrl;
-        String secondComponentUrl;
+        FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+        String combinationName = "";
+        StringBuilder combinationNameBuilder = new StringBuilder();
+        ArrayList<String> urls = new ArrayList<>();
         String httpPrefix = "https:";
 
-        firstComponentUrl = pictures.get(0).getThumbnailUrl();
-        secondComponentUrl = pictures.get(1).getThumbnailUrl();
-        combinationName = ingredients.get(0) + ingredients.get(1);
+        for(Picture picture : pictures) {
+            urls.add(httpPrefix + picture.getThumbnailUrl());
+        }
+
+        for(String component : components) {
+            combinationNameBuilder.append(component);
+        }
+        combinationName = combinationNameBuilder.toString();
+
+        Combination newCombination = new Combination(combinationName, components, currUser.getUid(), currUser.getDisplayName(),urls);
 
         DatabaseReferences.tableCombinations
                 .child(combinationName)
-                .child(Constants.COMBINATION_FIRST_COMPONENT_URL).setValue(httpPrefix + firstComponentUrl);
+                .setValue(newCombination);
 
-        DatabaseReferences.tableCombinations
-                .child(combinationName)
-                .child(Constants.COMBINATION_SECOND_COMPONENT_URL).setValue(httpPrefix + secondComponentUrl);
-
-        DatabaseReferences.tableUsers
-                .child(MainActivity.getCurrentGoogleUser().getUid())
+        DatabaseReferences.tableUsers.child(MainActivity.getCurrentGoogleUser().getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .child(combinationName)
-                .child(Constants.COMBINATION_FIRST_COMPONENT_URL).setValue(httpPrefix + firstComponentUrl);
-
-        DatabaseReferences.tableUsers
-                .child(MainActivity.getCurrentGoogleUser().getUid())
-                .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .child(combinationName)
-                .child(Constants.COMBINATION_SECOND_COMPONENT_URL).setValue(httpPrefix + secondComponentUrl);
+                .setValue(newCombination);
     }
 
     private void showSuccesToast() {

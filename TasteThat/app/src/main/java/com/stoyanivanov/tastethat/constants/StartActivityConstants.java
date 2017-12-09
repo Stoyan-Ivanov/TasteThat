@@ -10,6 +10,6 @@ public class StartActivityConstants {
     public static final String EXTRA_FLAG = "flag";
     public static final String EXTRA_FLAG_VALUE = "startedProperly";
 
-    public static final String EXTRA_INGREDIENTS = "extraIngredients";
-    public static final String EXTRA_FRAGMENT_INGREDIENT = "extraIngredient";
+    public static final String EXTRA_COMPONENTS = "extraComponents";
+    public static final String EXTRA_FRAGMENT_COMPONENT = "extraComponent";
 }

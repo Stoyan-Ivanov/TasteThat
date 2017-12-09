@@ -102,7 +102,7 @@ public class AllCombinationsFragment extends Fragment {
         adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickItemLikeListener() {
             @Override
             public void onItemClick(final Combination combination, final CustomTextView likeCounter, int position) {
-                final String nameOfCombination = combination.getFirstComponent() + combination.getSecondComponent();
+                final String nameOfCombination = combination.getCombinationName();
                 currentCombination = combination;
 
                 tableLikes.addListenerForSingleValueEvent(new ValueEventListener() {

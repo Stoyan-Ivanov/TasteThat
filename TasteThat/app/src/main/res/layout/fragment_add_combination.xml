@@ -1,83 +1,102 @@
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.stoyanivanov.tastethat.ui.AddCombinationFragment">
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.stoyanivanov.tastethat.view_utils.CustomTextView
+                android:id="@+id/tv_add_combination_header"
+
+                app:layout_widthPercent = "70%"
+                android:layout_height = "match_parent"
+
+                app:layout_marginTopPercent = "3%"
+                app:layout_marginLeftPercent = "5%"
+
+                android:text="Add your combination"
+                android:lines="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                />
+
+            <Button
+                android:id="@+id/btn_add_discard"
+                app:layout_widthPercent = "15%"
+                app:layout_heightPercent = "80%"
+
+                app:layout_marginRightPercent = "3%"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+
+                android:background="@drawable/ic_cancel_search"
+                />
+
+        </android.support.percent.PercentRelativeLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <com.stoyanivanov.tastethat.view_utils.CustomTextView
-        android:id="@+id/tv_add_combination_header"
-
-        app:layout_widthPercent = "90%"
-        app:layout_heightPercent = "15%"
-
-        app:layout_marginTopPercent = "3%"
-        app:layout_marginLeftPercent = "5%"
-
-        android:text="Add your combination"
-        android:lines="1"
-        android:gravity="center"
-        />
-
-    <com.stoyanivanov.tastethat.view_utils.CustomTextView
-        android:id="@+id/tv_first_ingredient_label"
-        app:layout_widthPercent = "70%"
+        android:id="@+id/ctv_ingredient_label"
+        app:layout_widthPercent = "85%"
         app:layout_heightPercent = "10%"
 
-        app:layout_marginTopPercent = "20%"
-        app:layout_marginLeftPercent = "15%"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_centerHorizontal="true"
 
-        android:text=" First ingredient: "
+        android:text="Enter the components"
         android:gravity="center"
         />
 
-    <EditText
-        android:id="@+id/et_first_ingredient"
-        app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "12%"
-        android:maxLines="1"
-        android:inputType="text"
+    <LinearLayout
+        android:id="@+id/scrollview_add"
+        android:layout_width="match_parent"
+        app:layout_heightPercent = "60%"
+        android:layout_below="@+id/ctv_ingredient_label">
 
-        android:layout_below="@+id/tv_first_ingredient_label"
-        app:layout_marginLeftPercent = "15%"
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/prl_add_fields_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        />
+            <include
+                android:id="@+id/view_first_ingredient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_heightPercent = "35%"
 
-    <com.stoyanivanov.tastethat.view_utils.CustomTextView
-        android:id="@+id/tv_second_ingredient_label"
-        app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "10%"
+                layout="@layout/add_field_inflatable" />
 
-        app:layout_marginTopPercent = "45%"
-        app:layout_marginLeftPercent = "15%"
+            <include
+                android:id="@+id/view_second_ingredient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_heightPercent = "35%"
 
-        android:text="Second ingredient:"
-        android:gravity="center"
-        />
+                android:layout_below="@+id/view_first_ingredient"
+                layout="@layout/add_field_inflatable" />
 
-    <EditText
-        android:id="@+id/et_second_ingredient"
-        app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "12%"
-        android:maxLines="1"
-        android:inputType="text"
-
-        android:layout_below="@+id/tv_second_ingredient_label"
-        app:layout_marginLeftPercent = "15%"
-        />
+        </android.support.percent.PercentRelativeLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_add_combination"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "12%"
 
-        android:layout_alignParentBottom="true"
-        app:layout_marginBottomPercent = "15%"
-        app:layout_marginLeftPercent = "15%"
+        android:layout_below="@+id/scrollview_add"
+        app:layout_marginTopPercent = "0%"
+        android:layout_centerHorizontal="true"
 
         android:text="Add Combination"
         android:background="@drawable/custom_rect_rounded_corners"
         />
-
-
 </android.support.percent.PercentRelativeLayout>

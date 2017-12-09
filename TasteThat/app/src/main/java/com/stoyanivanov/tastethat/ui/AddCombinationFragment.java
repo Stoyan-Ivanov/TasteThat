@@ -1,11 +1,11 @@
 package com.stoyanivanov.tastethat.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,93 +13,118 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
+import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.activities.ImageActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.activities.MainActivity;
-import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
-import com.stoyanivanov.tastethat.models.Combination;
+import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
 import java.util.ArrayList;
 
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
-
-
 public class AddCombinationFragment extends Fragment {
-    private EditText firstIngredient;
-    private EditText secondIngredient;
-    private FirebaseUser currUser;
+    private PercentRelativeLayout addFieldsContainer;
     private Button addCombination;
-    private String firstIng;
-    private String secondIng;
+    private ArrayList<View> allFields = new ArrayList<>();
+    private View firstIngredientField;
+    private View secondIngredientField;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_combination, container, false);
 
-        firstIngredient = (EditText) view.findViewById(R.id.et_first_ingredient);
-        secondIngredient = (EditText) view.findViewById(R.id.et_second_ingredient);
+        addFieldsContainer = (PercentRelativeLayout) view.findViewById(R.id.prl_add_fields_container);
         addCombination = (Button) view.findViewById(R.id.btn_add_combination);
-        currUser = ((MainActivity) getActivity()).getCurrentGoogleUser();
+        firstIngredientField = view.findViewById(R.id.view_first_ingredient);
+        secondIngredientField = view.findViewById(R.id.view_second_ingredient);
 
-        secondIngredient.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_ENTER) && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    setDataToDB();
-                    return true;
-                }
-
-                return false;
-            }
-        });
+        allFields.clear();
+        configureFirstTwoFields();
 
         addCombination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDataToDB();
+                startImageActivity();
             }
         });
 
         return view;
     }
 
-    private void setDataToDB () {
+    private void configureFirstTwoFields() {
+        Button newFieldBtnFirst = (Button) firstIngredientField.findViewById(R.id.btn_add_new_et);
+        CustomTextView fieldCounterFirst = (CustomTextView) firstIngredientField.findViewById(R.id.ctv_et_counter);
+        allFields.add(firstIngredientField);
 
-        firstIng = firstIngredient.getText().toString();
-        secondIng = secondIngredient.getText().toString();
+        newFieldBtnFirst.setVisibility(View.INVISIBLE);
+        fieldCounterFirst.setText(generateStringForFieldCounter());
 
-        if(firstIng.equals("") || secondIng.equals("")) {
-            showFailToast();
-        } else {
-            String combinationName = firstIng + secondIng;
+        Button newFieldBtnSecond = (Button) secondIngredientField.findViewById(R.id.btn_add_new_et);
+        CustomTextView fieldCounterSecond = (CustomTextView) secondIngredientField.findViewById(R.id.ctv_et_counter);
+        allFields.add(secondIngredientField);
 
-            Combination newCombination = new Combination(firstIng, secondIng, currUser.getUid(),currUser.getDisplayName() );
+        newFieldBtnSecond.setOnClickListener(newFieldBtnOnclick);
+        fieldCounterSecond.setText(generateStringForFieldCounter());
+    }
 
-            tableCombinations.child(firstIng + secondIng).setValue(newCombination);
+    View.OnClickListener newFieldBtnOnclick =  new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            v.setVisibility(View.INVISIBLE);
+            inflateNewField();
+        }
+    };
 
-            tableUsers.child(currUser.getUid())
-                    .child(Constants.USER_UPLOADED_COMBINATIONS)
-                    .child(combinationName).setValue(newCombination);
+    private void inflateNewField() {
+        LayoutInflater inflater = (LayoutInflater)getContext().getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
 
-            startImageActivity();
-            clearForm();
+        View newField = inflater.inflate(R.layout.add_field_inflatable,null);
+        if (newField != null) {
+            allFields.add(newField);
+
+            Button newFieldBtn = (Button) newField.findViewById(R.id.btn_add_new_et);
+            CustomTextView fieldCounter = (CustomTextView) newField.findViewById(R.id.ctv_et_counter);
+
+            if (allFields.size() >= Constants.MAX_ADD_FIELDS) {
+                newFieldBtn.setVisibility(View.INVISIBLE);
+            } else {
+                newFieldBtn.setOnClickListener(newFieldBtnOnclick);
+            }
+
+            fieldCounter.setText(generateStringForFieldCounter());
+
+            addFieldsContainer.addView(newField);
         }
     }
 
-    private void startImageActivity() {
-        ArrayList<String> ingredients = new ArrayList<>();
-        ingredients.add(firstIng);
-        ingredients.add(secondIng);
-        startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD, FragmentTags.CHOOSE_IMAGE_FRAGMENT,ingredients));
+    private String generateStringForFieldCounter() {
+        return Integer.toString(allFields.size()) + "/" + Integer.toString(Constants.MAX_ADD_FIELDS);
     }
 
-    private void clearForm() {
-        firstIngredient.setText("");
-        secondIngredient.setText("");
+    private void startImageActivity() {
+        if(allFields.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
+            ArrayList<String> components = getAllComponents();
+
+            startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD, FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
+        } else {
+            showFailToast();
+        }
+    }
+
+    private ArrayList<String> getAllComponents() {
+        ArrayList<String> components = new ArrayList<>();
+        for (View field: allFields) {
+            EditText editText = (EditText) field.findViewById(R.id.et_ingredient);
+            String component =  editText.getText().toString();
+
+            if(!component.equals("")) {
+                components.add(component);
+            }
+        }
+
+        return components;
     }
 
     private void showFailToast() {

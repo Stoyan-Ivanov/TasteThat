@@ -2,7 +2,6 @@ package com.stoyanivanov.tastethat.view_utils.rv_viewholders;
 
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,8 +18,9 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.controllers.PopUpMenuController;
 import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
 
+import java.util.ArrayList;
+
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableLikes;
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
 /**
  * Created by stoyan-ivanov on 16.11.17.
@@ -50,15 +50,28 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Combination combination, final OnClickItemLikeListener listener, final int position) {
-        combinationNameKey = combination.getFirstComponent() + combination.getSecondComponent();
-        final String nameOfCombination = combination.getFirstComponent() + " & " + combination.getSecondComponent();
+        StringBuilder displayNameBuilder = new StringBuilder();
+        combinationNameKey = combination.getCombinationName();
+        ArrayList<String> urls = combination.getUrls();
+        ArrayList<String> components = combination.getComponents();
+
+        for(int i = 0; i < components.size(); i++) {
+            if(i < components.size() - 1) {
+                displayNameBuilder.append(components.get(i));
+                displayNameBuilder.append(" & ");
+            } else {
+                displayNameBuilder.append(components.get(i));
+            }
+        }
+
+        final String displayNameOfCombination = displayNameBuilder.toString();
 
         user.setText("@"+combination.getUsername());
-        combinationName.setText(nameOfCombination);
-        loadImage(leftImg, combination.getFirstComponentUrl());
-        loadImage(rightImg, combination.getSecondComponentUrl());
+        combinationName.setText(displayNameOfCombination);
+        loadImage(leftImg, urls.get(0));
+        loadImage(rightImg, urls.get(1));
 
-        tableLikes.child(combination.getFirstComponent()+combination.getSecondComponent())
+        tableLikes.child(combinationNameKey)
                 .addValueEventListener(new ValueEventListener() {
 
                     @Override

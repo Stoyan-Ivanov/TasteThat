@@ -4,40 +4,35 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by stoyan-ivanov on 03.10.17.
  */
 
 public class Combination {
-    private String firstComponent, secondComponent, userId, username;
-    private String firstComponentUrl, secondComponentUrl;
+    private String combinationName, userId, username;
+    private ArrayList<String> components;
+    private ArrayList<String> urls;
 
-    public Combination(String firstComponent, String secondComponent, String userId, String username,
-                       String firstComponentUrl, String secondComponentUrl) {
-        this.firstComponent = firstComponent;
-        this.secondComponent = secondComponent;
+    public Combination(String combinationName, ArrayList<String> components, String userId, String username,
+                       ArrayList<String> urls) {
+        this.combinationName = combinationName;
+        this.components = components;
         this.userId = userId;
         this.username = username;
-        this.firstComponentUrl = firstComponentUrl;
-        this.secondComponentUrl = secondComponentUrl;
+        this.urls = urls;
     }
 
     public Combination() {
     }
 
-    public Combination(String firstComponent, String secodComponent, String userId, String username) {
-        this.firstComponent = firstComponent;
-        this.secondComponent = secodComponent;
-        this.userId = userId;
-        this.username= username;
+    public String getCombinationName() {
+        return combinationName;
     }
 
-    public String getFirstComponent() {
-        return firstComponent;
-    }
-
-    public String getSecondComponent() {
-        return secondComponent;
+    public ArrayList<String> getComponents() {
+        return components;
     }
 
     public String getUserId() {
@@ -48,11 +43,7 @@ public class Combination {
         return username;
     }
 
-    public String getFirstComponentUrl() {
-        return firstComponentUrl;
-    }
-
-    public String getSecondComponentUrl() {
-        return secondComponentUrl;
+    public ArrayList<String> getUrls() {
+        return urls;
     }
 }

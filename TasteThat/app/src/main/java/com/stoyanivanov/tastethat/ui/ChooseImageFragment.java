@@ -32,16 +32,16 @@ public class ChooseImageFragment extends Fragment {
     private CustomTextView header;
     private RecyclerView recyclerView;
     private NextImagesResponse nextImagesResponse;
-    private String ingredient;
+    private String component;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_image, container, false);
 
-        ingredient = getArguments().getString(StartActivityConstants.EXTRA_FRAGMENT_INGREDIENT);
+        component = getArguments().getString(StartActivityConstants.EXTRA_FRAGMENT_COMPONENT);
         header = (CustomTextView) view.findViewById(R.id.tv_image_selection_header);
-        header.setText(ingredient);
+        header.setText(component);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_images);
 
@@ -50,7 +50,7 @@ public class ChooseImageFragment extends Fragment {
     }
 
     public void getNextImages() {
-        Call<NextImagesResponse> call = TasteThatApplication.getApi().getNextImages(ingredient);
+        Call<NextImagesResponse> call = TasteThatApplication.getApi().getNextImages(component);
 
         call.enqueue(new Callback<NextImagesResponse>() {
             @Override
@@ -73,7 +73,7 @@ public class ChooseImageFragment extends Fragment {
             @Override
             public void onItemClick(int position, Picture picture) {
                 ((ImageActivity) getActivity()).savePicture(picture);
-                ImageActivity.ingredientNum++;
+                ImageActivity.currComponent++;
                 ((ImageActivity) getActivity()).replaceFragment(new ChooseImageFragment());
             }
         }));
