@@ -26,4 +26,5 @@ public class Constants {
     public static final String RV_UPLOADED_COMBINATIONS = "rvUploadedCombinations";
     public static final String RV_LIKED_COMBINATIONS = "rvLikedCombinations";
 
+    public static final Integer MAX_ADD_FIELDS = 4;
 }

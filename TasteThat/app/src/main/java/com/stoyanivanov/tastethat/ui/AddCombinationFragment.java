@@ -50,7 +50,6 @@ public class AddCombinationFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && event.getAction() == KeyEvent.ACTION_DOWN) {
                     setDataToDB();
-                    startImageActivity();
                     return true;
                 }
 
