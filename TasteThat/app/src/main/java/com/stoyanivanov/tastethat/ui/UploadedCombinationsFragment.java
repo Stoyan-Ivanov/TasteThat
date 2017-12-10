@@ -1,17 +1,12 @@
 package com.stoyanivanov.tastethat.ui;
 
-
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -19,13 +14,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.activities.UserProfileActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
-import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
+import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -34,10 +29,10 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers
 
 public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
-    ArrayList<Combination> uploadedCombinations;
-    FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
-    MyRecyclerViewAdapter adapter;
-    RecyclerView recyclerView;
+    private ArrayList<Combination> uploadedCombinations;
+    private FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
+    private MyRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
     private EditText searchBar;
     private ImageView cancelSearch;
     private ImageView searchIcon;

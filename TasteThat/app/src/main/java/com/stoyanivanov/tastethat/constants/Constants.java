@@ -14,9 +14,6 @@ public class Constants {
     public static final String USER_LIKED_COMBINATIONS = "likedCombinations";
     public static final String USER_ACHIEVEMENTS = "achievements";
 
-    public static final String COMBINATION_FIRST_COMPONENT_URL = "firstComponentUrl";
-    public static final String COMBINATION_SECOND_COMPONENT_URL = "secondComponentUrl";
-
     public static final String TOAST_SUCCESSFUL_UPLOAD = "Combination uploaded!";
     public static final String TOAST_FAILED_UPLOAD = "Please provide a valid input";
 

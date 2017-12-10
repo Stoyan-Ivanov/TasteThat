@@ -1,20 +1,13 @@
 package com.stoyanivanov.tastethat.ui;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +18,6 @@ import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.view_utils.CustomFilter;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;

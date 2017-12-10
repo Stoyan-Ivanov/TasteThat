@@ -101,7 +101,7 @@ public abstract class BaseRecyclerViewFragment extends Fragment {
         cancelSearch.setVisibility(View.VISIBLE);
         searchBar.requestFocus();
     }
-    
+
     protected abstract void startFilteringContent();
 
     protected abstract void notifyAdapterOnSearchCancel();
