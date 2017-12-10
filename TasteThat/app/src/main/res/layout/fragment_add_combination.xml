@@ -56,13 +56,15 @@
         android:gravity="center"
         />
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/scrollview_add"
         android:layout_width="match_parent"
-        app:layout_heightPercent = "60%"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
         android:layout_below="@+id/ctv_ingredient_label">
 
-        <android.support.percent.PercentRelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/prl_add_fields_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -70,22 +72,20 @@
             <include
                 android:id="@+id/view_first_ingredient"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_heightPercent = "35%"
+                android:layout_height="170dp"
 
                 layout="@layout/add_field_inflatable" />
 
             <include
                 android:id="@+id/view_second_ingredient"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_heightPercent = "35%"
+                android:layout_height="170dp"
 
                 android:layout_below="@+id/view_first_ingredient"
                 layout="@layout/add_field_inflatable" />
 
-        </android.support.percent.PercentRelativeLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/btn_add_combination"

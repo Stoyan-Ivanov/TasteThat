@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.stoyanivanov.tastethat.R;
@@ -23,7 +24,7 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import java.util.ArrayList;
 
 public class AddCombinationFragment extends Fragment {
-    private PercentRelativeLayout addFieldsContainer;
+    private LinearLayout addFieldsContainer;
     private Button addCombination;
     private ArrayList<View> allFields = new ArrayList<>();
     private View firstIngredientField;
@@ -34,7 +35,7 @@ public class AddCombinationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_combination, container, false);
 
-        addFieldsContainer = (PercentRelativeLayout) view.findViewById(R.id.prl_add_fields_container);
+        addFieldsContainer = (LinearLayout) view.findViewById(R.id.prl_add_fields_container);
         addCombination = (Button) view.findViewById(R.id.btn_add_combination);
         firstIngredientField = view.findViewById(R.id.view_first_ingredient);
         secondIngredientField = view.findViewById(R.id.view_second_ingredient);
@@ -104,9 +105,9 @@ public class AddCombinationFragment extends Fragment {
     }
 
     private void startImageActivity() {
-        if(allFields.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
-            ArrayList<String> components = getAllComponents();
+        ArrayList<String> components = getAllComponents();
 
+        if(components.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
             startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD, FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
         } else {
             showFailToast();
