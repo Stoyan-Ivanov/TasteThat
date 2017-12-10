@@ -32,13 +32,15 @@ import java.util.ArrayList;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
-public class LikedCombinationsFragment extends Fragment {
-    ArrayList<Combination> likedCombinations;
-    FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
-    MyRecyclerViewAdapter adapter;
+public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
+    private ArrayList<Combination> likedCombinations;
+    private FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
+    private MyRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
     private EditText searchBar;
     private ImageView cancelSearch;
     private ImageView searchIcon;
+    private CustomTextView selectedSectionHeader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,14 +49,24 @@ public class LikedCombinationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
 
         likedCombinations = new ArrayList<>();
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
+
         searchBar = (EditText) view.findViewById(R.id.et_search);
         cancelSearch = (ImageView) view.findViewById(R.id.iv_cancel_search);
         searchIcon = (ImageView) view.findViewById(R.id.iv_search_icon);
+        selectedSectionHeader = (CustomTextView) view.findViewById(R.id.ctv_selected_section_header);
+
+        selectedSectionHeader.setText("Liked Combinations");
+        configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         getLikedCombinations();
-        configureSearchBar();
+        instantiateRV();
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);
+        return view;
+    }
+
+    @Override
+    protected void instantiateRV() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, likedCombinations, new OnClickItemLikeListener() {
             @Override
@@ -66,8 +78,6 @@ public class LikedCombinationsFragment extends Fragment {
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
-
-        return view;
     }
 
     private void getLikedCombinations() {
@@ -91,60 +101,13 @@ public class LikedCombinationsFragment extends Fragment {
         });
     }
 
-    private void configureSearchBar() {
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
-                    hideVirtualKeyboard(v);
-                }
-            }
-        });
-
-        searchBar.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    Log.d("SII", "onKey: entering");
-                    startFilteringContent();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFilteringContent();
-                hideVirtualKeyboard(v);
-            }
-        });
-
-        cancelSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifyAdapterOnSearchCancel();
-                searchBar.setText("");
-            }
-        });
-    }
-
-    private void hideVirtualKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if(imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
+    @Override
     public void startFilteringContent() {
         adapter.setNewData(likedCombinations);
         adapter.filterData(searchBar.getText().toString());
     }
 
+    @Override
     public void notifyAdapterOnSearchCancel() {
         adapter.setNewData(likedCombinations);
     }

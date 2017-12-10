@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
-public class AllCombinationsFragment extends Fragment {
+public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
     private CustomTextView likeCounter;
     private FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
@@ -67,13 +67,10 @@ public class AllCombinationsFragment extends Fragment {
         selectedSectionHeader = (CustomTextView) view.findViewById(R.id.ctv_selected_section_header);
 
         selectedSectionHeader.setText("All Combinations");
+        configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         getAllCombinations();
         instantiateRV();
-        configureSearchBar();
-
-        RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
 
         return view;
     }
@@ -97,7 +94,8 @@ public class AllCombinationsFragment extends Fragment {
         });
     }
 
-    private void instantiateRV() {
+    @Override
+    protected void instantiateRV() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickItemLikeListener() {
             @Override
@@ -120,90 +118,20 @@ public class AllCombinationsFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
+
+        RVScrollController scrollController = new RVScrollController();
+        scrollController.addControlToBottomNavigation(recyclerView);
     }
 
-    private void configureSearchBar() {
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    showVirtualKeyboard();
-                } else {
-                    hideVirtualKeyboard(v);
-                }
-            }
-        });
-
-        searchBar.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    Log.d("SII", "onKey: entering");
-                    startFilteringContent();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(searchBar.getVisibility() == View.VISIBLE) {
-                    startFilteringContent();
-                    hideVirtualKeyboard(v);
-                } else {
-                    showAppBarSearch();
-                }
-            }
-        });
-
-        cancelSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifyAdapterOnSearchCancel();
-                searchBar.setText("");
-                hideVirtualKeyboard(v);
-                showAppBarHeader();
-            }
-        });
-    }
-
-    private void startFilteringContent() {
+    @Override
+    public void startFilteringContent() {
         adapter.setNewData(allCombinations);
         adapter.filterData(searchBar.getText().toString());
     }
 
-    private void notifyAdapterOnSearchCancel() {
+    @Override
+    public void notifyAdapterOnSearchCancel() {
         adapter.setNewData(allCombinations);
-    }
-
-    private void hideVirtualKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if(imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private void showVirtualKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-    }
-
-    private void showAppBarHeader() {
-        searchBar.setVisibility(View.INVISIBLE);
-        cancelSearch.setVisibility(View.INVISIBLE);
-        selectedSectionHeader.setVisibility(View.VISIBLE);
-    }
-
-    private void showAppBarSearch() {
-        selectedSectionHeader.setVisibility(View.INVISIBLE);
-        searchBar.setVisibility(View.VISIBLE);
-        cancelSearch.setVisibility(View.VISIBLE);
-        searchBar.requestFocus();
     }
 
     public long controlLikesInDB(long likes, String nameOfCombination) {

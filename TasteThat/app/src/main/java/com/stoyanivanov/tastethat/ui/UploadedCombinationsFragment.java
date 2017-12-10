@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
-public class UploadedCombinationsFragment extends Fragment {
+public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
     ArrayList<Combination> uploadedCombinations;
     FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
@@ -41,6 +41,7 @@ public class UploadedCombinationsFragment extends Fragment {
     private EditText searchBar;
     private ImageView cancelSearch;
     private ImageView searchIcon;
+    private CustomTextView selectedSectionHeader;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -49,19 +50,45 @@ public class UploadedCombinationsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
 
+        uploadedCombinations = new ArrayList<>();
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
+
         searchBar = (EditText) view.findViewById(R.id.et_search);
         cancelSearch = (ImageView) view.findViewById(R.id.iv_cancel_search);
         searchIcon = (ImageView) view.findViewById(R.id.iv_search_icon);
+        selectedSectionHeader = (CustomTextView) view.findViewById(R.id.ctv_selected_section_header);
 
-        uploadedCombinations = new ArrayList<>();
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
-        RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
+        selectedSectionHeader.setText("Uploaded Combinations");
+        configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         getUploadedCombinations();
-        configureSearchBar();
+        instantiateRV();
 
+        return view;
+    }
+
+    private void getUploadedCombinations() {
+        tableUsers.child(currUser.getUid())
+            .child(Constants.USER_UPLOADED_COMBINATIONS)
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    uploadedCombinations.clear();
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                        Combination currCombination = dataSnapshot.getValue(Combination.class);
+                        uploadedCombinations.add(currCombination);
+                    }
+                    adapter.setNewData(uploadedCombinations);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("SII", "onCancelled: error");
+                }
+            });
+    }
+
+    @Override
+    protected void instantiateRV() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickItemLikeListener() {
             @Override
@@ -70,84 +97,19 @@ public class UploadedCombinationsFragment extends Fragment {
         });
 
         recyclerView.setAdapter(adapter);
-        return view;
+
+        RVScrollController scrollController = new RVScrollController();
+        scrollController.addControlToBottomNavigation(recyclerView);
     }
 
-    private void getUploadedCombinations() {
-        tableUsers.child(currUser.getUid())
-                .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        uploadedCombinations.clear();
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            Combination currCombination = dataSnapshot.getValue(Combination.class);
-                            uploadedCombinations.add(currCombination);
-                        }
-                        adapter.setNewData(uploadedCombinations);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("SII", "onCancelled: error");
-                    }
-                });
-    }
-
-    private void configureSearchBar() {
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
-                    hideVirtualKeyboard(v);
-                }
-            }
-        });
-
-        searchBar.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    Log.d("SII", "onKey: entering");
-                    startFilteringContent();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFilteringContent();
-                hideVirtualKeyboard(v);
-            }
-        });
-
-        cancelSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifyAdapterOnSearchCancel();
-                searchBar.setText("");
-            }
-        });
-    }
-
-    private void hideVirtualKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if(imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private void startFilteringContent() {
+    @Override
+    protected void startFilteringContent() {
         adapter.setNewData(uploadedCombinations);
         adapter.filterData(searchBar.getText().toString());
     }
 
-    private void notifyAdapterOnSearchCancel() {
+    @Override
+    protected void notifyAdapterOnSearchCancel() {
         adapter.setNewData(uploadedCombinations);
     }
 }
