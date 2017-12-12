@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.AppBarLayout
@@ -60,28 +62,28 @@
         android:id="@+id/scrollview_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:layout_below="@+id/ctv_ingredient_label">
+        android:layout_below="@+id/ctv_ingredient_label"
+        android:layout_above="@id/btn_add_combination">
 
         <LinearLayout
             android:orientation="vertical"
             android:id="@+id/prl_add_fields_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:scrollbarAlwaysDrawVerticalTrack="true">
 
             <include
                 android:id="@+id/view_first_ingredient"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
 
                 layout="@layout/add_field_inflatable" />
 
             <include
                 android:id="@+id/view_second_ingredient"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
 
-                android:layout_below="@+id/view_first_ingredient"
                 layout="@layout/add_field_inflatable" />
 
         </LinearLayout>
@@ -92,8 +94,8 @@
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "12%"
 
-        android:layout_below="@+id/scrollview_add"
-        app:layout_marginTopPercent = "0%"
+        android:layout_alignParentBottom="true"
+        app:layout_marginBottomPercent = "10%"
         android:layout_centerHorizontal="true"
 
         android:text="Add Combination"

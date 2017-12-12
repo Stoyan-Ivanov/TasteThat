@@ -2,7 +2,7 @@
 <android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="170dp"
+    android:layout_height="160dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.percent.PercentRelativeLayout
@@ -12,7 +12,7 @@
         >
 
         <EditText
-            android:id="@+id/et_ingredient"
+            android:id="@+id/et_component"
             app:layout_widthPercent = "70%"
             app:layout_heightPercent = "60%"
 
@@ -30,7 +30,7 @@
             app:layout_widthPercent = "15%"
             app:layout_heightPercent = "50%"
 
-            android:layout_toLeftOf="@+id/et_ingredient"
+            android:layout_toLeftOf="@+id/et_component"
             android:layout_centerVertical="true"
             app:layout_marginRightPercent = "5%"
             />
