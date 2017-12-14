@@ -10,7 +10,7 @@
          android:id="@+id/prl_profile_pic"
          app:layout_heightPercent="40%"
          android:layout_width="match_parent"
-         android:background="@color/pastel_blue"
+         android:background="@drawable/custom_background_of_profile_pic"
          android:alpha="50"
          >
 
@@ -22,9 +22,16 @@
              app:layout_marginLeftPercent="25%"
              app:layout_marginTopPercent="15%"
              />
-
-
      </android.support.percent.PercentRelativeLayout>
+
+    <View
+        android:id="@+id/divider_user_pic"
+        android:layout_height="0.7dp"
+        android:layout_width="match_parent"
+
+        android:background="@color/black"
+        android:layout_below="@+id/prl_profile_pic"
+        />
 
 
     <com.stoyanivanov.tastethat.view_utils.CustomTextView
@@ -39,6 +46,16 @@
         android:gravity="center"
         />
 
+    <View
+        android:id="@+id/divider_user_profile"
+        android:layout_height="1dp"
+        app:layout_widthPercent="30%"
+
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tv_username"
+        android:background="@color/aluminum"
+        />
+
     <Button
         android:id="@+id/btn_liked_combinations"
         app:layout_heightPercent="9%"
@@ -49,8 +66,8 @@
         android:layout_below="@id/tv_username"
 
         android:text="Liked"
-        android:textColor="@color/black"
-        android:background="@drawable/custom_rect_rounded_corners"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_button_shape"
         />
 
     <Button
@@ -63,7 +80,8 @@
         android:layout_below="@id/btn_liked_combinations"
 
         android:text="Uploaded"
-        android:background="@drawable/custom_rect_rounded_corners"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_button_shape"
         />
 
     <Button
@@ -76,7 +94,8 @@
         android:layout_below="@id/btn_uploaded_combinations"
 
         android:text="Achievements"
-        android:background="@drawable/custom_rect_rounded_corners"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_button_shape"
         />
 
     <Button
@@ -89,8 +108,8 @@
         android:layout_below="@+id/btn_achievements"
 
         android:text="Logout"
-        android:textColor="@color/red"
-        android:background="@drawable/custom_rect_rounded_corners"
+        android:textColor="#FAF448"
+        android:background="@drawable/custom_button_shape"
         />
 
 

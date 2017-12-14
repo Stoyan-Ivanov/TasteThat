@@ -37,9 +37,11 @@
                 app:layout_widthPercent = "75%"
                 android:layout_height = "match_parent"
 
+                android:layout_centerHorizontal="true"
+                app:layout_marginLeftPercent="4%"
                 app:layout_marginTopPercent="10%"
                 app:layout_marginBottomPercent="10%"
-                app:layout_marginLeftPercent="4%"
+
                 android:layout_toRightOf="@+id/iv_search_icon"
 
                 android:gravity="center"

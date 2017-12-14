@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 public class AddCombinationFragment extends Fragment {
     private LinearLayout addFieldsContainer;
     private Button addCombination;
-    private Button discardChanges;
+    private ImageView discardChanges;
     private ArrayList<View> allFields = new ArrayList<>();
     private View firstIngredientField;
     private View secondIngredientField;
@@ -41,7 +42,7 @@ public class AddCombinationFragment extends Fragment {
 
         this.container = container;
         addFieldsContainer = (LinearLayout) view.findViewById(R.id.prl_add_fields_container);
-        discardChanges = (Button) view.findViewById(R.id.btn_add_discard);
+        discardChanges = (ImageView) view.findViewById(R.id.btn_add_discard);
         addCombination = (Button) view.findViewById(R.id.btn_add_combination);
         firstIngredientField = view.findViewById(R.id.view_first_ingredient);
         secondIngredientField = view.findViewById(R.id.view_second_ingredient);

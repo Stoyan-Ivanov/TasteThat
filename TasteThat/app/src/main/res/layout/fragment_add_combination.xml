@@ -10,11 +10,12 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.stoyanivanov.tastethat.view_utils.CustomTextView
                 android:id="@+id/tv_add_combination_header"
@@ -23,7 +24,7 @@
                 android:layout_height = "match_parent"
 
                 app:layout_marginTopPercent = "3%"
-                app:layout_marginLeftPercent = "5%"
+                android:layout_centerHorizontal="true"
 
                 android:text="Add your combination"
                 android:lines="1"
@@ -31,16 +32,16 @@
                 android:textColor="@color/white"
                 />
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_add_discard"
-                app:layout_widthPercent = "15%"
-                app:layout_heightPercent = "80%"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-                app:layout_marginRightPercent = "3%"
-                android:layout_centerVertical="true"
+                app:layout_marginRightPercent="4%"
                 android:layout_alignParentRight="true"
-
-                android:background="@drawable/ic_cancel_search"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_cancel_search"
                 />
 
         </android.support.percent.PercentRelativeLayout>
@@ -92,13 +93,14 @@
     <Button
         android:id="@+id/btn_add_combination"
         app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "12%"
+        app:layout_heightPercent = "10%"
 
         android:layout_alignParentBottom="true"
         app:layout_marginBottomPercent = "10%"
         android:layout_centerHorizontal="true"
 
         android:text="Add Combination"
-        android:background="@drawable/custom_rect_rounded_corners"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_button_shape"
         />
 </android.support.percent.PercentRelativeLayout>
