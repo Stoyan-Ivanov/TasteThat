@@ -102,7 +102,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
                 });
     }
 
-    public static FirebaseUser getCurrentGoogleUser() {
+    public static FirebaseUser getCurrentFirebaseUser() {
         return mAuth.getCurrentUser();
     }
 

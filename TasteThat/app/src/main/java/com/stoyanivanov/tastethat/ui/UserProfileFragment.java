@@ -28,7 +28,7 @@ public class UserProfileFragment extends Fragment {
     Button btnLiked, btnUploaded,btnAchievements, logout;
     View view;
 
-    FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+    FirebaseUser currUser = MainActivity.getCurrentFirebaseUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

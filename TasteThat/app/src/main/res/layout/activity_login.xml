@@ -29,6 +29,17 @@
 
         app:layout_marginTopPercent = "55%"
         app:layout_marginLeftPercent = "6%"
+
+        />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_login_button"
+        app:layout_widthPercent="88%"
+        app:layout_heightPercent="12%"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/google_sign_in_button"
         />
 
 </android.support.percent.PercentRelativeLayout>

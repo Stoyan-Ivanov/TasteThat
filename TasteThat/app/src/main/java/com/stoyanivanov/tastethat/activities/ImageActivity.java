@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -74,7 +73,7 @@ public class ImageActivity extends BaseBottomNavigationActivity {
     }
 
     private void saveUrlsToDB() {
-        FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+        FirebaseUser currUser = MainActivity.getCurrentFirebaseUser();
         String combinationName = "";
         StringBuilder combinationNameBuilder = new StringBuilder();
         ArrayList<String> urls = new ArrayList<>();
@@ -95,7 +94,7 @@ public class ImageActivity extends BaseBottomNavigationActivity {
                 .child(combinationName)
                 .setValue(newCombination);
 
-        DatabaseReferences.tableUsers.child(MainActivity.getCurrentGoogleUser().getUid())
+        DatabaseReferences.tableUsers.child(MainActivity.getCurrentFirebaseUser().getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .child(combinationName)
                 .setValue(newCombination);

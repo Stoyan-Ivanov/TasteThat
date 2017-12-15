@@ -30,7 +30,7 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers
 public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
     private ArrayList<Combination> uploadedCombinations;
-    private FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
+    private FirebaseUser currUser = UserProfileActivity.getCurrentFirebaseUser();
     private MyRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
     private EditText searchBar;

@@ -111,7 +111,7 @@ public class PopUpMenuController {
 
     public void deleteCombinationFromDB() {
         tableCombinations.child(combinationNameKey).removeValue();
-        tableUsers.child(MainActivity.getCurrentGoogleUser().getUid())
+        tableUsers.child(MainActivity.getCurrentFirebaseUser().getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationNameKey).removeValue();
     }
 

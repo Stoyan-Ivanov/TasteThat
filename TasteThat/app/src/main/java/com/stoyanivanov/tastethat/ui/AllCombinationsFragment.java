@@ -31,7 +31,7 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
     private CustomTextView likeCounter;
-    private FirebaseUser currUser = MainActivity.getCurrentGoogleUser();
+    private FirebaseUser currUser = MainActivity.getCurrentFirebaseUser();
     private MyRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
     private Combination currentCombination;

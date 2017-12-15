@@ -21,8 +21,8 @@ import com.stoyanivanov.tastethat.ui.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.UploadedCombinationsFragment;
 
 public class UserProfileActivity extends BaseBottomNavigationActivity {
-    public static FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    public static FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
         Intent intent = new Intent(context, UserProfileActivity.class);
@@ -38,9 +38,9 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        mAuth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+        authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
             }
@@ -108,8 +108,7 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
                 });
     }
 
-    public static FirebaseUser getCurrentGoogleUser() {
-        return mAuth.getCurrentUser();
+    public static FirebaseUser getCurrentFirebaseUser() {
+        return auth.getCurrentUser();
     }
-
 }

@@ -29,7 +29,7 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers
 
 public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
     private ArrayList<Combination> likedCombinations;
-    private FirebaseUser currUser = UserProfileActivity.getCurrentGoogleUser();
+    private FirebaseUser currUser = UserProfileActivity.getCurrentFirebaseUser();
     private MyRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
     private EditText searchBar;

@@ -51,7 +51,7 @@ public class AchievementsFragment extends Fragment {
 
         ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_achievements_profile_picture);
         ctvUserName = (CustomTextView) view.findViewById(R.id.ctv_achievements_username);
-        currUser = ((UserProfileActivity) getActivity()).getCurrentGoogleUser();
+        currUser = ((UserProfileActivity) getActivity()).getCurrentFirebaseUser();
 
         getAchievements();
         Log.d("SII", achievements.toString());
