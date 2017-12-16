@@ -4,13 +4,14 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by stoyan-ivanov on 03.10.17.
  */
 
-public class Combination {
+public class Combination implements Serializable {
     private String combinationName, userId, username;
     private ArrayList<String> components;
     private ArrayList<String> urls;

@@ -3,6 +3,7 @@ package com.stoyanivanov.tastethat.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,10 @@ public class CombinationDetailsFragment extends Fragment {
     private ImageView imageBottomLeft;
     private ImageView imageBottomRight;
     private CustomTextView combinationNameHeader;
+    private CustomTextView authorName;
     private CustomTextView combinationDescription;
     private Combination currCombination;
-    private ImageView [] images = {imageTopLeft, imageTopRight, imageBottomLeft, imageBottomRight};
+    private ImageView [] images;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +34,7 @@ public class CombinationDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_combination_details, container, false);
 
         combinationNameHeader = (CustomTextView) view.findViewById(R.id.ctv_combination_details_header);
+        authorName = (CustomTextView) view.findViewById(R.id.ctv_details_username);
         imageTopLeft = (ImageView) view.findViewById(R.id.iv_top_left);
         imageTopRight = (ImageView) view.findViewById(R.id.iv_top_right);
         imageBottomLeft = (ImageView) view.findViewById(R.id.iv_bottom_left);
@@ -39,6 +42,10 @@ public class CombinationDetailsFragment extends Fragment {
         combinationDescription = (CustomTextView) view.findViewById(R.id.ctv_combination_details_description);
 
         currCombination = (Combination) getArguments().getSerializable("currCombination");
+
+        images= new ImageView[] {imageTopLeft, imageTopRight, imageBottomLeft, imageBottomRight};
+
+        Log.d("SII", "onCreateView: " + currCombination);
 
         loadCombinationName();
         loadImages();
@@ -60,6 +67,9 @@ public class CombinationDetailsFragment extends Fragment {
             }
         }
         combinationNameHeader.setText(displayNameBuilder.toString());
+
+        String authorField = "Author: " + "@" + currCombination.getUsername();
+        authorName.setText(authorField);
     }
 
     private void loadImages() {

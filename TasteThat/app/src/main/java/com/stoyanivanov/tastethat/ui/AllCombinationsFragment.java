@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.activities.MainActivity;
-import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
+import com.stoyanivanov.tastethat.interfaces.OnClickViewHolder;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -89,7 +89,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     @Override
     protected void instantiateRV() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickItemLikeListener() {
+        adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
             public void onItemClick(final Combination combination, final CustomTextView likeCounter, int position) {
                 final String nameOfCombination = combination.getCombinationName();

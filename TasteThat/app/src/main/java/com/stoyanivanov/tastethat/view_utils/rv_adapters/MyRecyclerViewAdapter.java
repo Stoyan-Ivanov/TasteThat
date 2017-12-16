@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
+import com.stoyanivanov.tastethat.interfaces.OnClickViewHolder;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomFilter;
@@ -19,13 +19,13 @@ import java.util.ArrayList;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder> {
     private ArrayList<Combination> mData = new ArrayList<>();
-    private OnClickItemLikeListener listener;
+    private OnClickViewHolder listener;
     private String rvTag;
     private CustomFilter customFilter;
 
     private LayoutInflater mInflater;
 
-    public MyRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnClickItemLikeListener listener) {
+    public MyRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnClickViewHolder listener) {
         this.rvTag = rvTag;
         this.mData = data;
         this.listener = listener;

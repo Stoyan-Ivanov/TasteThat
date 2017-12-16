@@ -16,9 +16,13 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.ui.AchievementsFragment;
+import com.stoyanivanov.tastethat.ui.CombinationDetailsFragment;
 import com.stoyanivanov.tastethat.ui.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.UploadedCombinationsFragment;
+
+import java.io.Serializable;
 
 public class UserProfileActivity extends BaseBottomNavigationActivity {
     public static FirebaseAuth auth;
@@ -110,5 +114,14 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
 
     public static FirebaseUser getCurrentFirebaseUser() {
         return auth.getCurrentUser();
+    }
+
+    public void inflateDetailsFragment(Fragment fragment, Combination combination) {
+        if(fragment instanceof CombinationDetailsFragment) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("currCombination",combination);
+            fragment.setArguments(bundle);
+            replaceFragment(fragment);
+        }
     }
 }

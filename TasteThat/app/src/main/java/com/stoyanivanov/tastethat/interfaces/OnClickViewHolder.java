@@ -7,6 +7,6 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
  * Created by stoyan-ivanov on 23.10.17.
  */
 
-public interface OnClickItemLikeListener {
+public interface OnClickViewHolder {
     void onItemClick(Combination combination, CustomTextView likeCounter, int position);
 }

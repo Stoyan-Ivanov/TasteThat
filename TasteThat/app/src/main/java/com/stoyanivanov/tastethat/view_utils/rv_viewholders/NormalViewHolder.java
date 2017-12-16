@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.interfaces.OnClickItemLikeListener;
+import com.stoyanivanov.tastethat.interfaces.OnClickViewHolder;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
@@ -54,7 +54,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
         this.adapter = adapter;
     }
 
-    public void bind(final Combination combination, final OnClickItemLikeListener listener, final int position) {
+    public void bind(final Combination combination, final OnClickViewHolder listener, final int position) {
         StringBuilder displayNameBuilder = new StringBuilder();
         combinationNameKey = combination.getCombinationName();
         ArrayList<String> urls = combination.getUrls();

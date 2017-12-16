@@ -58,7 +58,6 @@ public class ImageActivity extends BaseBottomNavigationActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
 
             transaction.replace(R.id.image_selection_container, fragment);
-            transaction.addToBackStack(null);
 
             transaction.commit();
         } else {
