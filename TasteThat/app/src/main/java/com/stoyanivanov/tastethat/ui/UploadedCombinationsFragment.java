@@ -90,6 +90,11 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
                 ((UserProfileActivity) getActivity()).inflateDetailsFragment(new CombinationDetailsFragment(), combination);
             }
+
+            @Override
+            public void onItemLongClick(Combination combination, int position) {
+
+            }
         });
 
         recyclerView.setAdapter(adapter);

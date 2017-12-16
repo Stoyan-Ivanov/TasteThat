@@ -9,4 +9,6 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
 public interface OnClickViewHolder {
     void onItemClick(Combination combination, CustomTextView likeCounter, int position);
+
+    void onItemLongClick(Combination combination, int position);
 }

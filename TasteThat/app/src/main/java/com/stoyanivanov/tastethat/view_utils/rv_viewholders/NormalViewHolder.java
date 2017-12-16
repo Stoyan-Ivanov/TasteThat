@@ -94,6 +94,14 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listener.onItemLongClick(combination,position);
+                return true;
+            }
+        });
+
         if(components.size() > Constants.MIN_REQUIRED_COMPONENTS) {
             expandCombination.setVisibility(View.VISIBLE);
 

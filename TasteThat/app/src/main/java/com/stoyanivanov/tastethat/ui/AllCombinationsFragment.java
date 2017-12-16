@@ -91,7 +91,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(final Combination combination, final CustomTextView likeCounter, int position) {
+            public void onItemClick(Combination combination, final CustomTextView likeCounter, int position) {
                 final String nameOfCombination = combination.getCombinationName();
                 currentCombination = combination;
 
@@ -107,6 +107,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
                 });
+            }
+
+            @Override
+            public void onItemLongClick(Combination combination, int position) {
+                ((MainActivity) getActivity()).hideViewPager();
+                ((MainActivity) getActivity()).inflateDetailsFragment(new CombinationDetailsFragment(), combination);
             }
         });
         recyclerView.setAdapter(adapter);

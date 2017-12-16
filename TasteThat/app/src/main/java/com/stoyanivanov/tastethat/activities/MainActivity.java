@@ -21,8 +21,10 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartActivityConstants;
 import com.stoyanivanov.tastethat.constants.ViewPagerPages;
+import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.ui.AddCombinationFragment;
 import com.stoyanivanov.tastethat.ui.AllCombinationsFragment;
+import com.stoyanivanov.tastethat.ui.CombinationDetailsFragment;
 import com.stoyanivanov.tastethat.ui.OptionsFragment;
 import com.stoyanivanov.tastethat.ui.UserProfileFragment;
 import com.stoyanivanov.tastethat.view_utils.MyPagerAdapter;
@@ -161,5 +163,35 @@ public class MainActivity extends BaseBottomNavigationActivity {
     private void hideVirtualKeyboard() {
         ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE))
                 .hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager =  getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+
+    public void inflateDetailsFragment(Fragment fragment, Combination combination) {
+        if(fragment instanceof CombinationDetailsFragment) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("currCombination",combination);
+            fragment.setArguments(bundle);
+            replaceFragment(fragment);
+        }
+    }
+
+    public void hideViewPager() {
+        viewPager.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        viewPager.setVisibility(View.VISIBLE);
     }
 }

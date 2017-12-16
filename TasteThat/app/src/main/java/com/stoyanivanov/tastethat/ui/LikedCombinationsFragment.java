@@ -66,6 +66,11 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
         adapter = new MyRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, likedCombinations, new OnClickViewHolder() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
+                ((UserProfileActivity) getActivity()).inflateDetailsFragment(new CombinationDetailsFragment(), combination);
+            }
+
+            @Override
+            public void onItemLongClick(Combination combination, int position) {
 
             }
         });
