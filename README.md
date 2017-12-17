@@ -1,2 +1,2 @@
 # TasteThat
-Android app developed with Arduino and Firebase
+Android app developed with Android and Firebase
