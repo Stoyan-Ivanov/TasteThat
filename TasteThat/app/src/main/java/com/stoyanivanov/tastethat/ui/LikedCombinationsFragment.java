@@ -70,7 +70,7 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
             }
 
             @Override
-            public void onItemLongClick(Combination combination, int position) {
+            public void onItemLongClick(Combination combination) {
 
             }
         });

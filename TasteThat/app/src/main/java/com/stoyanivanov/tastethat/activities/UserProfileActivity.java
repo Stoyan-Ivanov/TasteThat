@@ -26,7 +26,6 @@ import java.io.Serializable;
 
 public class UserProfileActivity extends BaseBottomNavigationActivity {
     public static FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authStateListener;
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
         Intent intent = new Intent(context, UserProfileActivity.class);
@@ -43,12 +42,6 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
         setContentView(R.layout.activity_user_profile);
 
         auth = FirebaseAuth.getInstance();
-
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            }
-        };
 
         init();
         replaceFragment(fragmentToDisplay());
@@ -116,12 +109,10 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
         return auth.getCurrentUser();
     }
 
-    public void inflateDetailsFragment(Fragment fragment, Combination combination) {
-        if(fragment instanceof CombinationDetailsFragment) {
+    public void inflateDetailsFragment(CombinationDetailsFragment fragment, Combination combination) {
             Bundle bundle = new Bundle();
             bundle.putSerializable("currCombination",combination);
             fragment.setArguments(bundle);
             replaceFragment(fragment);
-        }
     }
 }

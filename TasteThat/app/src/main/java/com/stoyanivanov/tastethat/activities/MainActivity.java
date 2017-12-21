@@ -34,7 +34,6 @@ import java.util.ArrayList;
 public class MainActivity extends BaseBottomNavigationActivity {
 
     public static FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ViewPager viewPager;
     private MenuItem prevMenuItem;
 
@@ -48,13 +47,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        mAuth.addAuthStateListener(mAuthStateListener);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -62,12 +54,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
         init();
 
         mAuth = FirebaseAuth.getInstance();
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            }
-        };
 
         addControlToBottomNavigation();
         instantiateViewPager();
@@ -110,11 +96,12 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
 
     public void instantiateViewPager () {
-        FragmentPagerAdapter fragmentPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getFragments());
+        ArrayList<Fragment> fragments = getFragments();
+        FragmentPagerAdapter fragmentPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(fragmentPagerAdapter);
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(fragments.size());
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -176,13 +163,11 @@ public class MainActivity extends BaseBottomNavigationActivity {
     }
 
 
-    public void inflateDetailsFragment(Fragment fragment, Combination combination) {
-        if(fragment instanceof CombinationDetailsFragment) {
+    public void inflateDetailsFragment(CombinationDetailsFragment fragment, Combination combination) {
             Bundle bundle = new Bundle();
             bundle.putSerializable("currCombination",combination);
             fragment.setArguments(bundle);
             replaceFragment(fragment);
-        }
     }
 
     public void hideViewPager() {
