@@ -9,8 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
@@ -21,10 +19,10 @@ import com.stoyanivanov.tastethat.ui.CombinationDetailsFragment;
 import com.stoyanivanov.tastethat.ui.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.UploadedCombinationsFragment;
 
-public class UserProfileActivity extends BaseBottomNavigationActivity {
+public class MyProfileActivity extends BaseBottomNavigationActivity {
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
-        Intent intent = new Intent(context, UserProfileActivity.class);
+        Intent intent = new Intent(context, MyProfileActivity.class);
         intent.putExtra(StartConstants.EXTRA_NAV_OPTION, bottomNavOption);
         intent.putExtra(StartConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
         intent.putExtra(StartConstants.EXTRA_FLAG, StartConstants.EXTRA_FLAG_VALUE);
@@ -35,7 +33,7 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_my_profile);
 
         init();
         replaceFragment(fragmentToDisplay());
@@ -89,7 +87,7 @@ public class UserProfileActivity extends BaseBottomNavigationActivity {
 
                             case R.id.nav_button_profile:
                                 startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.USER_PROFILE, FragmentTags.USER_FRAGMENT));
+                                        BottomNavigationOptions.USER_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
                                 break;
 
                             case R.id.nav_button_options:

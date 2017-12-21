@@ -22,7 +22,7 @@ import com.stoyanivanov.tastethat.ui.AddCombinationFragment;
 import com.stoyanivanov.tastethat.ui.AllCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.CombinationDetailsFragment;
 import com.stoyanivanov.tastethat.ui.OptionsFragment;
-import com.stoyanivanov.tastethat.ui.UserProfileFragment;
+import com.stoyanivanov.tastethat.ui.MyProfileFragment;
 import com.stoyanivanov.tastethat.view_utils.MyPagerAdapter;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
                                 break;
 
                             case R.id.nav_button_profile:
-                                viewPager.setCurrentItem(ViewPagerPages.USER_PROFILE);
+                                viewPager.setCurrentItem(ViewPagerPages.MY_PROFILE);
                                 break;
 
                             case R.id.nav_button_options:
@@ -117,7 +117,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
         switch (fragmentTag) {
             case FragmentTags.ADD_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.ADD); break;
             case FragmentTags.HOME_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.HOME); break;
-            case FragmentTags.USER_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.USER_PROFILE); break;
+            case FragmentTags.MY_PROFILE_FRAGMENT: viewPager.setCurrentItem(ViewPagerPages.MY_PROFILE); break;
             case FragmentTags.OPTIONS_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.OPTIONS); break;
         }
     }
@@ -127,7 +127,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
         fragments.add(new AddCombinationFragment());
         fragments.add(new AllCombinationsFragment());
-        fragments.add(new UserProfileFragment());
+        fragments.add(new MyProfileFragment());
         fragments.add(new OptionsFragment());
 
         return fragments;

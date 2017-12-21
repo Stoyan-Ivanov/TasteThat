@@ -7,7 +7,7 @@ package com.stoyanivanov.tastethat.constants;
 public abstract class FragmentTags {
     public static final String ADD_FRAGMENT = "addFragment";
     public static final String HOME_FRAGMENT = "homeFragment";
-    public static final String USER_FRAGMENT = "userFragment";
+    public static final String MY_PROFILE_FRAGMENT = "myProfileFragment";
     public static final String OPTIONS_FRAGMENT = "optionsFragment";
 
     public static final String LIKED_FRAGMENT = "likedFragment";

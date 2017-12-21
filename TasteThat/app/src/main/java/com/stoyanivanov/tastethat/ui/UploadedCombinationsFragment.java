@@ -11,12 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.activities.UserProfileActivity;
+import com.stoyanivanov.tastethat.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.PageHeaders;
 import com.stoyanivanov.tastethat.interfaces.OnClickViewHolder;
@@ -89,13 +88,12 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
         adapter = new MyRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickViewHolder() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
-                ((UserProfileActivity) getActivity())
-                        .inflateDetailsFragment(new CombinationDetailsFragment(), combination);
             }
 
             @Override
             public void onItemLongClick(Combination combination) {
-
+                ((MyProfileActivity) getActivity())
+                        .inflateDetailsFragment(new CombinationDetailsFragment(), combination);
             }
         });
 
