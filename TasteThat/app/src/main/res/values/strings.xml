@@ -18,10 +18,12 @@
     <string name="facebook_app_id">379440962516055</string>
     <string name="fb_login_protocol_scheme">fb379440962516055</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Bottom navigation -->
     <string name="bottomnav_add">Add</string>
     <string name="bottomnav_home">Home</string>
     <string name="bottomnav_profile">Profile</string>
     <string name="bottomnav_menu">Options</string>
+
+    <!-- User -->
+    <string name="author_field">Author: @</string>
 </resources>

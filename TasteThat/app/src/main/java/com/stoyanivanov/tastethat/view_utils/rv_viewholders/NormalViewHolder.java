@@ -97,7 +97,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                listener.onItemLongClick(combination,position);
+                listener.onItemLongClick(combination);
                 return true;
             }
         });
@@ -131,7 +131,8 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
 
-                PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag, NormalViewHolder.this);
+                PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag,
+                                                            NormalViewHolder.this);
                 popUpMenuController.inflatePopupMenu(position, combinationNameKey);
             }
         });

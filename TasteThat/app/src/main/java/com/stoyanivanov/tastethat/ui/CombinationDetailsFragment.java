@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.constants.Constants;
+import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
@@ -18,10 +20,6 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import java.util.ArrayList;
 
 public class CombinationDetailsFragment extends Fragment {
-    private ImageView imageTopLeft;
-    private ImageView imageTopRight;
-    private ImageView imageBottomLeft;
-    private ImageView imageBottomRight;
     private CustomTextView combinationNameHeader;
     private CustomTextView authorName;
     private CustomTextView combinationDescription;
@@ -35,17 +33,15 @@ public class CombinationDetailsFragment extends Fragment {
 
         combinationNameHeader = (CustomTextView) view.findViewById(R.id.ctv_combination_details_header);
         authorName = (CustomTextView) view.findViewById(R.id.ctv_details_username);
-        imageTopLeft = (ImageView) view.findViewById(R.id.iv_top_left);
-        imageTopRight = (ImageView) view.findViewById(R.id.iv_top_right);
-        imageBottomLeft = (ImageView) view.findViewById(R.id.iv_bottom_left);
-        imageBottomRight = (ImageView) view.findViewById(R.id.iv_bottom_right);
         combinationDescription = (CustomTextView) view.findViewById(R.id.ctv_combination_details_description);
+        ImageView imageTopLeft = (ImageView) view.findViewById(R.id.iv_top_left);
+        ImageView imageTopRight = (ImageView) view.findViewById(R.id.iv_top_right);
+        ImageView imageBottomLeft = (ImageView) view.findViewById(R.id.iv_bottom_left);
+        ImageView imageBottomRight = (ImageView) view.findViewById(R.id.iv_bottom_right);
 
-        currCombination = (Combination) getArguments().getSerializable("currCombination");
+        currCombination = (Combination) getArguments().getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
 
-        images= new ImageView[] {imageTopLeft, imageTopRight, imageBottomLeft, imageBottomRight};
-
-        Log.d("SII", "onCreateView: " + currCombination);
+        images = new ImageView[] {imageTopLeft, imageTopRight, imageBottomLeft, imageBottomRight};
 
         loadCombinationName();
         loadImages();
@@ -68,7 +64,7 @@ public class CombinationDetailsFragment extends Fragment {
         }
         combinationNameHeader.setText(displayNameBuilder.toString());
 
-        String authorField = "Author: " + "@" + currCombination.getUsername();
+        String authorField = getString(R.string.author_field) + currCombination.getUsername();
         authorName.setText(authorField);
     }
 

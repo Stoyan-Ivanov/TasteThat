@@ -22,8 +22,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder
     private OnClickViewHolder listener;
     private String rvTag;
     private CustomFilter customFilter;
-
-    private LayoutInflater mInflater;
+    private LayoutInflater inflater;
 
     public MyRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnClickViewHolder listener) {
         this.rvTag = rvTag;
@@ -38,17 +37,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder
         notifyDataSetChanged();
     }
 
-    // inflates the cell layout from xml when needed
     @Override
     public NormalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = mInflater.from(parent.getContext())
+        View view = inflater.from(parent.getContext())
                 .inflate(R.layout.rv_holder, parent, false);
 
         return new NormalViewHolder(view, rvTag, this);
     }
 
-    // binds the data to the textview in each cel
     @Override
     public void onBindViewHolder(NormalViewHolder holder, int position) {
         holder.bind(mData.get(position), listener, position);

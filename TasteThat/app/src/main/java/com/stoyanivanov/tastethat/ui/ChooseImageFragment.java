@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.activities.ImageActivity;
-import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.interfaces.OnClickItemListener;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.network_models.NextImagesResponse;
@@ -39,7 +39,7 @@ public class ChooseImageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_image, container, false);
 
-        component = getArguments().getString(StartActivityConstants.EXTRA_FRAGMENT_COMPONENT);
+        component = getArguments().getString(StartConstants.EXTRA_FRAGMENT_COMPONENT);
         header = (CustomTextView) view.findViewById(R.id.tv_image_selection_header);
         header.setText(component);
 

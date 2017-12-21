@@ -2,7 +2,6 @@ package com.stoyanivanov.tastethat.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,16 +9,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
-import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.constants.ViewPagerPages;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.ui.AddCombinationFragment;
@@ -32,16 +28,15 @@ import com.stoyanivanov.tastethat.view_utils.MyPagerAdapter;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseBottomNavigationActivity {
-
-    public static FirebaseAuth mAuth;
+    
     private ViewPager viewPager;
     private MenuItem prevMenuItem;
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(StartActivityConstants.EXTRA_NAV_OPTION, bottomNavOption);
-        intent.putExtra(StartActivityConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
-        intent.putExtra(StartActivityConstants.EXTRA_FLAG, StartActivityConstants.EXTRA_FLAG_VALUE);
+        intent.putExtra(StartConstants.EXTRA_NAV_OPTION, bottomNavOption);
+        intent.putExtra(StartConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
+        intent.putExtra(StartConstants.EXTRA_FLAG, StartConstants.EXTRA_FLAG_VALUE);
 
         return intent;
     }
@@ -53,18 +48,15 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
         init();
 
-        mAuth = FirebaseAuth.getInstance();
-
         addControlToBottomNavigation();
         instantiateViewPager();
-        beginViewPagerPage();
+        viewPagerBeginPage();
     }
 
     private void addControlToBottomNavigation() {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
-
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
                         item.setEnabled(true);
@@ -90,11 +82,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
                 });
     }
 
-    public static FirebaseUser getCurrentFirebaseUser() {
-        return mAuth.getCurrentUser();
-    }
-
-
     public void instantiateViewPager () {
         ArrayList<Fragment> fragments = getFragments();
         FragmentPagerAdapter fragmentPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
@@ -117,7 +104,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
                 } else {
                     bottomNavigationView.getMenu().getItem(0).setChecked(false);
                 }
-                Log.d("page", "onPageSelected: "+position);
                 bottomNavigationView.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = bottomNavigationView.getMenu().getItem(position);
             }
@@ -127,7 +113,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
         });
     }
 
-    private void beginViewPagerPage() {
+    private void viewPagerBeginPage() {
         switch (fragmentTag) {
             case FragmentTags.ADD_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.ADD); break;
             case FragmentTags.HOME_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.HOME); break;
@@ -162,10 +148,9 @@ public class MainActivity extends BaseBottomNavigationActivity {
         transaction.commit();
     }
 
-
     public void inflateDetailsFragment(CombinationDetailsFragment fragment, Combination combination) {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("currCombination",combination);
+            bundle.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION,combination);
             fragment.setArguments(bundle);
             replaceFragment(fragment);
     }

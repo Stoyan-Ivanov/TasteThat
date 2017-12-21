@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.activities.MainActivity;
+import com.stoyanivanov.tastethat.constants.PageHeaders;
 import com.stoyanivanov.tastethat.interfaces.OnClickViewHolder;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
@@ -31,7 +33,6 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
     private CustomTextView likeCounter;
-    private FirebaseUser currUser = MainActivity.getCurrentFirebaseUser();
     private MyRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
     private Combination currentCombination;
@@ -58,7 +59,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         searchIcon = (ImageView) view.findViewById(R.id.iv_search_icon);
         selectedSectionHeader = (CustomTextView) view.findViewById(R.id.ctv_selected_section_header);
 
-        selectedSectionHeader.setText("All Combinations");
+        selectedSectionHeader.setText(PageHeaders.allCombinationsFragment);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         getAllCombinations();
@@ -112,7 +113,9 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
             @Override
             public void onItemLongClick(Combination combination) {
                 ((MainActivity) getActivity()).hideViewPager();
-                ((MainActivity) getActivity()).inflateDetailsFragment(new CombinationDetailsFragment(), combination);
+
+                ((MainActivity) getActivity())
+                        .inflateDetailsFragment(new CombinationDetailsFragment(), combination);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -150,18 +153,29 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (processLike) {
+                        FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+
                         if (dataSnapshot.hasChild(currUser.getUid())) {
                             tableLikes.child(nameOfCombination)
                                     .child(currUser.getUid()).removeValue();
-                            tableUsers.child(currUser.getUid()).
-                                    child(Constants.USER_LIKED_COMBINATIONS).child(nameOfCombination).removeValue();
+
+                            tableUsers.child(currUser.getUid())
+                                    .child(Constants.USER_LIKED_COMBINATIONS)
+                                    .child(nameOfCombination)
+                                    .removeValue();
+
                             isLiked = true;
                             processLike = false;
+
                         } else {
                             tableLikes.child(nameOfCombination)
                                     .child(currUser.getUid()).setValue(currUser.getEmail());
-                            tableUsers.child(currUser.getUid()).
-                                    child(Constants.USER_LIKED_COMBINATIONS).child(nameOfCombination).setValue(currentCombination);
+
+                            tableUsers.child(currUser.getUid())
+                                    .child(Constants.USER_LIKED_COMBINATIONS)
+                                    .child(nameOfCombination)
+                                    .setValue(currentCombination);
+
                             isLiked = false;
                             processLike = false;
                         }

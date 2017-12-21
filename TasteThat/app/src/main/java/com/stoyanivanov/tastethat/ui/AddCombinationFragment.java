@@ -148,7 +148,8 @@ public class AddCombinationFragment extends Fragment {
         ArrayList<String> components = getAllComponents();
 
         if(components.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
-            startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD, FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
+            startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD,
+                            FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
         } else {
             showFailToast();
         }

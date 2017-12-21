@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.activities.LoginActivity;
 import com.stoyanivanov.tastethat.activities.MainActivity;
@@ -20,42 +21,41 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 public class UserProfileFragment extends Fragment {
 
-    CircleImageView ivProfilePic;
-    CustomTextView tvUsername;
-    Button btnLiked, btnUploaded,btnAchievements, logout;
-    View view;
-
-    FirebaseUser currUser = MainActivity.getCurrentFirebaseUser();
+    private CircleImageView ivProfilePic;
+    private CustomTextView tvUsername;
+    private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view  = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
         ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_profile_picture);
         tvUsername = (CustomTextView) view.findViewById(R.id.tv_username);
-        btnLiked = (Button) view.findViewById(R.id.btn_liked_combinations);
-        btnUploaded = (Button) view.findViewById(R.id.btn_uploaded_combinations);
-        btnAchievements =(Button) view.findViewById(R.id.btn_achievements);
-        logout = (Button) view.findViewById(R.id.btn_logout);
+        Button btnLiked = (Button) view.findViewById(R.id.btn_liked_combinations);
+        Button btnUploaded = (Button) view.findViewById(R.id.btn_uploaded_combinations);
+        Button btnAchievements = (Button) view.findViewById(R.id.btn_achievements);
+        Button logout = (Button) view.findViewById(R.id.btn_logout);
 
+        loadUserData();
+
+        btnLiked.setOnClickListener(clickListener);
+        btnUploaded.setOnClickListener(clickListener);
+        btnAchievements.setOnClickListener(clickListener);
+        logout.setOnClickListener(clickListener);
+
+        return view;
+    }
+
+    private void loadUserData() {
         tvUsername.setText(currUser.getDisplayName());
 
         String userPhotoUrl = currUser.getPhotoUrl().toString();
         Glide.with(getActivity().getApplicationContext()).load(userPhotoUrl)
                 //.centerCrop()
                 .into(ivProfilePic);
-
-        btnLiked.setOnClickListener(clickListener);
-        btnUploaded.setOnClickListener(clickListener);
-        btnAchievements.setOnClickListener(clickListener);
-
-        logout.setOnClickListener(clickListener);
-
-        return view;
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {
@@ -63,15 +63,18 @@ public class UserProfileFragment extends Fragment {
 
             switch(v.getId()) {
                 case R.id.btn_liked_combinations:
-                    startActivity(UserProfileActivity.getIntent(getActivity(), BottomNavigationOptions.USER_PROFILE, FragmentTags.LIKED_FRAGMENT));
+                    startActivity(UserProfileActivity.getIntent(getActivity(),
+                            BottomNavigationOptions.USER_PROFILE, FragmentTags.LIKED_FRAGMENT));
                     break;
 
                 case R.id.btn_uploaded_combinations:
-                    startActivity(UserProfileActivity.getIntent(getActivity(), BottomNavigationOptions.USER_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
+                    startActivity(UserProfileActivity.getIntent(getActivity(),
+                            BottomNavigationOptions.USER_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
                     break;
 
                 case R.id.btn_achievements:
-                    startActivity(UserProfileActivity.getIntent(getActivity(), BottomNavigationOptions.USER_PROFILE, FragmentTags.ACHIEVEMENTS_FRAGMENT));
+                    startActivity(UserProfileActivity.getIntent(getActivity(),
+                            BottomNavigationOptions.USER_PROFILE, FragmentTags.ACHIEVEMENTS_FRAGMENT));
                     break;
 
                 case R.id.btn_logout:
@@ -81,9 +84,8 @@ public class UserProfileFragment extends Fragment {
         }
     };
 
-
     private void signOut() {
-        MainActivity.mAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 

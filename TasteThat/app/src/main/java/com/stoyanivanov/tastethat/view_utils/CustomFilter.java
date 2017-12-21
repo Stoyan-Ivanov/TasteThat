@@ -1,6 +1,5 @@
 package com.stoyanivanov.tastethat.view_utils;
 
-import android.util.Log;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -8,16 +7,15 @@ import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by stoyan-ivanov on 02.12.17.
  */
 
 public class CustomFilter implements Filterable {
-    ArrayList<Combination> data;
-    String searched;
-    MyRecyclerViewAdapter adapter;
+    private ArrayList<Combination> data;
+    private String searched;
+    private MyRecyclerViewAdapter adapter;
 
     public CustomFilter(MyRecyclerViewAdapter adapter) {
         this.adapter = adapter;
@@ -55,7 +53,6 @@ public class CustomFilter implements Filterable {
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                Log.d("SII", "publishResults: " + (ArrayList<Combination>) results.values);
                 adapter.setNewData((ArrayList<Combination>) results.values);
             }
         };

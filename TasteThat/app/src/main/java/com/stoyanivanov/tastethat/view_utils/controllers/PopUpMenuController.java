@@ -3,6 +3,7 @@ package com.stoyanivanov.tastethat.view_utils.controllers;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.R;
@@ -19,7 +20,7 @@ public class PopUpMenuController {
     private PopupMenu popupMenu;
     private String rvTag;
     private NormalViewHolder viewHolder;
-    private String combinationNameKey = "";
+    private String combinationNameKey;
 
     public PopUpMenuController(PopupMenu popupMenu, String rvTag, NormalViewHolder viewHolder) {
         this.popupMenu = popupMenu;
@@ -31,15 +32,15 @@ public class PopUpMenuController {
         this.combinationNameKey = combinationNameKey;
 
         switch (rvTag) {
-            case "rvAllCombinations":
+            case Constants.RV_ALL_COMBINATIONS:
                 allCombinationsPopup(position);
                 break;
 
-            case "rvUploadedCombinations":
+            case Constants.RV_UPLOADED_COMBINATIONS:
                 uploadedCombinationsPopup(position);
                 break;
 
-            case "rvLikedCombinations":
+            case Constants.RV_LIKED_COMBINATIONS:
                 likedCombinationsPopup();
                 break;
         }
@@ -111,8 +112,10 @@ public class PopUpMenuController {
 
     public void deleteCombinationFromDB() {
         tableCombinations.child(combinationNameKey).removeValue();
-        tableUsers.child(MainActivity.getCurrentFirebaseUser().getUid())
-                .child(Constants.USER_UPLOADED_COMBINATIONS).child(combinationNameKey).removeValue();
+
+        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.USER_UPLOADED_COMBINATIONS)
+                .child(combinationNameKey).removeValue();
     }
 
 }

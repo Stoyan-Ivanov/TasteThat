@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.constants.StartActivityConstants;
+import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.view_utils.BottomNavigationViewHelper;
 
 public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
     protected void init() {
         Intent intent = getIntent();
-        if(intent.getStringExtra(StartActivityConstants.EXTRA_FLAG) == null) {
+        if(intent.getStringExtra(StartConstants.EXTRA_FLAG) == null) {
             try {
                 throw new Exception();
             } catch (Exception e) {
@@ -33,8 +33,8 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
             }
         }
 
-        int bottomNavOption = intent.getIntExtra(StartActivityConstants.EXTRA_NAV_OPTION, 0);
-        fragmentTag = intent.getStringExtra(StartActivityConstants.EXTRA_FRAGMENT_TAG);
+        int bottomNavOption = intent.getIntExtra(StartConstants.EXTRA_NAV_OPTION, 0);
+        fragmentTag = intent.getStringExtra(StartConstants.EXTRA_FRAGMENT_TAG);
 
         instantiateBottomNavBar();
         setSelectedBottomNavOption(bottomNavOption);
