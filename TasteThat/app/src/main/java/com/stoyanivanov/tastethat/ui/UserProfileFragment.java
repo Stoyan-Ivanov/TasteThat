@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,39 +57,46 @@ public class UserProfileFragment extends Fragment {
         currCombination = (Combination) getArguments().getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
         userId = currCombination.getUserId();
 
-        Log.d("SII", "onCreateView: " + userId);
-
         instantiateAchievementsRV();
-//        getUploadedCombinations();
-//        instantiateCombinationsRV();
-//
-//        uploadsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(uploadedCombinations == null) {
-//                    getUploadedCombinations();
-//                }
-//                adapter.setNewData(uploadedCombinations);
-//            }
-//        });
-//
-//        likesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(likedCombinations == null) {
-//                    getLikedCombinations();
-//                }
-//                adapter.setNewData(likedCombinations);
-//            }
-//        });
+        instantiateCombinationsRV();
+
+        uploadsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(uploadedCombinations == null) {
+                    getUploadedCombinations();
+                }
+
+                colorTextPurple(uploadsBtn);
+                colorTextBlack(likesBtn);
+
+                adapter.setNewData(uploadedCombinations);
+            }
+        });
+
+        likesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(likedCombinations == null) {
+                    getLikedCombinations();
+                }
+
+                colorTextPurple(likesBtn);
+                colorTextBlack(uploadsBtn);
+
+                adapter.setNewData(likedCombinations);
+            }
+        });
 
         return view;
     }
 
     private void instantiateAchievementsRV() {
-        recyclerViewAchievements.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
         getAchievements();
+
+        recyclerViewAchievements.setLayoutManager(new LinearLayoutManager(getActivity(),
+                                    LinearLayoutManager.HORIZONTAL, false));
+
         achievementsAdapter = new UserAchievementsRecyclerViewAdapter(achievements);
         recyclerViewAchievements.setAdapter(achievementsAdapter);
     }
@@ -115,12 +123,13 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void instantiateCombinationsRV() {
+        ArrayList<Combination> defaultCombinations = defaultClickedSection();
+
         recyclerViewCombinations.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapter = new MyRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, uploadedCombinations, new OnClickViewHolder() {
+        adapter = new MyRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
-            }
+            public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {}
 
             @Override
             public void onItemLongClick(Combination combination) {
@@ -130,6 +139,15 @@ public class UserProfileFragment extends Fragment {
         });
 
         recyclerViewCombinations.setAdapter(adapter);
+    }
+
+    private ArrayList<Combination> defaultClickedSection() {
+        getUploadedCombinations();
+
+        colorTextPurple(uploadsBtn);
+        colorTextBlack(likesBtn);
+
+        return uploadedCombinations;
     }
 
     private void getUploadedCombinations() {
@@ -168,6 +186,7 @@ public class UserProfileFragment extends Fragment {
                             Combination currCombination = dataSnapshot.getValue(Combination.class);
                             likedCombinations.add(currCombination);
                         }
+                        adapter.setNewData(likedCombinations);
                         Log.d("SII", likedCombinations.toString());
                     }
                     @Override
@@ -175,5 +194,13 @@ public class UserProfileFragment extends Fragment {
                         Log.d("SII", "onCancelled: error");
                     }
                 });
+    }
+
+    private void colorTextPurple(TextView textView) {
+        textView.setTextColor(getResources().getColor(R.color.colorSecondaryPurple));
+    }
+
+    private void colorTextBlack(TextView textView) {
+        textView.setTextColor(getResources().getColor(R.color.black));
     }
 }
