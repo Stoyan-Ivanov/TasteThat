@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.models.Combination;
@@ -66,6 +67,14 @@ public class CombinationDetailsFragment extends Fragment {
 
         String authorField = getString(R.string.author_field) + currCombination.getUsername();
         authorName.setText(authorField);
+
+        authorName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).inflateExtraCombinationFragment(
+                        new UserProfileFragment(), currCombination);
+            }
+        });
     }
 
     private void loadImages() {

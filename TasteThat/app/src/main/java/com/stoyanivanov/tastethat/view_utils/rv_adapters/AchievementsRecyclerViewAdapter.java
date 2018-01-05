@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class AchievementsRecyclerViewAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
     private ArrayList<Achievement> data;
-    private LayoutInflater mInflater;
+    private LayoutInflater inflater;
 
     public AchievementsRecyclerViewAdapter(ArrayList<Achievement> data) {
         this.data = data;
@@ -25,7 +25,7 @@ public class AchievementsRecyclerViewAdapter extends RecyclerView.Adapter<Achiev
 
     @Override
     public AchievementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.from(parent.getContext())
+        View view = inflater.from(parent.getContext())
                 .inflate(R.layout.rv_achievement_holder, parent, false);
 
         return new AchievementViewHolder(view);

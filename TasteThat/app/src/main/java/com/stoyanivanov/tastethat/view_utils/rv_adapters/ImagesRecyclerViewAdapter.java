@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ImagesRecyclerViewAdapter extends RecyclerView.Adapter<ImageViewHolder> {
     private ArrayList<Picture> data;
     private OnClickItemListener listener;
-    private LayoutInflater mInflater;
+    private LayoutInflater inflater;
 
     public ImagesRecyclerViewAdapter(ArrayList<Picture> data, OnClickItemListener onItemClickListener) {
         this.data = data;
@@ -29,7 +29,7 @@ public class ImagesRecyclerViewAdapter extends RecyclerView.Adapter<ImageViewHol
 
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.from(parent.getContext())
+        View view = inflater.from(parent.getContext())
                 .inflate(R.layout.rv_image_holder, parent, false);
 
         return new ImageViewHolder(view);

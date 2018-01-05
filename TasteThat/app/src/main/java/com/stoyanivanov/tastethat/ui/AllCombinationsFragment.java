@@ -115,7 +115,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                 ((MainActivity) getActivity()).hideViewPager();
 
                 ((MainActivity) getActivity())
-                        .inflateDetailsFragment(new CombinationDetailsFragment(), combination);
+                        .inflateExtraCombinationFragment(new CombinationDetailsFragment(), combination);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -178,6 +178,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
                             isLiked = false;
                             processLike = false;
+
                         }
                     }
                 }

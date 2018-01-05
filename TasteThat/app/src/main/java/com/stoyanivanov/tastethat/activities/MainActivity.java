@@ -60,6 +60,8 @@ public class MainActivity extends BaseBottomNavigationActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
                         item.setEnabled(true);
+                        clearBackStack();
+
                         switch (item.getItemId()) {
                             case R.id.nav_button_add:
                                 viewPager.setCurrentItem(ViewPagerPages.ADD);
@@ -148,7 +150,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
         transaction.commit();
     }
 
-    public void inflateDetailsFragment(CombinationDetailsFragment fragment, Combination combination) {
+    public void inflateExtraCombinationFragment(Fragment fragment, Combination combination) {
             Bundle bundle = new Bundle();
             bundle.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION,combination);
             fragment.setArguments(bundle);

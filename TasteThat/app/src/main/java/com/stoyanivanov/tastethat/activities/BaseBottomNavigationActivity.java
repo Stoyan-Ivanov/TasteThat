@@ -2,6 +2,7 @@ package com.stoyanivanov.tastethat.activities;
 
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -47,5 +48,10 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
     protected void instantiateBottomNavBar() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+    }
+
+    protected void clearBackStack() {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }
