@@ -107,4 +107,12 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
             fragment.setArguments(bundle);
             replaceFragment(fragment);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        startActivity(MainActivity.getIntent(getBaseContext(),
+                BottomNavigationOptions.USER_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
+    }
 }

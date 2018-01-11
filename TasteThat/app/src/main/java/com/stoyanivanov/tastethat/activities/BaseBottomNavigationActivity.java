@@ -49,9 +49,4 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
     }
-
-    protected void clearBackStack() {
-        FragmentManager fm = getSupportFragmentManager();
-        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
 }

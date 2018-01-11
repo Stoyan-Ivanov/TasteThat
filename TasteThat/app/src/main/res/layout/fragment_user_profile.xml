@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.stoyanivanov.tastethat.ui.UserProfileFragment">
+    tools:context="com.stoyanivanov.tastethat.ui.UserProfileFragment"
+    android:background="@color/white">
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"

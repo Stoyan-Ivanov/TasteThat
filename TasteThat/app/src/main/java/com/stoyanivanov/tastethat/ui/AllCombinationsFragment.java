@@ -112,8 +112,6 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
             @Override
             public void onItemLongClick(Combination combination) {
-                ((MainActivity) getActivity()).hideViewPager();
-
                 ((MainActivity) getActivity())
                         .inflateExtraCombinationFragment(new CombinationDetailsFragment(), combination);
             }

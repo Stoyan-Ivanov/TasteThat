@@ -24,7 +24,7 @@
 
         android:weightSum="1"
         card_view:cardCornerRadius="6dp"
-        card_view:cardElevation="4dp"
+        card_view:cardElevation="6dp"
         card_view:cardPreventCornerOverlap="false"
         card_view:cardUseCompatPadding="true">
 
@@ -102,6 +102,7 @@
 
                     />
                 <!-- #5a4dae -->
+                <!-- #673AB7 -->
 
                 <LinearLayout
                     android:layout_width="0dp"

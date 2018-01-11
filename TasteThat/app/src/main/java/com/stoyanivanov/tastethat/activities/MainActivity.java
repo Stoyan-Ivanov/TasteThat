@@ -60,7 +60,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
                         item.setEnabled(true);
-                        clearBackStack();
 
                         switch (item.getItemId()) {
                             case R.id.nav_button_add:
@@ -155,15 +154,5 @@ public class MainActivity extends BaseBottomNavigationActivity {
             bundle.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION,combination);
             fragment.setArguments(bundle);
             replaceFragment(fragment);
-    }
-
-    public void hideViewPager() {
-        viewPager.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        viewPager.setVisibility(View.VISIBLE);
     }
 }

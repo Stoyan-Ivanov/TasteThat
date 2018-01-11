@@ -6,7 +6,9 @@
     android:orientation="vertical"
     android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.stoyanivanov.tastethat.ui.CombinationDetailsFragment">
+    tools:context="com.stoyanivanov.tastethat.ui.CombinationDetailsFragment"
+    android:background="@color/white"
+    >
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
