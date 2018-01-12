@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#381f75</color>
+    <color name="white">#FFFFFF</color>
+
+
+
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorSecondaryPurple">#673AB7</color>
@@ -68,7 +72,7 @@
     <color name="aluminum">#999999</color>
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
-    <color name="white">#FFFFFF</color>
+
 
     <color name="white_70">#B3FFFFFF</color>
 </resources>

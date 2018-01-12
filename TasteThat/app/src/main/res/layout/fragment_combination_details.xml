@@ -15,17 +15,41 @@
         android:layout_height="wrap_content"
         android:verticalScrollbarPosition="right">
 
-        <com.stoyanivanov.tastethat.view_utils.CustomTextView
-            android:id="@+id/ctv_combination_details_header"
-            app:layout_widthPercent = "90%"
-            app:layout_heightPercent = "12%"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/abl_header_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            android:layout_centerHorizontal="true"
-            app:layout_marginTopPercent = "3%"
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            android:gravity="center"
-            android:textColor="@color/black"
-            />
+            <ImageView
+                android:id="@+id/iv_back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_marginLeftPercent = "2%"
+
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_arrow_left" />
+
+                <com.stoyanivanov.tastethat.view_utils.CustomTextView
+                    android:id="@+id/ctv_combination_details_header"
+                    app:layout_widthPercent="80%"
+                    app:layout_heightPercent="65%"
+
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/iv_back_arrow"
+                    app:layout_marginLeftPercent="3%"
+
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+
+            </android.support.percent.PercentRelativeLayout>
+        </android.support.design.widget.AppBarLayout>
+
 
         <com.stoyanivanov.tastethat.view_utils.CustomTextView
             android:id="@+id/ctv_details_username"
@@ -33,7 +57,10 @@
             app:layout_heightPercent = "5%"
 
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/ctv_combination_details_header"
+            android:layout_below="@id/abl_header_bar"
+
+            app:layout_marginTopPercent = "2%"
+            android:textColor="@color/accent_700"
             />
 
         <ImageView

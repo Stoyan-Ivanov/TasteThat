@@ -2,9 +2,11 @@ package com.stoyanivanov.tastethat.activities;
 
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.StartConstants;
@@ -48,5 +50,14 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
     protected void instantiateBottomNavBar() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+    }
+
+    protected void clearBackstack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Log.d("SII", "clearBackstack: " + fragmentManager.getBackStackEntryCount());
+
+        while (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate();
+        }
     }
 }

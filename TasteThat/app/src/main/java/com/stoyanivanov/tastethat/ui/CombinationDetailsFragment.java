@@ -1,8 +1,10 @@
 package com.stoyanivanov.tastethat.ui;
 
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ public class CombinationDetailsFragment extends Fragment {
         ImageView imageTopRight = (ImageView) view.findViewById(R.id.iv_top_right);
         ImageView imageBottomLeft = (ImageView) view.findViewById(R.id.iv_bottom_left);
         ImageView imageBottomRight = (ImageView) view.findViewById(R.id.iv_bottom_right);
+        ImageView backArrow = (ImageView) view.findViewById(R.id.iv_back_arrow);
 
         currCombination = (Combination) getArguments().getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
 
@@ -47,6 +50,14 @@ public class CombinationDetailsFragment extends Fragment {
         loadCombinationName();
         loadImages();
         loadDescription();
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.popBackStack();
+            }
+        });
 
         return view;
     }
@@ -79,6 +90,7 @@ public class CombinationDetailsFragment extends Fragment {
 
     private void loadImages() {
         ArrayList<String> urls = currCombination.getUrls();
+        hideImageviewsIfNotUsed(urls.size());
 
         for(int i = 0; i < urls.size(); i++) {
             Glide.with(TasteThatApplication.getStaticContext())
@@ -89,5 +101,12 @@ public class CombinationDetailsFragment extends Fragment {
     }
 
     private void loadDescription() {
+    }
+
+    private void hideImageviewsIfNotUsed(int numOfPics) {
+        if (numOfPics < 3) {
+            images[2].setVisibility(View.GONE);
+            images[3].setVisibility(View.GONE);
+        }
     }
 }

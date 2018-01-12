@@ -60,6 +60,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
                         item.setEnabled(true);
+                        clearBackstack();
 
                         switch (item.getItemId()) {
                             case R.id.nav_button_add:
@@ -140,6 +141,8 @@ public class MainActivity extends BaseBottomNavigationActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
+        bottomNavVisibilityCheck();
+
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -147,6 +150,12 @@ public class MainActivity extends BaseBottomNavigationActivity {
         transaction.addToBackStack(null);
 
         transaction.commit();
+    }
+
+    private void bottomNavVisibilityCheck() {
+        if(bottomNavigationView.getVisibility() == View.GONE) {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void inflateExtraCombinationFragment(Fragment fragment, Combination combination) {

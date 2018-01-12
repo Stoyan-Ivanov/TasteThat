@@ -96,6 +96,7 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
                                 break;
                         }
 
+                        finish();
                         return true;
                     }
                 });
@@ -114,5 +115,7 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
 
         startActivity(MainActivity.getIntent(getBaseContext(),
                 BottomNavigationOptions.USER_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
+
+        finish();
     }
 }
