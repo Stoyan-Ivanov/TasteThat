@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.StartConstants;
@@ -42,6 +43,19 @@ public class UserProfileFragment extends Fragment {
     private CustomTextView likesBtn;
     private MyRecyclerViewAdapter adapter;
     private UserAchievementsRecyclerViewAdapter achievementsAdapter;
+    private String activityName;
+
+     public static UserProfileFragment newInstance(String activityName, Combination combination) {
+        Bundle arguments = new Bundle();
+        UserProfileFragment fragment = new UserProfileFragment();
+
+        arguments.putString(StartConstants.EXTRA_ACTIVITY_NAME, activityName);
+        arguments.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION, combination);
+
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,21 +68,35 @@ public class UserProfileFragment extends Fragment {
         uploadsBtn = (CustomTextView) view.findViewById(R.id.ctv_user_uploads);
         likesBtn = (CustomTextView) view.findViewById(R.id.ctv_user_likes);
 
-        currCombination = (Combination) getArguments().getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
-        userId = currCombination.getUserId();
+        getExtraArguments();
+        
+        try {
+            if(currCombination != null) {
+                userId = currCombination.getUserId();
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        instantiateAchievementsRV();
-        instantiateCombinationsRV();
+        instantiateButtons();
+        populateAchievementsRV();
+        populateCombinationsRV();
 
+        return view;
+    }
+
+    private void instantiateButtons() {
         uploadsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(uploadedCombinations == null) {
-                    getUploadedCombinations();
+                    getUserUploadedCombinations();
                 }
 
-                colorTextPurple(uploadsBtn);
-                colorTextBlack(likesBtn);
+                setPurpleColorToText(uploadsBtn);
+                setBlackColorToText(likesBtn);
 
                 adapter.setNewData(uploadedCombinations);
             }
@@ -78,21 +106,24 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(likedCombinations == null) {
-                    getLikedCombinations();
+                    getUserLikedCombinations();
                 }
 
-                colorTextPurple(likesBtn);
-                colorTextBlack(uploadsBtn);
+                setPurpleColorToText(likesBtn);
+                setBlackColorToText(uploadsBtn);
 
                 adapter.setNewData(likedCombinations);
             }
         });
-
-        return view;
     }
 
-    private void instantiateAchievementsRV() {
-        getAchievements();
+    private void getExtraArguments() {
+        activityName = getArguments().getString(StartConstants.EXTRA_ACTIVITY_NAME);
+        currCombination = (Combination) getArguments().getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
+    }
+
+    private void populateAchievementsRV() {
+        getUserAchievements();
 
         recyclerViewAchievements.setLayoutManager(new LinearLayoutManager(getActivity(),
                                     LinearLayoutManager.HORIZONTAL, false));
@@ -101,7 +132,7 @@ public class UserProfileFragment extends Fragment {
         recyclerViewAchievements.setAdapter(achievementsAdapter);
     }
 
-    private void getAchievements() {
+    private void getUserAchievements() {
         achievements.clear();
 
         tableUsers.child(userId)
@@ -122,7 +153,7 @@ public class UserProfileFragment extends Fragment {
                 });
     }
 
-    private void instantiateCombinationsRV() {
+    private void populateCombinationsRV() {
         ArrayList<Combination> defaultCombinations = defaultClickedSection();
 
         recyclerViewCombinations.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -133,8 +164,15 @@ public class UserProfileFragment extends Fragment {
 
             @Override
             public void onItemLongClick(Combination combination) {
-                ((MyProfileActivity) getActivity())
-                        .inflateDetailsFragment(new CombinationDetailsFragment(), combination);
+                if(activityName.equals(MainActivity.class.getSimpleName())) {
+                    ((MainActivity) getActivity())
+                            .replaceFragment(CombinationDetailsFragment.newInstance(activityName, currCombination));
+                } else {
+                    if(activityName.equals(MyProfileActivity.class.getSimpleName())) {
+                        ((MyProfileActivity) getActivity())
+                                .replaceFragment(CombinationDetailsFragment.newInstance(activityName, currCombination));
+                    }
+                }
             }
         });
 
@@ -142,15 +180,15 @@ public class UserProfileFragment extends Fragment {
     }
 
     private ArrayList<Combination> defaultClickedSection() {
-        getUploadedCombinations();
+        getUserUploadedCombinations();
 
-        colorTextPurple(uploadsBtn);
-        colorTextBlack(likesBtn);
+        setPurpleColorToText(uploadsBtn);
+        setBlackColorToText(likesBtn);
 
         return uploadedCombinations;
     }
 
-    private void getUploadedCombinations() {
+    private void getUserUploadedCombinations() {
         uploadedCombinations = new ArrayList<>();
 
         tableUsers.child(userId)
@@ -173,7 +211,7 @@ public class UserProfileFragment extends Fragment {
                 });
     }
 
-    private void getLikedCombinations() {
+    private void getUserLikedCombinations() {
         likedCombinations = new ArrayList<>();
 
         tableUsers.child(userId)
@@ -196,11 +234,11 @@ public class UserProfileFragment extends Fragment {
                 });
     }
 
-    private void colorTextPurple(TextView textView) {
+    private void setPurpleColorToText(TextView textView) {
         textView.setTextColor(getResources().getColor(R.color.colorSecondaryPurple));
     }
 
-    private void colorTextBlack(TextView textView) {
+    private void setBlackColorToText(TextView textView) {
         textView.setTextColor(getResources().getColor(R.color.black));
     }
 }

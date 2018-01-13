@@ -140,7 +140,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
                 .hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
     }
 
-    private void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment) {
         bottomNavVisibilityCheck();
 
         FragmentManager fragmentManager =  getSupportFragmentManager();
@@ -156,12 +156,5 @@ public class MainActivity extends BaseBottomNavigationActivity {
         if(bottomNavigationView.getVisibility() == View.GONE) {
             bottomNavigationView.setVisibility(View.VISIBLE);
         }
-    }
-
-    public void inflateExtraCombinationFragment(Fragment fragment, Combination combination) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION,combination);
-            fragment.setArguments(bundle);
-            replaceFragment(fragment);
     }
 }

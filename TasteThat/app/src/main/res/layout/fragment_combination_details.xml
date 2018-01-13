@@ -139,14 +139,12 @@
         <com.stoyanivanov.tastethat.view_utils.CustomTextView
             android:id="@+id/ctv_combination_details_description"
 
-            app:layout_widthPercent = "94%"
-            app:layout_heightPercent = "30%"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/ctv_combination_details_description_header"
 
-            android:layout_below="@+id/ctv_combination_details_description_header"
-            android:layout_centerHorizontal="true"
-
-            app:layout_marginTopPercent = "3%"
-            />
+            app:layout_heightPercent="30%"
+            app:layout_marginTopPercent="3%"
+            app:layout_widthPercent="94%" />
 
     </android.support.percent.PercentRelativeLayout>
 

@@ -72,8 +72,7 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
             @Override
             public void onItemLongClick(Combination combination) {
                 ((MyProfileActivity) getActivity())
-                        .inflateDetailsFragment(new CombinationDetailsFragment(), combination);
-            }
+                        .replaceFragment(CombinationDetailsFragment.newInstance(MyProfileActivity.class.getSimpleName(), combination));            }
         });
         recyclerView.setAdapter(adapter);
 

@@ -1,11 +1,9 @@
 package com.stoyanivanov.tastethat.ui;
 
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.activities.MainActivity;
-import com.stoyanivanov.tastethat.constants.Constants;
+import com.stoyanivanov.tastethat.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
@@ -28,6 +26,18 @@ public class CombinationDetailsFragment extends Fragment {
     private CustomTextView combinationDescription;
     private Combination currCombination;
     private ImageView [] images;
+    private String activityName;
+
+    public static Fragment newInstance(String activityName, Combination combination) {
+        Bundle bundle = new Bundle();
+        CombinationDetailsFragment fragment = new CombinationDetailsFragment();
+
+        bundle.putString(StartConstants.EXTRA_ACTIVITY_NAME, activityName);
+        bundle.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION, combination);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,11 +53,13 @@ public class CombinationDetailsFragment extends Fragment {
         ImageView imageBottomRight = (ImageView) view.findViewById(R.id.iv_bottom_right);
         ImageView backArrow = (ImageView) view.findViewById(R.id.iv_back_arrow);
 
+        activityName = getArguments().getString(StartConstants.EXTRA_ACTIVITY_NAME);
         currCombination = (Combination) getArguments().getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
 
         images = new ImageView[] {imageTopLeft, imageTopRight, imageBottomLeft, imageBottomRight};
 
         loadCombinationName();
+        loadAuthorField();
         loadImages();
         loadDescription();
 
@@ -64,7 +76,7 @@ public class CombinationDetailsFragment extends Fragment {
 
     private void loadCombinationName() {
         StringBuilder displayNameBuilder = new StringBuilder();
-        ArrayList<String> components = currCombination.getComponents();
+        final ArrayList<String> components = currCombination.getComponents();
 
         for(int i = 0; i < components.size(); i++) {
             if(i < components.size() - 1) {
@@ -75,15 +87,24 @@ public class CombinationDetailsFragment extends Fragment {
             }
         }
         combinationNameHeader.setText(displayNameBuilder.toString());
+    }
 
+    private void loadAuthorField() {
         String authorField = getString(R.string.author_field) + currCombination.getUsername();
         authorName.setText(authorField);
 
         authorName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).inflateExtraCombinationFragment(
-                        new UserProfileFragment(), currCombination);
+                if(activityName.equals(MainActivity.class.getSimpleName())) {
+                    ((MainActivity) getActivity())
+                            .replaceFragment(UserProfileFragment.newInstance(activityName, currCombination));
+                } else {
+                    if(activityName.equals(MyProfileActivity.class.getSimpleName())) {
+                        ((MyProfileActivity) getActivity())
+                                .replaceFragment(UserProfileFragment.newInstance(activityName, currCombination));
+                    }
+                }
             }
         });
     }
@@ -103,6 +124,7 @@ public class CombinationDetailsFragment extends Fragment {
     private void loadDescription() {
     }
 
+    //ToDo: REFACTOR AS SOON AS POSSIBLE
     private void hideImageviewsIfNotUsed(int numOfPics) {
         if (numOfPics < 3) {
             images[2].setVisibility(View.GONE);

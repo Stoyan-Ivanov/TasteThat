@@ -41,16 +41,6 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
     }
 
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.replace(R.id.user_fragment_container, fragment);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
     private Fragment fragmentToDisplay() {
         Fragment fragment = null;
 
@@ -102,11 +92,14 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
                 });
     }
 
-    public void inflateDetailsFragment(CombinationDetailsFragment fragment, Combination combination) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION,combination);
-            fragment.setArguments(bundle);
-            replaceFragment(fragment);
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager =  getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.replace(R.id.user_fragment_container, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     @Override

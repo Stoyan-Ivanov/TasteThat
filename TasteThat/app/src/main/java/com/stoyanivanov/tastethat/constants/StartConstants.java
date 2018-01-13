@@ -14,4 +14,5 @@ public class StartConstants {
     public static final String EXTRA_FRAGMENT_COMPONENT = "extraComponent";
 
     public static final String EXTRA_FRAGMENT_COMBINATION = "currCombination";
+    public static final String EXTRA_ACTIVITY_NAME = "activity";
 }

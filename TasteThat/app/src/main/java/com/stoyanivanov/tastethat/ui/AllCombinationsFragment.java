@@ -113,7 +113,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
             @Override
             public void onItemLongClick(Combination combination) {
                 ((MainActivity) getActivity())
-                        .inflateExtraCombinationFragment(new CombinationDetailsFragment(), combination);
+                        .replaceFragment(CombinationDetailsFragment.newInstance(MainActivity.class.getSimpleName(), combination));
             }
         });
         recyclerView.setAdapter(adapter);
