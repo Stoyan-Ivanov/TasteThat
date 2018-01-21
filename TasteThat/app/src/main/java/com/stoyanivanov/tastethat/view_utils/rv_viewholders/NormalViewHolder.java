@@ -36,7 +36,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
     private ImageView leftImg;
     private ImageView rightImg;
     private ImageView options;
-    private String combinationNameKey;
+    private String combinationKey;
     private CircleImageView expandCombination;
     private String rvTag;
     private MyRecyclerViewAdapter adapter;
@@ -56,7 +56,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final Combination combination, final OnClickViewHolder listener, final int position) {
         StringBuilder displayNameBuilder = new StringBuilder();
-        combinationNameKey = combination.getCombinationName();
+        combinationKey = combination.getCombinationKey();
         ArrayList<String> urls = combination.getUrls();
         ArrayList<String> components = combination.getComponents();
 
@@ -76,7 +76,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
         loadImage(leftImg, urls.get(0));
         loadImage(rightImg, urls.get(1));
 
-        tableLikes.child(combinationNameKey)
+        tableLikes.child(combinationKey)
                 .addValueEventListener(new ValueEventListener() {
 
                     @Override
@@ -133,7 +133,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
 
                 PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag,
                                                             NormalViewHolder.this);
-                popUpMenuController.inflatePopupMenu(position, combinationNameKey);
+                popUpMenuController.inflatePopupMenu(position, combinationKey);
             }
         });
     }

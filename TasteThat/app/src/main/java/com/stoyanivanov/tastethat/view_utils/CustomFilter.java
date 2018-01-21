@@ -40,7 +40,7 @@ public class CustomFilter implements Filterable {
                 } else {
                     for (Combination combination : data) {
 
-                        if (combination.getCombinationName().trim().contains(searched)) {
+                        if (combination.getCombinationKey().trim().contains(searched)) {
                             filteredData.add(combination);
                         }
                     }

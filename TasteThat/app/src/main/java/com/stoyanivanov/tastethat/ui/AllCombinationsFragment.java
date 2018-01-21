@@ -1,5 +1,6 @@
 package com.stoyanivanov.tastethat.ui;
 
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,6 @@ import com.stoyanivanov.tastethat.constants.PageHeaders;
 import com.stoyanivanov.tastethat.interfaces.OnClickViewHolder;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.view_utils.EndlessRecyclerOnScrollListener;
-import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
@@ -48,7 +48,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private ImageView searchIcon;
     private CustomTextView selectedSectionHeader;
 
-    private static final int TOTAL_COMBINATIONS_FOR_ONE_LOAD = 5;
+    private static final int TOTAL_COMBINATIONS_FOR_ONE_LOAD = 3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,14 +79,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         if(nodeId == null) {
             query = tableCombinations
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("combinationName")
-                    .startAt(null);
+                    .orderByChild("timestamp");
         } else {
-
             query = tableCombinations
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("combinationName")
-                    .startAt(nodeId + 1);
+                    .orderByChild("timestamp")
+                    .startAt((long)allCombinations.get(allCombinations.size() - 1).getTimestamp(),nodeId +1);
         }
 
         query.addValueEventListener(new ValueEventListener() {
@@ -106,26 +104,27 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     }
 
     private void loadMoreCombinations(){
-        loadCombinations(allCombinations.get(allCombinations.size() - 1).getCombinationName());
+        loadCombinations(allCombinations.get(allCombinations.size() - 1).getCombinationKey());
     }
 
     @Override
     protected void instantiateRV() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+
         recyclerView.setLayoutManager(linearLayoutManager);
 
         adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
             public void onItemClick(Combination combination, final CustomTextView likeCounter, int position) {
-                final String nameOfCombination = combination.getCombinationName();
+                final String combinationKey = combination.getCombinationKey();
                 currentCombination = combination;
 
                 tableLikes.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        likes = dataSnapshot.child(nameOfCombination).getChildrenCount();
+                        likes = dataSnapshot.child(combinationKey).getChildrenCount();
 
-                        long manipulatedLikes = (controlLikesInDB(likes, nameOfCombination));
+                        long manipulatedLikes = (controlLikesInDB(likes, combinationKey));
                         likeCounter.setText(String.valueOf(manipulatedLikes));
                     }
 
@@ -169,12 +168,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         return ++likes;
     }
 
-    public boolean combinationIsLiked(final String nameOfCombination) {
+    public boolean combinationIsLiked(final String combinationKey) {
 
         processLike = true;
         isLiked = false;
 
-        tableLikes.child(nameOfCombination).addValueEventListener(new ValueEventListener() {
+        tableLikes.child(combinationKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -182,24 +181,24 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                         FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
 
                         if (dataSnapshot.hasChild(currUser.getUid())) {
-                            tableLikes.child(nameOfCombination)
+                            tableLikes.child(combinationKey)
                                     .child(currUser.getUid()).removeValue();
 
                             tableUsers.child(currUser.getUid())
                                     .child(Constants.USER_LIKED_COMBINATIONS)
-                                    .child(nameOfCombination)
+                                    .child(combinationKey)
                                     .removeValue();
 
                             isLiked = true;
                             processLike = false;
 
                         } else {
-                            tableLikes.child(nameOfCombination)
+                            tableLikes.child(combinationKey)
                                     .child(currUser.getUid()).setValue(currUser.getEmail());
 
                             tableUsers.child(currUser.getUid())
                                     .child(Constants.USER_LIKED_COMBINATIONS)
-                                    .child(nameOfCombination)
+                                    .child(combinationKey)
                                     .setValue(currentCombination);
 
                             isLiked = false;

@@ -6,11 +6,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
@@ -22,6 +28,7 @@ import com.stoyanivanov.tastethat.network.network_models.Picture;
 import com.stoyanivanov.tastethat.ui.ChooseImageFragment;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ImageActivity extends BaseBottomNavigationActivity {
     private ArrayList<String> components;
@@ -62,7 +69,7 @@ public class ImageActivity extends BaseBottomNavigationActivity {
 
             transaction.commit();
         } else {
-            saveUrlsToDB();
+            saveCombinationToDB();
             showSuccessToast();
             startActivity(MainActivity.getIntent(this, BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
         }
@@ -72,10 +79,8 @@ public class ImageActivity extends BaseBottomNavigationActivity {
         pictures.add(picture);
     }
 
-    private void saveUrlsToDB() {
+    private void saveCombinationToDB() {
         FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-        String combinationName;
-        StringBuilder combinationNameBuilder = new StringBuilder();
         ArrayList<String> urls = new ArrayList<>();
         String httpPrefix = "https:";
 
@@ -83,20 +88,34 @@ public class ImageActivity extends BaseBottomNavigationActivity {
             urls.add(httpPrefix + picture.getThumbnailUrl());
         }
 
-        for(String component : components) {
-            combinationNameBuilder.append(component);
-        }
-        combinationName = combinationNameBuilder.toString();
+        String combinationKey = DatabaseReferences.tableCombinations.push().getKey();
 
-        Combination newCombination = new Combination(combinationName, components, currUser.getUid(),
-                                                        currUser.getDisplayName(),urls);
+        Combination newCombination = new Combination(combinationKey, components, currUser.getUid(),
+                                                        currUser.getDisplayName(),urls, ServerValue.TIMESTAMP);
 
-        DatabaseReferences.tableCombinations.child(combinationName)
+        DatabaseReferences.tableCombinations.child(combinationKey)
                 .setValue(newCombination);
+
+        // create negative timestamp for sorting purpose
+        final DatabaseReference timestampReference = DatabaseReferences.tableCombinations.child(combinationKey).child("timestamp");
+        timestampReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    if (!(Long.parseLong(dataSnapshot.getValue().toString()) < 0)) {
+                        timestampReference.setValue(0 - Long.parseLong(dataSnapshot.getValue().toString()));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("SII", databaseError.getMessage());
+            }
+        });
 
         DatabaseReferences.tableUsers.child(currUser.getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .child(combinationName)
+                .child(combinationKey)
                 .setValue(newCombination);
     }
 

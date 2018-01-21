@@ -1,9 +1,5 @@
 package com.stoyanivanov.tastethat.models;
 
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,24 +8,26 @@ import java.util.ArrayList;
  */
 
 public class Combination implements Serializable {
-    private String combinationName, userId, username;
+    private String combinationKey, userId, username;
     private ArrayList<String> components;
     private ArrayList<String> urls;
+    private Object timestamp;
 
     public Combination(String combinationName, ArrayList<String> components, String userId, String username,
-                       ArrayList<String> urls) {
-        this.combinationName = combinationName;
+                       ArrayList<String> urls, Object timestamp) {
+        this.combinationKey = combinationName;
         this.components = components;
         this.userId = userId;
         this.username = username;
         this.urls = urls;
+        this.timestamp = timestamp;
     }
 
     public Combination() {
     }
 
-    public String getCombinationName() {
-        return combinationName;
+    public String getCombinationKey() {
+        return combinationKey;
     }
 
     public ArrayList<String> getComponents() {
@@ -46,5 +44,9 @@ public class Combination implements Serializable {
 
     public ArrayList<String> getUrls() {
         return urls;
+    }
+
+    public Object getTimestamp() {
+        return timestamp;
     }
 }
