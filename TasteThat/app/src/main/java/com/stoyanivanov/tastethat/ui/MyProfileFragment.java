@@ -63,17 +63,17 @@ public class MyProfileFragment extends Fragment {
             switch(v.getId()) {
                 case R.id.btn_liked_combinations:
                     startActivity(MyProfileActivity.getIntent(getActivity(),
-                            BottomNavigationOptions.USER_PROFILE, FragmentTags.LIKED_FRAGMENT));
+                            BottomNavigationOptions.MY_PROFILE, FragmentTags.LIKED_FRAGMENT));
                     break;
 
                 case R.id.btn_uploaded_combinations:
                     startActivity(MyProfileActivity.getIntent(getActivity(),
-                            BottomNavigationOptions.USER_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
+                            BottomNavigationOptions.MY_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
                     break;
 
                 case R.id.btn_achievements:
                     startActivity(MyProfileActivity.getIntent(getActivity(),
-                            BottomNavigationOptions.USER_PROFILE, FragmentTags.ACHIEVEMENTS_FRAGMENT));
+                            BottomNavigationOptions.MY_PROFILE, FragmentTags.ACHIEVEMENTS_FRAGMENT));
                     break;
 
                 case R.id.btn_logout:

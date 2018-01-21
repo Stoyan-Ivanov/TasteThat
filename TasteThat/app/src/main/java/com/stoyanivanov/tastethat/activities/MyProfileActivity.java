@@ -13,9 +13,7 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
-import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.ui.AchievementsFragment;
-import com.stoyanivanov.tastethat.ui.CombinationDetailsFragment;
 import com.stoyanivanov.tastethat.ui.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.UploadedCombinationsFragment;
 
@@ -77,7 +75,7 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
 
                             case R.id.nav_button_profile:
                                 startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.USER_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
+                                        BottomNavigationOptions.MY_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
                                 break;
 
                             case R.id.nav_button_options:
@@ -107,7 +105,7 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
         super.onBackPressed();
 
         startActivity(MainActivity.getIntent(getBaseContext(),
-                BottomNavigationOptions.USER_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
+                BottomNavigationOptions.MY_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
 
         finish();
     }

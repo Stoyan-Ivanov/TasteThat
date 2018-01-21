@@ -91,7 +91,6 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
                     likedCombinations.add(currCombination);
                 }
-                Log.d("SII", likedCombinations.toString());
                 adapter.setNewData(likedCombinations);
             }
             @Override

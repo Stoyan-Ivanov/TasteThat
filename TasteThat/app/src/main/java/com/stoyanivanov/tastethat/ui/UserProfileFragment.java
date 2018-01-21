@@ -69,7 +69,7 @@ public class UserProfileFragment extends Fragment {
         likesBtn = (CustomTextView) view.findViewById(R.id.ctv_user_likes);
 
         getExtraArguments();
-        
+
         try {
             if(currCombination != null) {
                 userId = currCombination.getUserId();

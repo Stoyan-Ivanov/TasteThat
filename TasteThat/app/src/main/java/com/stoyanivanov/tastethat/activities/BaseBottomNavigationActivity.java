@@ -54,7 +54,6 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
     protected void clearBackstack() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Log.d("SII", "clearBackstack: " + fragmentManager.getBackStackEntryCount());
 
         while (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStackImmediate();

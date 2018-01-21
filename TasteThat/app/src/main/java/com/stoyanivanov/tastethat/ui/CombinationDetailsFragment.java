@@ -29,12 +29,12 @@ public class CombinationDetailsFragment extends Fragment {
     private String activityName;
 
     public static Fragment newInstance(String activityName, Combination combination) {
-        Bundle bundle = new Bundle();
+        Bundle arguments = new Bundle();
         CombinationDetailsFragment fragment = new CombinationDetailsFragment();
 
-        bundle.putString(StartConstants.EXTRA_ACTIVITY_NAME, activityName);
-        bundle.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION, combination);
-        fragment.setArguments(bundle);
+        arguments.putString(StartConstants.EXTRA_ACTIVITY_NAME, activityName);
+        arguments.putSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION, combination);
+        fragment.setArguments(arguments);
 
         return fragment;
     }

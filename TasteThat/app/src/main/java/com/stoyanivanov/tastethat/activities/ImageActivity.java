@@ -51,9 +51,9 @@ public class ImageActivity extends BaseBottomNavigationActivity {
 
     public void replaceFragment(Fragment fragment) {
         if(currComponent < components.size()) {
-            Bundle bundle = new Bundle();
-            bundle.putString(StartConstants.EXTRA_FRAGMENT_COMPONENT, components.get(currComponent));
-            fragment.setArguments(bundle);
+            Bundle arguments = new Bundle();
+            arguments.putString(StartConstants.EXTRA_FRAGMENT_COMPONENT, components.get(currComponent));
+            fragment.setArguments(arguments);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();

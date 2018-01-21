@@ -9,17 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.constants.PageHeaders;
 import com.stoyanivanov.tastethat.interfaces.OnClickViewHolder;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.view_utils.EndlessRecyclerOnScrollListener;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
@@ -45,6 +48,8 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private ImageView searchIcon;
     private CustomTextView selectedSectionHeader;
 
+    private static final int TOTAL_COMBINATIONS_FOR_ONE_LOAD = 5;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,34 +67,53 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         selectedSectionHeader.setText(PageHeaders.allCombinationsFragment);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
-        getAllCombinations();
+        loadCombinations(null);
         instantiateRV();
 
         return view;
     }
 
-    private void getAllCombinations() {
-        tableCombinations.addValueEventListener(new ValueEventListener() {
+    private void loadCombinations(String nodeId) {
+        Query query;
+
+        if(nodeId == null) {
+            query = tableCombinations
+                    .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
+                    .orderByChild("combinationName")
+                    .startAt(null);
+        } else {
+
+            query = tableCombinations
+                    .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
+                    .orderByChild("combinationName")
+                    .startAt(nodeId + 1);
+        }
+
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                allCombinations.clear();
-
+                if(!dataSnapshot.hasChildren()){
+                    Toast.makeText(getActivity(), "No more combinations", Toast.LENGTH_SHORT).show();
+                }
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Combination currCombination = snapshot.getValue(Combination.class);
                     allCombinations.add(currCombination);
                 }
                 adapter.setNewData(allCombinations);
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("SII", "onCancelled: error getAllCombinations");
-            }
-        });
+
+            @Override public void onCancelled(DatabaseError databaseError) {}});
+    }
+
+    private void loadMoreCombinations(){
+        loadCombinations(allCombinations.get(allCombinations.size() - 1).getCombinationName());
     }
 
     @Override
     protected void instantiateRV() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         adapter = new MyRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
             public void onItemClick(Combination combination, final CustomTextView likeCounter, int position) {
@@ -118,8 +142,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         });
         recyclerView.setAdapter(adapter);
 
-        RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore() {
+                loadMoreCombinations();
+            }
+        });
     }
 
     @Override
