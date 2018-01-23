@@ -26,17 +26,21 @@ import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
 public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
+    @BindView(R.id.rv) RecyclerView recyclerView;
+    @BindView(R.id.et_search) EditText searchBar;
+    @BindView(R.id.iv_cancel_search) ImageView cancelSearch;
+    @BindView(R.id.iv_search_icon) ImageView searchIcon;
+    @BindView(R.id.ctv_selected_section_header) CustomTextView selectedSectionHeader;
+
     private ArrayList<Combination> uploadedCombinations;
     private MyRecyclerViewAdapter adapter;
-    private RecyclerView recyclerView;
-    private EditText searchBar;
-    private ImageView cancelSearch;
-    private ImageView searchIcon;
-    private CustomTextView selectedSectionHeader;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -45,13 +49,8 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
 
+        ButterKnife.bind(this, view);
         uploadedCombinations = new ArrayList<>();
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
-
-        searchBar = (EditText) view.findViewById(R.id.et_search);
-        cancelSearch = (ImageView) view.findViewById(R.id.iv_cancel_search);
-        searchIcon = (ImageView) view.findViewById(R.id.iv_search_icon);
-        selectedSectionHeader = (CustomTextView) view.findViewById(R.id.ctv_selected_section_header);
 
         selectedSectionHeader.setText(PageHeaders.uploadsFragment);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);

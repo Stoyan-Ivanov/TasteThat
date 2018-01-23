@@ -1,6 +1,5 @@
 package com.stoyanivanov.tastethat.ui;
 
-import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,23 +29,26 @@ import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
-    private CustomTextView likeCounter;
+    @BindView(R.id.et_search) EditText searchBar;
+    @BindView(R.id.iv_cancel_search) ImageView cancelSearch;
+    @BindView(R.id.iv_search_icon) ImageView searchIcon;
+    @BindView(R.id.ctv_selected_section_header) CustomTextView selectedSectionHeader;
+    @BindView(R.id.rv) RecyclerView recyclerView;
+
     private MyRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
     private Combination currentCombination;
-    private RecyclerView recyclerView;
     private boolean processLike = false;
     private boolean isLiked;
     private long likes;
-    private EditText searchBar;
-    private ImageView cancelSearch;
-    private ImageView searchIcon;
-    private CustomTextView selectedSectionHeader;
 
     private static final int TOTAL_COMBINATIONS_FOR_ONE_LOAD = 3;
 
@@ -56,13 +58,8 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view  = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
 
+        ButterKnife.bind(this, view);
         allCombinations = new ArrayList<>();
-        likeCounter = (CustomTextView) view.findViewById(R.id.vh_tv_like_counter);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
-        searchBar = (EditText) view.findViewById(R.id.et_search);
-        cancelSearch = (ImageView) view.findViewById(R.id.iv_cancel_search);
-        searchIcon = (ImageView) view.findViewById(R.id.iv_search_icon);
-        selectedSectionHeader = (CustomTextView) view.findViewById(R.id.ctv_selected_section_header);
 
         selectedSectionHeader.setText(PageHeaders.allCombinationsFragment);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);

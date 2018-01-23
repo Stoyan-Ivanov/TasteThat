@@ -28,22 +28,29 @@ import com.stoyanivanov.tastethat.view_utils.rv_adapters.UserAchievementsRecycle
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
 public class UserProfileFragment extends Fragment {
 
+    @BindView(R.id.rv_horizontal_achievements) RecyclerView recyclerViewAchievements;
+    @BindView(R.id.rv_user_combinations) RecyclerView recyclerViewCombinations;
+    @BindView(R.id.ctv_user_uploads) CustomTextView uploadsBtn;
+    @BindView(R.id.ctv_user_likes) CustomTextView likesBtn;
+    @BindView(R.id.ctv_username) CustomTextView username;
+
     private String userId;
     private Combination currCombination;
-    private RecyclerView recyclerViewAchievements;
-    private RecyclerView recyclerViewCombinations;
+    private String activityName;
+
     private ArrayList<Combination> uploadedCombinations;
     private ArrayList<Combination> likedCombinations;
     private ArrayList<Achievement> achievements = new ArrayList<>();
-    private CustomTextView uploadsBtn;
-    private CustomTextView likesBtn;
+
     private MyRecyclerViewAdapter adapter;
     private UserAchievementsRecyclerViewAdapter achievementsAdapter;
-    private String activityName;
 
      public static UserProfileFragment newInstance(String activityName, Combination combination) {
         Bundle arguments = new Bundle();
@@ -63,26 +70,16 @@ public class UserProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
-        recyclerViewAchievements = (RecyclerView) view.findViewById(R.id.rv_horizontal_achievements);
-        recyclerViewCombinations = (RecyclerView) view.findViewById(R.id.rv_user_combinations);
-        uploadsBtn = (CustomTextView) view.findViewById(R.id.ctv_user_uploads);
-        likesBtn = (CustomTextView) view.findViewById(R.id.ctv_user_likes);
+        ButterKnife.bind(this, view);
 
         getExtraArguments();
-
-        try {
-            if(currCombination != null) {
-                userId = currCombination.getUserId();
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        userId = currCombination.getUserId();
 
         instantiateButtons();
         populateAchievementsRV();
         populateCombinationsRV();
+
+        username.setText(currCombination.getUsername());
 
         return view;
     }
@@ -135,22 +132,27 @@ public class UserProfileFragment extends Fragment {
     private void getUserAchievements() {
         achievements.clear();
 
-        tableUsers.child(userId)
-                .child(Constants.USER_ACHIEVEMENTS)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            Achievement currAchievement = dataSnapshot.getValue(Achievement.class);
-                            achievements.add(currAchievement);
+        if(userId != null) {
+            tableUsers.child(userId)
+                    .child(Constants.USER_ACHIEVEMENTS)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                Achievement currAchievement = dataSnapshot.getValue(Achievement.class);
+                                achievements.add(currAchievement);
+                            }
+                            achievementsAdapter.setNewData(achievements);
                         }
-                        achievementsAdapter.setNewData(achievements);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("SII", "onCancelled: error");
-                    }
-                });
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.d("SII", "onCancelled: error");
+                        }
+                    });
+        } else {
+            throw new NullPointerException("Provide non-null user id!");
+        }
     }
 
     private void populateCombinationsRV() {
@@ -191,24 +193,29 @@ public class UserProfileFragment extends Fragment {
     private void getUserUploadedCombinations() {
         uploadedCombinations = new ArrayList<>();
 
-        tableUsers.child(userId)
-                .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        uploadedCombinations.clear();
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            Combination currCombination = dataSnapshot.getValue(Combination.class);
-                            uploadedCombinations.add(currCombination);
+        if(userId != null) {
+            tableUsers.child(userId)
+                    .child(Constants.USER_UPLOADED_COMBINATIONS)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            uploadedCombinations.clear();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                Combination currCombination = dataSnapshot.getValue(Combination.class);
+                                uploadedCombinations.add(currCombination);
+                            }
+
+                            adapter.setNewData(uploadedCombinations);
                         }
 
-                        adapter.setNewData(uploadedCombinations);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("SII", "onCancelled: error");
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.d("SII", "onCancelled: error");
+                        }
+                    });
+        } else {
+            throw new NullPointerException("Provide non-null user id!");
+        }
     }
 
     private void getUserLikedCombinations() {
@@ -225,7 +232,6 @@ public class UserProfileFragment extends Fragment {
                             likedCombinations.add(currCombination);
                         }
                         adapter.setNewData(likedCombinations);
-                        Log.d("SII", likedCombinations.toString());
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

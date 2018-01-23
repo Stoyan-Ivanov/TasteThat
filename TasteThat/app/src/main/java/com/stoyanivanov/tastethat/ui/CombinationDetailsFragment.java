@@ -19,13 +19,22 @@ import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 
 public class CombinationDetailsFragment extends Fragment {
-    private CustomTextView combinationNameHeader;
-    private CustomTextView authorName;
-    private CustomTextView combinationDescription;
+
+    @BindView(R.id.ctv_combination_details_header) CustomTextView combinationNameHeader;
+    @BindView(R.id.iv_back_arrow) ImageView backArrow;
+    @BindView(R.id.ctv_details_username) CustomTextView authorName;
+    @BindView(R.id.ctv_combination_details_description) CustomTextView combinationDescription;
+    @BindViews({R.id.iv_top_left, R.id.iv_top_right,
+            R.id.iv_bottom_left, R.id.iv_bottom_right}) List<ImageView> images;
+
     private Combination currCombination;
-    private ImageView [] images;
     private String activityName;
 
     public static Fragment newInstance(String activityName, Combination combination) {
@@ -44,25 +53,26 @@ public class CombinationDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_combination_details, container, false);
 
-        combinationNameHeader = (CustomTextView) view.findViewById(R.id.ctv_combination_details_header);
-        authorName = (CustomTextView) view.findViewById(R.id.ctv_details_username);
-        combinationDescription = (CustomTextView) view.findViewById(R.id.ctv_combination_details_description);
-        ImageView imageTopLeft = (ImageView) view.findViewById(R.id.iv_top_left);
-        ImageView imageTopRight = (ImageView) view.findViewById(R.id.iv_top_right);
-        ImageView imageBottomLeft = (ImageView) view.findViewById(R.id.iv_bottom_left);
-        ImageView imageBottomRight = (ImageView) view.findViewById(R.id.iv_bottom_right);
-        ImageView backArrow = (ImageView) view.findViewById(R.id.iv_back_arrow);
+        ButterKnife.bind(this, view);
 
-        activityName = getArguments().getString(StartConstants.EXTRA_ACTIVITY_NAME);
-        currCombination = (Combination) getArguments().getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
-
-        images = new ImageView[] {imageTopLeft, imageTopRight, imageBottomLeft, imageBottomRight};
-
+        getExtraArguments();
         loadCombinationName();
         loadAuthorField();
         loadImages();
         loadDescription();
+        configureButtons();
 
+        return view;
+    }
+
+    private void getExtraArguments() {
+        activityName = getArguments().getString(StartConstants.EXTRA_ACTIVITY_NAME);
+
+        currCombination = (Combination) getArguments()
+                .getSerializable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
+    }
+
+    private void configureButtons() {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +80,6 @@ public class CombinationDetailsFragment extends Fragment {
                 fragmentManager.popBackStack();
             }
         });
-
-        return view;
     }
 
     private void loadCombinationName() {
@@ -117,7 +125,7 @@ public class CombinationDetailsFragment extends Fragment {
             Glide.with(TasteThatApplication.getStaticContext())
                     .load(urls.get(i))
                     .centerCrop()
-                    .into(images[i]);
+                    .into(images.get(i));
         }
     }
 
@@ -127,8 +135,8 @@ public class CombinationDetailsFragment extends Fragment {
     //ToDo: REFACTOR AS SOON AS POSSIBLE
     private void hideImageviewsIfNotUsed(int numOfPics) {
         if (numOfPics < 3) {
-            images[2].setVisibility(View.GONE);
-            images[3].setVisibility(View.GONE);
+            images.get(2).setVisibility(View.GONE);
+            images.get(3).setVisibility(View.GONE);
         }
     }
 }

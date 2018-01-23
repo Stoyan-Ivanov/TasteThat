@@ -21,6 +21,8 @@ import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableLikes;
@@ -30,33 +32,30 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableLikes
  */
 
 public class NormalViewHolder extends RecyclerView.ViewHolder {
-    private CustomTextView combinationName;
-    private CustomTextView likeCounter;
-    private TextView user;
-    private ImageView leftImg;
-    private ImageView rightImg;
-    private ImageView options;
+
+    @BindView(R.id.vh_tv_combinationName) CustomTextView combinationName;
+    @BindView(R.id.vh_tv_like_counter) CustomTextView likeCounter;
+    @BindView(R.id.vh_username) TextView username;
+    @BindView(R.id.vh_iv_leftImg) ImageView leftImg;
+    @BindView(R.id.vh_iv_rightImg) ImageView rightImg;
+    @BindView(R.id.vh_options) ImageView options;
+    @BindView(R.id.vh_civ_expand_combinatiov) CircleImageView expandCombination;
+
     private String combinationKey;
-    private CircleImageView expandCombination;
     private String rvTag;
     private MyRecyclerViewAdapter adapter;
 
     public NormalViewHolder(View itemView, String rvTag, MyRecyclerViewAdapter adapter) {
         super(itemView);
-        likeCounter = (CustomTextView) itemView.findViewById(R.id.vh_tv_like_counter);
-        combinationName = (CustomTextView) itemView.findViewById(R.id.vh_tv_combinationName);
-        user = (TextView) itemView.findViewById(R.id.vh_username);
-        leftImg = (ImageView) itemView.findViewById(R.id.vh_iv_leftImg);
-        rightImg = (ImageView) itemView.findViewById(R.id.vh_iv_rightImg);
-        options = (ImageView) itemView.findViewById(R.id.vh_options);
-        expandCombination = (CircleImageView) itemView.findViewById(R.id.vh_civ_expand_combinatiov);
+
+        ButterKnife.bind(this, itemView);
+
         this.rvTag = rvTag;
         this.adapter = adapter;
     }
 
     public void bind(final Combination combination, final OnClickViewHolder listener, final int position) {
         StringBuilder displayNameBuilder = new StringBuilder();
-        combinationKey = combination.getCombinationKey();
         ArrayList<String> urls = combination.getUrls();
         ArrayList<String> components = combination.getComponents();
 
@@ -71,12 +70,12 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
 
         final String displayNameOfCombination = displayNameBuilder.toString();
 
-        user.setText("@"+combination.getUsername());
+        username.setText("@"+combination.getUsername());
         combinationName.setText(displayNameOfCombination);
         loadImage(leftImg, urls.get(0));
         loadImage(rightImg, urls.get(1));
 
-        tableLikes.child(combinationKey)
+        tableLikes.child(combination.getCombinationKey())
                 .addValueEventListener(new ValueEventListener() {
 
                     @Override
@@ -104,13 +103,6 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
 
         if(components.size() > Constants.MIN_REQUIRED_COMPONENTS) {
             expandCombination.setVisibility(View.VISIBLE);
-
-            expandCombination.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO: Imlement
-                }
-            });
         }
     }
 

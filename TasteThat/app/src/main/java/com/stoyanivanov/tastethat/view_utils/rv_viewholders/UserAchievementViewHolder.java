@@ -8,6 +8,8 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.models.Achievement;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -15,12 +17,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class UserAchievementViewHolder extends RecyclerView.ViewHolder {
-    private CircleImageView ivAchievement;
+    @BindView(R.id.iv_user_achievement) CircleImageView ivAchievement;
 
     public UserAchievementViewHolder(View itemView) {
         super(itemView);
 
-        ivAchievement = (CircleImageView) itemView.findViewById(R.id.iv_user_achievement);
+        ButterKnife.bind(this, itemView);
     }
 
     public void bind(Achievement achievement) {

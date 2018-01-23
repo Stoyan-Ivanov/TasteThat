@@ -24,6 +24,8 @@ import com.stoyanivanov.tastethat.view_utils.rv_adapters.AchievementsRecyclerVie
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
@@ -32,17 +34,16 @@ public class AchievementsFragment extends Fragment {
     private ArrayList<Achievement> achievements;
     private AchievementsRecyclerViewAdapter adapter;
     private FirebaseUser currUser;
-    private CircleImageView ivProfilePic;
-    private CustomTextView ctvUserName;
-    private RecyclerView recyclerView;
+
+    @BindView(R.id.iv_achievements_profile_picture) CircleImageView ivProfilePic;
+    @BindView(R.id.ctv_achievements_username) CustomTextView ctvUserName;
+    @BindView(R.id.rv_achievements) RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_achievements, container, false);
 
-        ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_achievements_profile_picture);
-        ctvUserName = (CustomTextView) view.findViewById(R.id.ctv_achievements_username);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_achievements);
+        ButterKnife.bind(this,view);
         currUser = FirebaseAuth.getInstance().getCurrentUser();
 
         getAchievements();

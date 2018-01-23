@@ -18,12 +18,19 @@ import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends Fragment {
 
-    private CircleImageView ivProfilePic;
-    private CustomTextView tvUsername;
+    @BindView(R.id.iv_profile_picture) CircleImageView ivProfilePic;
+    @BindView(R.id.tv_username) CustomTextView tvUsername;
+    @BindView(R.id.btn_liked_combinations) Button btnLiked;
+    @BindView(R.id.btn_uploaded_combinations) Button btnUploaded;
+    @BindView(R.id.btn_achievements) Button btnAchievements;
+    @BindView(R.id.btn_logout) Button btnLogout;
+
     private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -31,19 +38,13 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
 
-        ivProfilePic = (CircleImageView) view.findViewById(R.id.iv_profile_picture);
-        tvUsername = (CustomTextView) view.findViewById(R.id.tv_username);
-        Button btnLiked = (Button) view.findViewById(R.id.btn_liked_combinations);
-        Button btnUploaded = (Button) view.findViewById(R.id.btn_uploaded_combinations);
-        Button btnAchievements = (Button) view.findViewById(R.id.btn_achievements);
-        Button logout = (Button) view.findViewById(R.id.btn_logout);
-
+        ButterKnife.bind(this, view);
         loadUserData();
 
         btnLiked.setOnClickListener(clickListener);
         btnUploaded.setOnClickListener(clickListener);
         btnAchievements.setOnClickListener(clickListener);
-        logout.setOnClickListener(clickListener);
+        btnLogout.setOnClickListener(clickListener);
 
         return view;
     }

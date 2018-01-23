@@ -26,13 +26,18 @@ import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class AddCombinationFragment extends Fragment {
-    private LinearLayout addFieldsContainer;
-    private Button addCombination;
-    private ImageView discardChanges;
+
+    @BindView(R.id.ll_add_fields_container) LinearLayout addFieldsContainer;
+    @BindView(R.id.btn_add_combination) Button addCombination;
+    @BindView(R.id.btn_add_discard) ImageView discardChanges;
+    @BindView(R.id.view_first_ingredient) View firstIngredientField;
+    @BindView(R.id.view_second_ingredient) View secondIngredientField;
+
     private ArrayList<View> allFields = new ArrayList<>();
-    private View firstIngredientField;
-    private View secondIngredientField;
     private ViewGroup container;
 
     @Override
@@ -40,16 +45,17 @@ public class AddCombinationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_combination, container, false);
 
+        ButterKnife.bind(this, view);
         this.container = container;
-        addFieldsContainer = (LinearLayout) view.findViewById(R.id.prl_add_fields_container);
-        discardChanges = (ImageView) view.findViewById(R.id.btn_add_discard);
-        addCombination = (Button) view.findViewById(R.id.btn_add_combination);
-        firstIngredientField = view.findViewById(R.id.view_first_ingredient);
-        secondIngredientField = view.findViewById(R.id.view_second_ingredient);
 
         allFields.clear();
         configureFirstTwoFields();
+        configureButtons();
 
+        return view;
+    }
+
+    private void configureButtons() {
         discardChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +70,6 @@ public class AddCombinationFragment extends Fragment {
                 startImageActivity();
             }
         });
-
-        return view;
     }
 
     private void discardUserChanges() {

@@ -10,27 +10,27 @@ import com.stoyanivanov.tastethat.interfaces.OnClickItemListener;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.network_models.Picture;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by stoyan-ivanov on 16.11.17.
  */
 
 public class ImageViewHolder extends RecyclerView.ViewHolder{
-    private ImageView vhImg;
+    @BindView(R.id.image_vh_iv) ImageView image;
+    private final String httpPrefix = "https:";
 
     public ImageViewHolder(View view) {
         super(view);
-        vhImg = (ImageView) view.findViewById(R.id.image_vh_iv);
-    }
-
-    public ImageView getVhImg() {
-        return vhImg;
+        ButterKnife.bind(this, view);
     }
 
     public void bind(final Picture picture, final OnClickItemListener listener, final int position) {
         Glide.with(TasteThatApplication.getStaticContext())
-                .load("https:" + picture.getThumbnailUrl())
+                .load(httpPrefix + picture.getThumbnailUrl())
                 .centerCrop()
-                .into(vhImg);
+                .into(image);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

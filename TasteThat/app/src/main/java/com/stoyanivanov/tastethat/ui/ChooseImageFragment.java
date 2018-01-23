@@ -23,14 +23,18 @@ import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class ChooseImageFragment extends Fragment {
-    private CustomTextView header;
-    private RecyclerView recyclerView;
+
+    @BindView(R.id.rv_images) CustomTextView header;
+    @BindView(R.id.tv_image_selection_header) RecyclerView recyclerView;
+
     private NextImagesResponse nextImagesResponse;
     private String component;
 
@@ -39,11 +43,10 @@ public class ChooseImageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_image, container, false);
 
-        component = getArguments().getString(StartConstants.EXTRA_FRAGMENT_COMPONENT);
-        header = (CustomTextView) view.findViewById(R.id.tv_image_selection_header);
-        header.setText(component);
+        ButterKnife.bind(this, view);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_images);
+        component = getArguments().getString(StartConstants.EXTRA_FRAGMENT_COMPONENT);
+        header.setText(component);
 
         getNextImages();
         return view;

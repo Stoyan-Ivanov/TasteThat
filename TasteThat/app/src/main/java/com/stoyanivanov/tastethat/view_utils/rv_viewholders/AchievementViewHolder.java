@@ -9,6 +9,8 @@ import com.stoyanivanov.tastethat.models.Achievement;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.CustomTextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -16,14 +18,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class AchievementViewHolder extends RecyclerView.ViewHolder {
-    private CircleImageView ivAchievement;
-    private CustomTextView ctvAchievementName;
+    @BindView(R.id.iv_achievement) CircleImageView ivAchievement;
+    @BindView(R.id.tv_achievement_name) CustomTextView ctvAchievementName;
 
     public AchievementViewHolder(View itemView) {
         super(itemView);
 
-        ivAchievement = (CircleImageView) itemView.findViewById(R.id.iv_achievement);
-        ctvAchievementName = (CustomTextView) itemView.findViewById(R.id.tv_achievement_name);
+        ButterKnife.bind(this, itemView);
     }
 
     public void bind(Achievement achievement) {
