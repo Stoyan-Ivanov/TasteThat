@@ -3,8 +3,8 @@ package com.stoyanivanov.tastethat.view_utils;
 import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.stoyanivanov.tastethat.models.Combination;
-import com.stoyanivanov.tastethat.view_utils.rv_adapters.MyRecyclerViewAdapter;
+import com.stoyanivanov.tastethat.db.models.Combination;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class CustomFilter implements Filterable {
     private ArrayList<Combination> data;
     private String searched;
-    private MyRecyclerViewAdapter adapter;
+    private CombinationsRecyclerViewAdapter adapter;
 
-    public CustomFilter(MyRecyclerViewAdapter adapter) {
+    public CustomFilter(CombinationsRecyclerViewAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -40,7 +40,7 @@ public class CustomFilter implements Filterable {
                 } else {
                     for (Combination combination : data) {
 
-                        if (combination.getCombinationKey().trim().contains(searched)) {
+                        if (combination.toString().trim().contains(searched)) {
                             filteredData.add(combination);
                         }
                     }

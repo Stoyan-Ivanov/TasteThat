@@ -23,6 +23,7 @@ public class Constants {
     public static final String RV_UPLOADED_COMBINATIONS = "rvUploadedCombinations";
     public static final String RV_LIKED_COMBINATIONS = "rvLikedCombinations";
 
-    public static final Integer MAX_ADD_FIELDS = 4;
-    public static final Integer MIN_REQUIRED_COMPONENTS = 2;
+    public static final int MAX_ADD_FIELDS = 4;
+    public static final int MIN_REQUIRED_COMPONENTS = 2;
+    public static final int NUMBER_OF_IMAGE_COLUMNS = 3;
 }

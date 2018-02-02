@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.stoyanivanov.tastethat.ui.CombinationDetailsFragment"
+    tools:context=".ui.fragments.CombinationDetailsFragment"
     android:background="@color/white"
     >
 
@@ -35,7 +35,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_arrow_left" />
 
-                <com.stoyanivanov.tastethat.view_utils.CustomTextView
+                <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
                     android:id="@+id/ctv_combination_details_header"
                     app:layout_widthPercent="80%"
                     app:layout_heightPercent="65%"
@@ -51,7 +51,7 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <com.stoyanivanov.tastethat.view_utils.CustomTextView
+        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_details_username"
             app:layout_widthPercent = "80%"
             app:layout_heightPercent = "5%"
@@ -121,7 +121,7 @@
             app:layout_marginTopPercent = "3%"
             />
 
-        <com.stoyanivanov.tastethat.view_utils.CustomTextView
+        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_combination_details_description_header"
             app:layout_widthPercent = "50%"
             app:layout_heightPercent = "8%"
@@ -136,7 +136,7 @@
             android:gravity="center"
             />
 
-        <com.stoyanivanov.tastethat.view_utils.CustomTextView
+        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_combination_details_description"
 
             android:layout_alignParentBottom="true"

@@ -30,7 +30,7 @@
                 android:src="@drawable/ic_search"
                 />
 
-            <com.stoyanivanov.tastethat.view_utils.CustomTextView
+            <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
                 android:id="@+id/ctv_selected_section_header"
 
                 app:layout_widthPercent = "75%"

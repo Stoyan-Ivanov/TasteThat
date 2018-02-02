@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.stoyanivanov.tastethat.ui.UserProfileFragment"
+    tools:context=".ui.fragments.UserProfileFragment"
     android:background="@color/white">
 
     <android.support.percent.PercentRelativeLayout
@@ -21,7 +21,7 @@
             android:background="@color/amber"
             />
 
-        <com.stoyanivanov.tastethat.view_utils.CustomTextView
+        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_username"
             app:layout_heightPercent="11%"
             app:layout_widthPercent="70%"
@@ -51,7 +51,7 @@
         </android.support.v7.widget.RecyclerView>
 
 
-        <com.stoyanivanov.tastethat.view_utils.CustomTextView
+        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
         android:id="@+id/ctv_user_likes"
         android:layout_below="@+id/rv_horizontal_achievements"
 
@@ -78,7 +78,7 @@
 
             android:background="@color/aluminum"/>
 
-        <com.stoyanivanov.tastethat.view_utils.CustomTextView
+        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_user_uploads"
             android:layout_below="@+id/rv_horizontal_achievements"
 

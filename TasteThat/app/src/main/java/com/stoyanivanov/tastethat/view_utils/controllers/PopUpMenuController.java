@@ -5,9 +5,8 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.activities.MainActivity;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.view_utils.rv_viewholders.NormalViewHolder;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.NormalViewHolder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 

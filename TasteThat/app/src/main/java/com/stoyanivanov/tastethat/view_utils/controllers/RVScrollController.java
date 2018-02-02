@@ -4,7 +4,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.stoyanivanov.tastethat.activities.BaseBottomNavigationActivity;
+import com.stoyanivanov.tastethat.ui.activities.BaseBottomNavigationActivity;
 
 /**
  * Created by stoyan-ivanov on 30.10.17.

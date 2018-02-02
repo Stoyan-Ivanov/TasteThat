@@ -27,6 +27,8 @@
     <!-- User -->
     <string name="author_field">Author: @</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Page headers -->
+    <string name="all_combinations_header">All Combinations</string>
+    <string name="uploads_header">Uploaded Combinations</string>
+    <string name="liked_header">Liked Combinations</string>
 </resources>

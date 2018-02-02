@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.stoyanivanov.tastethat.view_utils.CustomTextView
+            <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
                 android:id="@+id/tv_add_combination_header"
 
                 app:layout_widthPercent = "70%"
@@ -47,7 +47,7 @@
         </android.support.percent.PercentRelativeLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <com.stoyanivanov.tastethat.view_utils.CustomTextView
+    <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
         android:id="@+id/ctv_ingredient_label"
         app:layout_widthPercent = "85%"
         app:layout_heightPercent = "10%"

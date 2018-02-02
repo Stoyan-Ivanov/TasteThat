@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.stoyanivanov.tastethat.ui.MyProfileFragment">
+    tools:context=".ui.fragments.MyProfileFragment">
 
      <android.support.percent.PercentRelativeLayout
          android:id="@+id/prl_profile_pic"
@@ -24,7 +24,7 @@
              />
      </android.support.percent.PercentRelativeLayout>
 
-    <com.stoyanivanov.tastethat.view_utils.CustomTextView
+    <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
         android:id="@+id/tv_username"
         app:layout_heightPercent="9%"
         app:layout_widthPercent="70%"
