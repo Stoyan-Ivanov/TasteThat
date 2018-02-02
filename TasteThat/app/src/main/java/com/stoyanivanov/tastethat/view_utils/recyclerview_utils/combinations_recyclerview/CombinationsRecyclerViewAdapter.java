@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by stoyan-ivanov on 03.10.17.
  */
 
-public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<NormalViewHolder> {
+public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<CombinationsViewHolder> {
     private ArrayList<Combination> mData = new ArrayList<>();
     private OnClickViewHolder listener;
     private String rvTag;
@@ -37,16 +37,16 @@ public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<Normal
     }
 
     @Override
-    public NormalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CombinationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = inflater.from(parent.getContext())
                 .inflate(R.layout.rv_holder, parent, false);
 
-        return new NormalViewHolder(view, rvTag, this);
+        return new CombinationsViewHolder(view, rvTag, this);
     }
 
     @Override
-    public void onBindViewHolder(NormalViewHolder holder, int position) {
+    public void onBindViewHolder(CombinationsViewHolder holder, int position) {
         holder.bind(mData.get(position), listener, position);
         holder.setPopUpMenu(position);
     }

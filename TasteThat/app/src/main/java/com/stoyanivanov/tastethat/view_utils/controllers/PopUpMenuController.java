@@ -6,7 +6,7 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.NormalViewHolder;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
@@ -18,10 +18,10 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 public class PopUpMenuController {
     private PopupMenu popupMenu;
     private String rvTag;
-    private NormalViewHolder viewHolder;
+    private CombinationsViewHolder viewHolder;
     private String combinationNameKey;
 
-    public PopUpMenuController(PopupMenu popupMenu, String rvTag, NormalViewHolder viewHolder) {
+    public PopUpMenuController(PopupMenu popupMenu, String rvTag, CombinationsViewHolder viewHolder) {
         this.popupMenu = popupMenu;
         this.rvTag = rvTag;
         this.viewHolder = viewHolder;

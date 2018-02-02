@@ -27,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by stoyan-ivanov on 16.11.17.
  */
 
-public class NormalViewHolder extends RecyclerView.ViewHolder {
+public class CombinationsViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.vh_tv_combinationName) CustomTextView combinationName;
     @BindView(R.id.vh_tv_like_counter) CustomTextView likeCounter;
@@ -41,7 +41,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
     private String rvTag;
     private CombinationsRecyclerViewAdapter adapter;
 
-    public NormalViewHolder(View itemView, String rvTag, CombinationsRecyclerViewAdapter adapter) {
+    public CombinationsViewHolder(View itemView, String rvTag, CombinationsRecyclerViewAdapter adapter) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
@@ -101,7 +101,7 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
 
                 PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag,
-                                                            NormalViewHolder.this);
+                                                            CombinationsViewHolder.this);
                 popUpMenuController.inflatePopupMenu(position, combinationKey);
             }
         });

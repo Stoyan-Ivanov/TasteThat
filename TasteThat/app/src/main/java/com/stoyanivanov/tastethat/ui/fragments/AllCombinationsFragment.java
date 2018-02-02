@@ -91,8 +91,6 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        Log.d("SII", "instantiateRV: " + allCombinations);
-
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
             public void onItemClick(Combination combination, final CustomTextView likeCounter, int position) {

@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 
@@ -22,9 +23,9 @@ public abstract class BaseRecyclerViewFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
-                    showVirtualKeyboard();
+                    TasteThatApplication.showVirtualKeyboard();
                 } else {
-                    hideVirtualKeyboard(v);
+                    TasteThatApplication.hideVirtualKeyboard(v);
                 }
             }
         });
@@ -34,7 +35,7 @@ public abstract class BaseRecyclerViewFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    Log.d("SII", "onKey: entering");
+
                     startFilteringContent();
                     return true;
                 }
@@ -47,7 +48,7 @@ public abstract class BaseRecyclerViewFragment extends Fragment {
             public void onClick(View v) {
                 if(searchBar.getVisibility() == View.VISIBLE) {
                     startFilteringContent();
-                    hideVirtualKeyboard(v);
+                    TasteThatApplication.hideVirtualKeyboard(v);
                 } else {
                     showAppBarSearch(searchBar,cancelSearch,selectedSectionHeader);
                 }
@@ -59,25 +60,12 @@ public abstract class BaseRecyclerViewFragment extends Fragment {
             public void onClick(View v) {
                 notifyAdapterOnSearchCancel();
                 searchBar.setText("");
-                hideVirtualKeyboard(v);
+                TasteThatApplication.hideVirtualKeyboard(v);
                 showAppBarHeader(searchBar,cancelSearch,selectedSectionHeader);
             }
         });
     }
 
-    private void hideVirtualKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if(imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private void showVirtualKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-    }
 
     private void showAppBarHeader(EditText searchBar, ImageView cancelSearch,
                                   CustomTextView selectedSectionHeader) {

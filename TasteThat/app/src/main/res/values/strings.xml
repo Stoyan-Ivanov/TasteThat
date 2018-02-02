@@ -31,4 +31,9 @@
     <string name="all_combinations_header">All Combinations</string>
     <string name="uploads_header">Uploaded Combinations</string>
     <string name="liked_header">Liked Combinations</string>
+
+    <!-- Toasts -->
+    <string name="toast_successfull_adding">Combination added!</string>
+    <string name="toast_invalid_input">Please provide a valid input</string>
+
 </resources>

@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.activities.ImageActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class AddCombinationFragment extends Fragment {
 
@@ -39,13 +41,14 @@ public class AddCombinationFragment extends Fragment {
 
     private ArrayList<View> allFields = new ArrayList<>();
     private ViewGroup container;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_combination, container, false);
 
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         this.container = container;
 
         allFields.clear();
@@ -60,7 +63,7 @@ public class AddCombinationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 discardUserChanges();
-                hideVirtualKeyboard(v);
+                TasteThatApplication.hideVirtualKeyboard(v);
             }
         });
 
@@ -155,14 +158,13 @@ public class AddCombinationFragment extends Fragment {
             startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD,
                             FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
         } else {
-            showFailToast();
+            TasteThatApplication.showToast(getString(R.string.toast_invalid_input));
         }
     }
 
     private ArrayList<String> getAllComponents() {
         ArrayList<String> components = new ArrayList<>();
 
-        Log.d("SII", "ALL Fields " + allFields.size());
         for (View field: allFields) {
             EditText editText = (EditText) field.findViewById(R.id.et_component);
             String component =  editText.getText().toString();
@@ -175,23 +177,9 @@ public class AddCombinationFragment extends Fragment {
         return components;
     }
 
-    private void showFailToast() {
-        Toast toast=Toast.makeText(getActivity(), Constants.TOAST_FAILED_UPLOAD,Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-        toast.show();
-    }
-
-    private void hideVirtualKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if(imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private void showVirtualKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

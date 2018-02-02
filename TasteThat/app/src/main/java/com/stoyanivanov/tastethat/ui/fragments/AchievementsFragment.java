@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
@@ -33,7 +34,8 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers
 public class AchievementsFragment extends Fragment {
     private ArrayList<Achievement> achievements;
     private MyAchievementsRecyclerViewAdapter adapter;
-    private FirebaseUser currUser;
+    private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+    private Unbinder unbinder;
 
     @BindView(R.id.iv_achievements_profile_picture) CircleImageView ivProfilePic;
     @BindView(R.id.ctv_achievements_username) CustomTextView ctvUserName;
@@ -43,8 +45,7 @@ public class AchievementsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_achievements, container, false);
 
-        ButterKnife.bind(this,view);
-        currUser = FirebaseAuth.getInstance().getCurrentUser();
+        unbinder = ButterKnife.bind(this,view);
 
         getAchievements();
         displayUserInfo();
@@ -91,5 +92,11 @@ public class AchievementsFragment extends Fragment {
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

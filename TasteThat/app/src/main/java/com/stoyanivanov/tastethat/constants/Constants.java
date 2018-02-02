@@ -14,9 +14,6 @@ public class Constants {
     public static final String USER_LIKED_COMBINATIONS = "likedCombinations";
     public static final String USER_ACHIEVEMENTS = "achievements";
 
-    public static final String TOAST_SUCCESSFUL_UPLOAD = "Combination uploaded!";
-    public static final String TOAST_FAILED_UPLOAD = "Please provide a valid input";
-
     public static final String LOGIN_HEADER_TV_FONT = "font/Allura-Regular.ttf";
 
     public static final String RV_ALL_COMBINATIONS = "rvAllCombinations";

@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.db.models.Combination;
@@ -15,7 +16,7 @@ import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
-import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.NormalViewHolder;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,7 @@ public class DatabaseProvider {
                 .child(combinationKey)
                 .setValue(newCombination);
 
-        TasteThatApplication.showToast(Constants.TOAST_SUCCESSFUL_UPLOAD);
+        TasteThatApplication.showToast(String.valueOf((R.string.toast_successfull_adding)));
     }
 
     public void getCombinations(final String nodeId, final ArrayList<Combination> combinations, final AllCombinationsFragment fragment) {
@@ -107,7 +108,7 @@ public class DatabaseProvider {
                 @Override public void onCancelled(DatabaseError databaseError) {}});
     }
 
-    public void getCombinationLikes(Combination combination, final NormalViewHolder viewHolder) {
+    public void getCombinationLikes(Combination combination, final CombinationsViewHolder viewHolder) {
 
         tableLikes.child(combination.getCombinationKey())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
