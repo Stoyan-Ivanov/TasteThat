@@ -30,10 +30,10 @@ import butterknife.Unbinder;
 
 public class ChooseImageFragment extends Fragment {
 
-    @BindView(R.id.rv_images) CustomTextView header;
-    @BindView(R.id.tv_image_selection_header) RecyclerView recyclerView;
+    @BindView(R.id.tv_image_selection_header) CustomTextView header;
+    @BindView(R.id.rv_images) RecyclerView recyclerView;
 
-    private String component;
+    private String componentName;
     private Unbinder unbinder;
 
     public static ChooseImageFragment newInstance(String component) {
@@ -53,10 +53,10 @@ public class ChooseImageFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        component = getArguments().getString(StartConstants.EXTRA_FRAGMENT_COMPONENT);
-        header.setText(component);
+        componentName = getArguments().getString(StartConstants.EXTRA_FRAGMENT_COMPONENT);
+        header.setText(componentName);
 
-        NetworkManager.getInstance().getNextImages(component, this);
+        NetworkManager.getInstance().getNextImages(componentName, this);
         return view;
     }
 

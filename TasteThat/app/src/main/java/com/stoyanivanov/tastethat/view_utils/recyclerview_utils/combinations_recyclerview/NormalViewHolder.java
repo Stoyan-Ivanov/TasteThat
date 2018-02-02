@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
+import com.stoyanivanov.tastethat.db.models.Pair;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
@@ -50,13 +51,12 @@ public class NormalViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Combination combination, final OnClickViewHolder listener, final int position) {
-        ArrayList<String> urls = combination.getUrls();
-        ArrayList<String> components = combination.getComponents();
+        ArrayList<Pair> components = combination.getComponents();
 
         username.setText("@"+combination.getUsername());
         combinationName.setText(combination.toString());
-        loadImage(leftImg, urls.get(0));
-        loadImage(rightImg, urls.get(1));
+        loadImage(leftImg, components.get(0).getComponentUrl());
+        loadImage(rightImg, components.get(1).getComponentUrl());
 
         DatabaseProvider.getInstance().getCombinationLikes(combination, this);
 

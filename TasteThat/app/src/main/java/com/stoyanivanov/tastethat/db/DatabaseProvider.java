@@ -5,9 +5,11 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
+import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
@@ -37,6 +39,43 @@ public class DatabaseProvider {
     }
 
     private DatabaseProvider() {}
+
+    public void saveCombination(final Combination newCombination) {
+        String combinationKey = newCombination.getCombinationKey();
+
+        DatabaseReferences.tableCombinations.child(combinationKey)
+                .setValue(newCombination);
+
+        // create negative timestamp for sorting purpose
+        final DatabaseReference timestampReference = DatabaseReferences.tableCombinations
+                .child(combinationKey).child("timestamp");
+
+        timestampReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    if (!(Long.parseLong(dataSnapshot.getValue().toString()) < 0)) {
+
+                        long negativeTimestamp = 0 - Long.parseLong(dataSnapshot.getValue().toString());
+
+                        newCombination.setTimestamp(negativeTimestamp);
+                        timestampReference.setValue(negativeTimestamp);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("SII", databaseError.getMessage());
+            }
+        });
+
+        DatabaseReferences.tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.USER_UPLOADED_COMBINATIONS)
+                .child(combinationKey)
+                .setValue(newCombination);
+
+        TasteThatApplication.showToast(Constants.TOAST_SUCCESSFUL_UPLOAD);
+    }
 
     public void getCombinations(final String nodeId, final ArrayList<Combination> combinations, final AllCombinationsFragment fragment) {
             Query query;

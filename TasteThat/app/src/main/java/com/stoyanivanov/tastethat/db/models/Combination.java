@@ -11,17 +11,16 @@ import java.util.ArrayList;
 
 public class Combination implements Parcelable {
     private String combinationKey, userId, username;
-    private ArrayList<String> components;
-    private ArrayList<String> urls;
+    private ArrayList<Pair> components;
     private Object timestamp;
 
-    public Combination(String combinationName, ArrayList<String> components, String userId, String username,
-                       ArrayList<String> urls, Object timestamp) {
+    public Combination(String combinationName, ArrayList<Pair> components,
+                       String userId, String username, Object timestamp) {
+
         this.combinationKey = combinationName;
         this.components = components;
         this.userId = userId;
         this.username = username;
-        this.urls = urls;
         this.timestamp = timestamp;
     }
 
@@ -32,7 +31,7 @@ public class Combination implements Parcelable {
         return combinationKey;
     }
 
-    public ArrayList<String> getComponents() {
+    public ArrayList<Pair> getComponents() {
         return components;
     }
 
@@ -42,10 +41,6 @@ public class Combination implements Parcelable {
 
     public String getUsername() {
         return username;
-    }
-
-    public ArrayList<String> getUrls() {
-        return urls;
     }
 
     public Object getTimestamp() {
@@ -61,26 +56,14 @@ public class Combination implements Parcelable {
         String displayString = "";
 
         for(int i = 0; i < components.size() - 1; i++ ) {
-            displayString += components.get(i) + ", ";
+            displayString += components.get(i).getComponentName() + ", ";
         }
-        displayString += components.get(components.size() -1);
+        displayString += components.get(components.size() -1).getComponentName();
 
         return displayString;
     }
 
     protected Combination(Parcel in) {
-        if (in.readByte() == 0x01) {
-            components = new ArrayList<String>();
-            in.readList(components, String.class.getClassLoader());
-        } else {
-            components = null;
-        }
-        if (in.readByte() == 0x01) {
-            urls = new ArrayList<String>();
-            in.readList(urls, String.class.getClassLoader());
-        } else {
-            urls = null;
-        }
         timestamp = (Object) in.readValue(Object.class.getClassLoader());
     }
 
@@ -91,18 +74,6 @@ public class Combination implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (components == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(components);
-        }
-        if (urls == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(urls);
-        }
         dest.writeValue(timestamp);
     }
 

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.db.models.Pair;
 import com.stoyanivanov.tastethat.ui.activities.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.StartConstants;
@@ -24,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class CombinationDetailsFragment extends Fragment {
 
@@ -36,6 +38,7 @@ public class CombinationDetailsFragment extends Fragment {
 
     private Combination currCombination;
     private String activityName;
+    private Unbinder unbinder;
 
     public static Fragment newInstance(String activityName, Combination combination) {
         Bundle arguments = new Bundle();
@@ -53,7 +56,7 @@ public class CombinationDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_combination_details, container, false);
 
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         getExtraArguments();
         loadCombinationName();
@@ -106,12 +109,13 @@ public class CombinationDetailsFragment extends Fragment {
     }
 
     private void loadImages() {
-        ArrayList<String> urls = currCombination.getUrls();
-        hideImageviewsIfNotUsed(urls.size());
+        ArrayList<Pair> components = currCombination.getComponents();
 
-        for(int i = 0; i < urls.size(); i++) {
+        hideImageviewsIfNotUsed(components.size());
+
+        for(int i = 0; i < components.size(); i++) {
             Glide.with(TasteThatApplication.getStaticContext())
-                    .load(urls.get(i))
+                    .load(components.get(i).getComponentUrl())
                     .centerCrop()
                     .into(images.get(i));
         }
@@ -126,5 +130,11 @@ public class CombinationDetailsFragment extends Fragment {
             images.get(2).setVisibility(View.GONE);
             images.get(3).setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
