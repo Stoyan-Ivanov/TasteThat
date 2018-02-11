@@ -28,9 +28,8 @@ public class ImageActivity extends BaseBottomNavigationActivity {
     private ArrayList<Picture> pictures = new ArrayList<>();
     public static int currComponent;
 
-    public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag, ArrayList<String> components) {
+    public static Intent getIntent(Context context, String fragmentTag, ArrayList<String> components) {
         Intent intent = new Intent(context, ImageActivity.class);
-        intent.putExtra(StartConstants.EXTRA_NAV_OPTION, bottomNavOption);
         intent.putExtra(StartConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
         intent.putExtra(StartConstants.EXTRA_FLAG, StartConstants.EXTRA_FLAG_VALUE);
         intent.putStringArrayListExtra(StartConstants.EXTRA_COMPONENTS, components);

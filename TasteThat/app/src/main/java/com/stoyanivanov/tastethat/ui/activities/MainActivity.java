@@ -25,9 +25,12 @@ import com.stoyanivanov.tastethat.view_utils.MyPagerAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends BaseBottomNavigationActivity {
-    
-    private ViewPager viewPager;
+
+    @BindView(R.id.view_pager) ViewPager viewPager;
     private MenuItem prevMenuItem;
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
@@ -43,6 +46,8 @@ public class MainActivity extends BaseBottomNavigationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
 
         init();
 
@@ -61,9 +66,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
                         clearBackstack();
 
                         switch (item.getItemId()) {
-                            case R.id.nav_button_add:
-                                viewPager.setCurrentItem(ViewPagerPages.ADD);
-                                break;
 
                             case R.id.nav_button_home:
                                 viewPager.setCurrentItem(ViewPagerPages.HOME);
@@ -86,7 +88,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
         ArrayList<Fragment> fragments = getFragments();
         FragmentPagerAdapter fragmentPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(fragmentPagerAdapter);
         viewPager.setOffscreenPageLimit(fragments.size());
 
@@ -115,7 +116,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     private void viewPagerBeginPage() {
         switch (fragmentTag) {
-            case FragmentTags.ADD_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.ADD); break;
             case FragmentTags.HOME_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.HOME); break;
             case FragmentTags.MY_PROFILE_FRAGMENT: viewPager.setCurrentItem(ViewPagerPages.MY_PROFILE); break;
             case FragmentTags.OPTIONS_FRAGMENT : viewPager.setCurrentItem(ViewPagerPages.OPTIONS); break;
@@ -125,7 +125,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
 
-        fragments.add(new AddCombinationFragment());
         fragments.add(new AllCombinationsFragment());
         fragments.add(new MyProfileFragment());
         fragments.add(new OptionsFragment());

@@ -63,11 +63,6 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
                         item.setEnabled(true);
 
                         switch (item.getItemId()) {
-                            case R.id.nav_button_add:
-                                startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.ADD, FragmentTags.ADD_FRAGMENT));
-                                break;
-
                             case R.id.nav_button_home:
                                 startActivity(MainActivity.getIntent(getBaseContext(),
                                         BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));

@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.StartConstants;
-import com.stoyanivanov.tastethat.view_utils.views_behaviour.BottomNavigationViewHelper;
 
 public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
@@ -37,17 +36,12 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
         int bottomNavOption = intent.getIntExtra(StartConstants.EXTRA_NAV_OPTION, 0);
         fragmentTag = intent.getStringExtra(StartConstants.EXTRA_FRAGMENT_TAG);
 
-        instantiateBottomNavBar();
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         setSelectedBottomNavOption(bottomNavOption);
     }
 
     protected void setSelectedBottomNavOption(int bottomNavOption) {
         bottomNavigationView.setSelectedItemId(bottomNavOption);
-    }
-
-    protected void instantiateBottomNavBar() {
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
     }
 
     protected void clearBackstack() {

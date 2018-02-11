@@ -1,6 +1,7 @@
 package com.stoyanivanov.tastethat.view_utils.views_behaviour;
 
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,22 +20,26 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
 
 
     private LinearLayoutManager mLinearLayoutManager;
+    private FloatingActionButton floatingActionButton;
 
-    public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager) {
+    public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager, FloatingActionButton floatingActionButton) {
         this.mLinearLayoutManager = linearLayoutManager;
+        this.floatingActionButton = floatingActionButton;
     }
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-        // show and hide bottom navigation
+        // show and hide bottom navigation and FAB
         BottomNavigationView bottomNavigationView = BaseBottomNavigationActivity.bottomNavigationView;
 
         if (dy > 0 && bottomNavigationView.isShown()) {
             bottomNavigationView.setVisibility(View.GONE);
+            floatingActionButton.setVisibility(View.GONE);
         } else if (dy < 0 || dy == 0) {
             bottomNavigationView.setVisibility(View.VISIBLE);
+            floatingActionButton.setVisibility(View.VISIBLE);
         }
         //
 

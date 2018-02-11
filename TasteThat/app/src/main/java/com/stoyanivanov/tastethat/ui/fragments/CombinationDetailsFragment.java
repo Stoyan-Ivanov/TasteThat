@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class CombinationDetailsFragment extends Fragment {
@@ -51,6 +52,19 @@ public class CombinationDetailsFragment extends Fragment {
         return fragment;
     }
 
+    @OnClick(R.id.ctv_details_username)
+        void inflateNewUserProfileFragment() {
+            if(activityName.equals(MainActivity.class.getSimpleName())) {
+                ((MainActivity) getActivity())
+                        .replaceFragment(UserProfileFragment.newInstance(activityName, currCombination));
+            } else {
+                if(activityName.equals(MyProfileActivity.class.getSimpleName())) {
+                    ((MyProfileActivity) getActivity())
+                            .replaceFragment(UserProfileFragment.newInstance(activityName, currCombination));
+                }
+            }
+        }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,7 +74,7 @@ public class CombinationDetailsFragment extends Fragment {
 
         getExtraArguments();
         loadCombinationName();
-        loadAuthorField();
+        loadAuthorName();
         loadImages();
         loadDescription();
         configureButtons();
@@ -88,24 +102,9 @@ public class CombinationDetailsFragment extends Fragment {
         combinationNameHeader.setText(currCombination.toString());
     }
 
-    private void loadAuthorField() {
+    private void loadAuthorName() {
         String authorField = getString(R.string.author_field) + currCombination.getUsername();
         authorName.setText(authorField);
-
-        authorName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(activityName.equals(MainActivity.class.getSimpleName())) {
-                    ((MainActivity) getActivity())
-                            .replaceFragment(UserProfileFragment.newInstance(activityName, currCombination));
-                } else {
-                    if(activityName.equals(MyProfileActivity.class.getSimpleName())) {
-                        ((MyProfileActivity) getActivity())
-                                .replaceFragment(UserProfileFragment.newInstance(activityName, currCombination));
-                    }
-                }
-            }
-        });
     }
 
     private void loadImages() {

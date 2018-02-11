@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class AddCombinationFragment extends Fragment {
@@ -43,6 +44,22 @@ public class AddCombinationFragment extends Fragment {
     private ViewGroup container;
     private Unbinder unbinder;
 
+    public static AddCombinationFragment newInstance() {
+
+        return new AddCombinationFragment();
+    }
+
+    @OnClick(R.id.btn_add_combination)
+        void startNewImageActivity() {
+            startImageActivity();
+        }
+
+    @OnClick(R.id.btn_add_discard)
+        void discardchanges(View view) {
+            discardUserChanges();
+            TasteThatApplication.hideVirtualKeyboard(view);
+        }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,31 +70,14 @@ public class AddCombinationFragment extends Fragment {
 
         allFields.clear();
         configureFirstTwoFields();
-        configureButtons();
 
         return view;
     }
 
-    private void configureButtons() {
-        discardChanges.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                discardUserChanges();
-                TasteThatApplication.hideVirtualKeyboard(v);
-            }
-        });
-
-        addCombination.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startImageActivity();
-            }
-        });
-    }
 
     private void discardUserChanges() {
         for(View field : allFields) {
-            EditText componentField = (EditText) field.findViewById(R.id.et_component);
+            EditText componentField =  field.findViewById(R.id.et_component);
             componentField.setText("");
         }
 
@@ -85,15 +85,15 @@ public class AddCombinationFragment extends Fragment {
     }
 
     private void configureFirstTwoFields() {
-        Button newFieldBtnFirst = (Button) firstIngredientField.findViewById(R.id.btn_add_new_et);
-        CustomTextView fieldCounterFirst = (CustomTextView) firstIngredientField.findViewById(R.id.ctv_et_counter);
+        Button newFieldBtnFirst =  firstIngredientField.findViewById(R.id.btn_add_new_et);
+        CustomTextView fieldCounterFirst = firstIngredientField.findViewById(R.id.ctv_et_counter);
         allFields.add(firstIngredientField);
 
         newFieldBtnFirst.setVisibility(View.INVISIBLE);
         fieldCounterFirst.setText(generateStringForFieldCounter());
 
-        Button newFieldBtnSecond = (Button) secondIngredientField.findViewById(R.id.btn_add_new_et);
-        CustomTextView fieldCounterSecond = (CustomTextView) secondIngredientField.findViewById(R.id.ctv_et_counter);
+        Button newFieldBtnSecond = secondIngredientField.findViewById(R.id.btn_add_new_et);
+        CustomTextView fieldCounterSecond = secondIngredientField.findViewById(R.id.ctv_et_counter);
         allFields.add(secondIngredientField);
 
         newFieldBtnSecond.setOnClickListener(newFieldBtnOnclick);
@@ -116,8 +116,8 @@ public class AddCombinationFragment extends Fragment {
         if (newField != null) {
             allFields.add(newField);
 
-            Button newFieldBtn = (Button) newField.findViewById(R.id.btn_add_new_et);
-            CustomTextView fieldCounter = (CustomTextView) newField.findViewById(R.id.ctv_et_counter);
+            Button newFieldBtn = newField.findViewById(R.id.btn_add_new_et);
+            CustomTextView fieldCounter = newField.findViewById(R.id.ctv_et_counter);
 
             newField.findViewById(R.id.et_component).requestFocus();
 
@@ -155,8 +155,8 @@ public class AddCombinationFragment extends Fragment {
         ArrayList<String> components = getAllComponents();
 
         if(components.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
-            startActivity(ImageActivity.getIntent(getActivity(), BottomNavigationOptions.ADD,
-                            FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
+            startActivity(ImageActivity.getIntent(getActivity(),
+                    FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
         } else {
             TasteThatApplication.showToast(getString(R.string.toast_invalid_input));
         }

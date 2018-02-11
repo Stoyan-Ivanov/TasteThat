@@ -19,7 +19,7 @@ public class PopUpMenuController {
     private PopupMenu popupMenu;
     private String rvTag;
     private CombinationsViewHolder viewHolder;
-    private String combinationNameKey;
+    private String combinationKey;
 
     public PopUpMenuController(PopupMenu popupMenu, String rvTag, CombinationsViewHolder viewHolder) {
         this.popupMenu = popupMenu;
@@ -27,8 +27,8 @@ public class PopUpMenuController {
         this.viewHolder = viewHolder;
     }
 
-    public void inflatePopupMenu(final int position, final String combinationNameKey) {
-        this.combinationNameKey = combinationNameKey;
+    public void inflatePopupMenu(final int position, final String combinationKey) {
+        this.combinationKey = combinationKey;
 
         switch (rvTag) {
             case Constants.RV_ALL_COMBINATIONS:
@@ -110,11 +110,11 @@ public class PopUpMenuController {
     }
 
     public void deleteCombinationFromDB() {
-        tableCombinations.child(combinationNameKey).removeValue();
+        tableCombinations.child(combinationKey).removeValue();
 
         tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .child(combinationNameKey).removeValue();
+                .child(combinationKey).removeValue();
     }
 
 }

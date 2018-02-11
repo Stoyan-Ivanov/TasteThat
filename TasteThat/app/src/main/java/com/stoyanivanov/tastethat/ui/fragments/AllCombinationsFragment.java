@@ -1,6 +1,7 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
@@ -41,6 +43,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     @BindView(R.id.iv_search_icon) ImageView searchIcon;
     @BindView(R.id.ctv_selected_section_header) CustomTextView selectedSectionHeader;
     @BindView(R.id.rv) RecyclerView recyclerView;
+    @BindView(R.id.fab_add_combination) FloatingActionButton fabAddCombination;
 
     private CombinationsRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
@@ -49,6 +52,11 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private boolean isLiked;
     private long likes;
     private Unbinder unbinder;
+
+    @OnClick(R.id.fab_add_combination)
+        void inflateNewAddCombinationFragment() {
+        ((MainActivity) getActivity()).replaceFragment(AddCombinationFragment.newInstance());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,10 +67,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         unbinder = ButterKnife.bind(this, view);
         allCombinations = new ArrayList<>();
 
+        fabAddCombination.setVisibility(View.VISIBLE);
         selectedSectionHeader.setText(R.string.all_combinations_header);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         loadCombinations(null);
+
 
         return view;
     }
@@ -119,7 +129,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         });
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager, fabAddCombination) {
             @Override
             public void onLoadMore() {
                 loadMoreCombinations();

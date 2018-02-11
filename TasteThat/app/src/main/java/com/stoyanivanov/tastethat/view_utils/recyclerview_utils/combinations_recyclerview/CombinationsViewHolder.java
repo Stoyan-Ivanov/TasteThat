@@ -52,6 +52,7 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final Combination combination, final OnClickViewHolder listener, final int position) {
         ArrayList<Pair> components = combination.getComponents();
+        combinationKey = combination.getCombinationKey();
 
         username.setText("@"+combination.getUsername());
         combinationName.setText(combination.toString());
