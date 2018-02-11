@@ -36,5 +36,7 @@
     <string name="toast_successfull_adding">Combination added!</string>
     <string name="toast_invalid_input">Please provide a valid input</string>
     <string name="login_header">Taste that</string>
+    <string name="add_combination_frag_header">Add your combination</string>
+    <string name="options_header">Options</string>
 
 </resources>

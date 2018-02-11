@@ -28,7 +28,7 @@
                 app:layout_marginTopPercent = "3%"
                 android:layout_centerHorizontal="true"
 
-                android:text="Add your combination"
+                android:text="@string/add_combination_frag_header"
                 android:lines="1"
                 android:gravity="center"
                 android:textColor="@color/white"
