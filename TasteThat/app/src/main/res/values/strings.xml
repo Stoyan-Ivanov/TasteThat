@@ -35,5 +35,6 @@
     <!-- Toasts -->
     <string name="toast_successfull_adding">Combination added!</string>
     <string name="toast_invalid_input">Please provide a valid input</string>
+    <string name="login_header">Taste that</string>
 
 </resources>

@@ -55,10 +55,11 @@ public class Combination implements Parcelable {
     public String toString() {
         String displayString = "";
 
-        for(int i = 0; i < components.size() - 1; i++ ) {
+        for(int i = 0; i < components.size() - 2; i++ ) {
             displayString += components.get(i).getComponentName() + ", ";
         }
-        displayString += components.get(components.size() -1).getComponentName();
+        displayString += components.get(components.size() - 2).getComponentName() + " & ";
+        displayString += components.get(components.size() - 1).getComponentName();
 
         return displayString;
     }

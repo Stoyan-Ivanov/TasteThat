@@ -1,4 +1,4 @@
-<RelativeLayout
+<android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_all_combinations"
@@ -95,4 +95,20 @@
 
     </android.support.v7.widget.RecyclerView>
 
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_combination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:elevation="6dp"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        app:layout_marginRightPercent="9%"
+        app:layout_marginBottomPercent="12%"
+
+        android:src="@drawable/ic_add"
+        />
+
+</android.support.percent.PercentRelativeLayout>

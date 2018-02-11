@@ -11,26 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_user_profile_picture"
-            app:layout_heightPercent="12%"
-            app:layout_widthPercent="20%"
-
-            app:layout_marginLeftPercent="5%"
-            app:layout_marginTopPercent="2%"
-            android:background="@color/amber"
-            />
-
         <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_username"
             app:layout_heightPercent="11%"
             app:layout_widthPercent="70%"
 
-            app:layout_marginLeftPercent="5%"
-            app:layout_marginRightPercent="5%"
             app:layout_marginTopPercent="2%"
-
-            android:layout_toRightOf="@+id/iv_user_profile_picture"
+            android:layout_centerHorizontal="true"
 
             android:gravity="center"
             />

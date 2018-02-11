@@ -1,16 +1,16 @@
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     tools:context=".ui.activities.LoginActivity">
 
     <TextView
         android:id="@+id/tv_intro_header"
 
         android:gravity="center"
-        android:text="Taste that"
+        android:text="@string/login_header"
         android:textColor="@color/colorThunderbirdRed"
 
         app:layout_heightPercent="25%"
@@ -38,7 +38,7 @@
         app:layout_heightPercent="12%"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        app:layout_marginTopPercent = "5%"
         android:layout_below="@+id/google_sign_in_button"
         />
 
