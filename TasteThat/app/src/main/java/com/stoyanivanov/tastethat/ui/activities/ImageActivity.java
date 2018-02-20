@@ -42,7 +42,6 @@ public class ImageActivity extends BaseBottomNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
 
-        init();
         currComponent = 0;
         componentsNames = getIntent().getStringArrayListExtra(StartConstants.EXTRA_COMPONENTS);
         replaceFragment();

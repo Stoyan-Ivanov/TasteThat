@@ -20,10 +20,17 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_bottom_navigation);
+        super.setContentView(R.layout.activity_base_bottom_navigation);
     }
 
-    protected void init() {
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+
+        initBottomNavigation();
+    }
+
+    private void initBottomNavigation() {
         Intent intent = getIntent();
         if(intent.getStringExtra(StartConstants.EXTRA_FLAG) == null) {
             try {

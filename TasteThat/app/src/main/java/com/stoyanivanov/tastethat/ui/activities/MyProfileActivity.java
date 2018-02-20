@@ -33,7 +33,6 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
 
-        init();
         replaceFragment(fragmentToDisplay());
         addControlToBottomNavigation();
     }

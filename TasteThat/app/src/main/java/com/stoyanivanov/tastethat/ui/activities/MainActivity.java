@@ -17,6 +17,7 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.constants.ViewPagerPages;
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AddCombinationFragment;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.OptionsFragment;
@@ -48,8 +49,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-
-        init();
 
         addControlToBottomNavigation();
         instantiateViewPager();
@@ -94,7 +93,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                hideVirtualKeyboard();
+                TasteThatApplication.hideVirtualKeyboard(viewPager);
                 bottomNavVisibilityCheck();
             }
 
@@ -131,11 +130,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
         fragments.add(new OptionsFragment());
 
         return fragments;
-    }
-
-    private void hideVirtualKeyboard() {
-        ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
     }
 
     public void replaceFragment(Fragment fragment) {
