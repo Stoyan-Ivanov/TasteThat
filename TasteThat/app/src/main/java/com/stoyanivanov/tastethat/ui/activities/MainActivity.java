@@ -95,6 +95,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 hideVirtualKeyboard();
+                bottomNavVisibilityCheck();
             }
 
             @Override

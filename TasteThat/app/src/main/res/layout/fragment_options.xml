@@ -1,4 +1,5 @@
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-                android:id="@+id/tv_add_combination_header"
+                android:id="@+id/ctv_options_header"
 
                 app:layout_widthPercent = "70%"
                 android:layout_height = "match_parent"

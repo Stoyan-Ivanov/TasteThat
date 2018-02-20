@@ -1,4 +1,4 @@
-<LinearLayout
+<android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,10 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.UserProfileFragment"
     android:background="@color/white">
-
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_username"
@@ -107,6 +103,4 @@
 
         </android.support.v7.widget.RecyclerView>
 
-    </android.support.percent.PercentRelativeLayout>
-
-</LinearLayout>
+</android.support.percent.PercentRelativeLayout>

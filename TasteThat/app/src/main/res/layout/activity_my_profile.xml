@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MyProfileActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/user_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

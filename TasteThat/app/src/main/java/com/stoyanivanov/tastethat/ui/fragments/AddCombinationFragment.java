@@ -166,7 +166,7 @@ public class AddCombinationFragment extends Fragment {
         ArrayList<String> components = new ArrayList<>();
 
         for (View field: allFields) {
-            EditText editText = (EditText) field.findViewById(R.id.et_component);
+            EditText editText = field.findViewById(R.id.et_component);
             String component =  editText.getText().toString();
 
             if(!component.equals("")) {
