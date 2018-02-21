@@ -1,12 +1,8 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
-
-import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -15,6 +11,8 @@ import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 
 public abstract class BaseRecyclerViewFragment extends Fragment {
+
+
 
     protected void configureSearchWidget(final EditText searchBar, final ImageView searchIcon,
                                     final ImageView cancelSearch, final CustomTextView selectedSectionHeader) {

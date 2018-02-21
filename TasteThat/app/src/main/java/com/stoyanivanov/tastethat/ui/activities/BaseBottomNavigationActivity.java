@@ -20,7 +20,14 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_base_bottom_navigation);
+
+        if(!activityIsProperlyStarted(getIntent())) {
+            try {
+                throw new Exception("Activity is not properly started!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -32,13 +39,6 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
     private void initBottomNavigation() {
         Intent intent = getIntent();
-        if(intent.getStringExtra(StartConstants.EXTRA_FLAG) == null) {
-            try {
-                throw new Exception();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
         int bottomNavOption = intent.getIntExtra(StartConstants.EXTRA_NAV_OPTION, 0);
         fragmentTag = intent.getStringExtra(StartConstants.EXTRA_FRAGMENT_TAG);
@@ -49,6 +49,10 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
     protected void setSelectedBottomNavOption(int bottomNavOption) {
         bottomNavigationView.setSelectedItemId(bottomNavOption);
+    }
+
+    private boolean activityIsProperlyStarted(Intent intent) {
+        return intent.getStringExtra(StartConstants.EXTRA_FLAG) != null;
     }
 
     protected void clearBackstack() {

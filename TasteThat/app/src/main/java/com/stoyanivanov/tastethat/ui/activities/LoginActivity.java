@@ -41,18 +41,24 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    private SignInButton googleSignInBtn;
-    private FirebaseAuth mAuth;
+    @BindView(R.id.google_sign_in_button) SignInButton googleSignInBtn;
+    @BindView(R.id.tv_intro_header) TextView header;
+    @BindView(R.id.facebook_login_button) LoginButton facebookSignInButton;
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final int RC_SIGN_IN = 1000;
     private final String TAG = "authentication";
 
     private GoogleApiClient googleApiClient;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private TextView header;
     private CallbackManager facebookCallbackManager;
 
     @Override
@@ -65,22 +71,22 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
-        setContentView(R.layout.activity_login);
+
 
         Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), Constants.LOGIN_HEADER_TV_FONT);
-        header = (TextView) findViewById(R.id.tv_intro_header);
         header.setTypeface(custom_font);
-        mAuth = FirebaseAuth.getInstance();
+
 
         facebookCallbackManager = CallbackManager.Factory.create();
 
-        LoginButton facebookSignInButton = (LoginButton) findViewById(R.id.facebook_login_button);
         facebookSignInButton.setReadPermissions("email");
 
         facebookSignInButton.registerCallback(facebookCallbackManager, new FacebookCallback<LoginResult>() {
@@ -111,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        googleSignInBtn = (SignInButton) findViewById(R.id.google_sign_in_button);
         googleSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,13 +212,13 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null && user.getDisplayName() != null) {
-            Toast.makeText(LoginActivity.this, "Welcome back " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+            TasteThatApplication.showToast("Welcome back " + user.getDisplayName());
         } else {
             Log.e("Error", "User is null");
         }
     }
 
     private void showFailedLogin(){
-        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+        TasteThatApplication.showToast("Authentication failed.");
     }
 }

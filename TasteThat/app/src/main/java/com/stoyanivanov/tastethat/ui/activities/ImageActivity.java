@@ -86,7 +86,7 @@ public class ImageActivity extends BaseBottomNavigationActivity {
     }
 
     private void getComponentsUrls() {
-        String httpPrefix = "https:";
+        final String httpPrefix = "https:";
 
         for (Picture picture : pictures) {
             componentsUrls.add(httpPrefix + picture.getThumbnailUrl());
