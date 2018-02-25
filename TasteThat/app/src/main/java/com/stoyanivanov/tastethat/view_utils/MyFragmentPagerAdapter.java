@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * Created by stoyan-ivanov on 18.10.17.
  */
 
-public class MyPagerAdapter extends FragmentPagerAdapter {
+public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
-    public MyPagerAdapter(FragmentManager supportFragmentManager, ArrayList<Fragment> fragments) {
+    public MyFragmentPagerAdapter(FragmentManager supportFragmentManager, ArrayList<Fragment> fragments) {
         super(supportFragmentManager);
 
         this.fragments = fragments;

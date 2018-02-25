@@ -11,18 +11,16 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.constants.ViewPagerPages;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
-import com.stoyanivanov.tastethat.ui.fragments.AddCombinationFragment;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.OptionsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.MyProfileFragment;
-import com.stoyanivanov.tastethat.view_utils.MyPagerAdapter;
+import com.stoyanivanov.tastethat.view_utils.MyFragmentPagerAdapter;
 
 import java.util.ArrayList;
 
@@ -55,7 +53,8 @@ public class MainActivity extends BaseBottomNavigationActivity {
         viewPagerBeginPage();
     }
 
-    private void addControlToBottomNavigation() {
+    @Override
+    protected void addControlToBottomNavigation() {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -85,7 +84,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     public void instantiateViewPager () {
         ArrayList<Fragment> fragments = getFragments();
-        FragmentPagerAdapter fragmentPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
+        FragmentPagerAdapter fragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
 
         viewPager.setAdapter(fragmentPagerAdapter);
         viewPager.setOffscreenPageLimit(fragments.size());

@@ -34,7 +34,6 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
         setContentView(R.layout.activity_my_profile);
 
         replaceFragment(fragmentToDisplay());
-        addControlToBottomNavigation();
     }
 
 
@@ -50,38 +49,6 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
         }
 
         return fragment;
-    }
-
-    private void addControlToBottomNavigation() {
-
-        bottomNavigationView.setOnNavigationItemSelectedListener (
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem item) {
-                        item.setEnabled(true);
-
-                        switch (item.getItemId()) {
-                            case R.id.nav_button_home:
-                                startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
-                                break;
-
-                            case R.id.nav_button_profile:
-                                startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.MY_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
-                                break;
-
-                            case R.id.nav_button_options:
-                                startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.OPTIONS, FragmentTags.OPTIONS_FRAGMENT));
-                                break;
-                        }
-
-                        finish();
-                        return true;
-                    }
-                });
     }
 
     public void replaceFragment(Fragment fragment) {

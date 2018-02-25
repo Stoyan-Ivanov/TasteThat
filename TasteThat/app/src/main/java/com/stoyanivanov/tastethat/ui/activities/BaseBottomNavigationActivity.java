@@ -5,17 +5,18 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
+import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 
 public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
-    public static BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
     public static String fragmentTag;
 
-    public BaseBottomNavigationActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
 
         initBottomNavigation();
+        addControlToBottomNavigation();
     }
 
     private void initBottomNavigation() {
@@ -49,6 +51,38 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
     protected void setSelectedBottomNavOption(int bottomNavOption) {
         bottomNavigationView.setSelectedItemId(bottomNavOption);
+    }
+
+    protected void addControlToBottomNavigation() {
+
+        bottomNavigationView.setOnNavigationItemSelectedListener (
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem item) {
+                        item.setEnabled(true);
+
+                        switch (item.getItemId()) {
+                            case R.id.nav_button_home:
+                                startActivity(MainActivity.getIntent(getBaseContext(),
+                                        BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
+                                break;
+
+                            case R.id.nav_button_profile:
+                                startActivity(MainActivity.getIntent(getBaseContext(),
+                                        BottomNavigationOptions.MY_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
+                                break;
+
+                            case R.id.nav_button_options:
+                                startActivity(MainActivity.getIntent(getBaseContext(),
+                                        BottomNavigationOptions.OPTIONS, FragmentTags.OPTIONS_FRAGMENT));
+                                break;
+                        }
+
+                        finish();
+                        return true;
+                    }
+                });
     }
 
     private boolean activityIsProperlyStarted(Intent intent) {
