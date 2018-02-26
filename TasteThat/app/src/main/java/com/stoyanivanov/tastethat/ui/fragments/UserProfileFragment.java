@@ -34,7 +34,7 @@ import butterknife.Unbinder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
-public class UserProfileFragment extends Fragment {
+public class UserProfileFragment extends BaseFragment {
 
     @BindView(R.id.rv_horizontal_achievements) RecyclerView recyclerViewAchievements;
     @BindView(R.id.rv_user_combinations) RecyclerView recyclerViewCombinations;
@@ -52,7 +52,6 @@ public class UserProfileFragment extends Fragment {
 
     private CombinationsRecyclerViewAdapter adapter;
     private UserAchievementsRecyclerViewAdapter achievementsAdapter;
-    private Unbinder unbinder;
 
      public static UserProfileFragment newInstance(String activityName, Combination combination) {
         Bundle arguments = new Bundle();
@@ -69,10 +68,7 @@ public class UserProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
-
-        unbinder = ButterKnife.bind(this, view);
+        View view = inflateCurrentView(R.layout.fragment_user_profile, inflater, container);
 
         getExtraArguments();
         userId = currCombination.getUserId();
@@ -244,11 +240,5 @@ public class UserProfileFragment extends Fragment {
 
     private void setBlackColorToText(TextView textView) {
         textView.setTextColor(getResources().getColor(R.color.black));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

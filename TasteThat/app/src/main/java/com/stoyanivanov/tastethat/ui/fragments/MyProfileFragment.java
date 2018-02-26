@@ -2,7 +2,6 @@ package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,9 @@ import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends BaseFragment {
 
     @BindView(R.id.iv_profile_picture) CircleImageView ivProfilePic;
     @BindView(R.id.tv_username) CustomTextView tvUsername;
@@ -33,14 +30,12 @@ public class MyProfileFragment extends Fragment {
     @BindView(R.id.btn_logout) Button btnLogout;
 
     private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        View view = inflateCurrentView(R.layout.fragment_my_profile, inflater, container);
 
-        unbinder = ButterKnife.bind(this, view);
         loadUserData();
 
         btnLiked.setOnClickListener(clickListener);
@@ -90,11 +85,4 @@ public class MyProfileFragment extends Fragment {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
 }

@@ -28,13 +28,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class ChooseImageFragment extends Fragment {
+public class ChooseImageFragment extends BaseFragment {
 
     @BindView(R.id.tv_image_selection_header) CustomTextView header;
     @BindView(R.id.rv_images) RecyclerView recyclerView;
 
     private String componentName;
-    private Unbinder unbinder;
 
     public static ChooseImageFragment newInstance(String component) {
         ChooseImageFragment fragment = new ChooseImageFragment();
@@ -49,9 +48,7 @@ public class ChooseImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_image, container, false);
-
-        unbinder = ButterKnife.bind(this, view);
+        View view = inflateCurrentView(R.layout.fragment_choose_image, inflater, container);
 
         componentName = getArguments().getString(StartConstants.EXTRA_FRAGMENT_COMPONENT);
         header.setText(componentName);
@@ -79,11 +76,5 @@ public class ChooseImageFragment extends Fragment {
 
         RVScrollController scrollController = new RVScrollController();
         scrollController.addControlToBottomNavigation(recyclerView);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

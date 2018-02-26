@@ -35,16 +35,12 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
     private ArrayList<Combination> uploadedCombinations;
     private CombinationsRecyclerViewAdapter adapter;
-    private Unbinder unbinder;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
-
-        unbinder = ButterKnife.bind(this, view);
         uploadedCombinations = new ArrayList<>();
 
         DatabaseProvider.getInstance().getUploadedCombinations(this);
@@ -76,7 +72,7 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
             public void onItemLongClick(Combination combination) {
                 ((MyProfileActivity) getActivity())
                         .replaceFragment(CombinationDetailsFragment
-                                .newInstance(MyProfileActivity.class.getSimpleName(), combination));
+                            .newInstance(MyProfileActivity.class.getSimpleName(), combination));
             }
         });
 
@@ -95,11 +91,5 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
     @Override
     protected void notifyAdapterOnSearchCancel() {
         adapter.setNewData(uploadedCombinations);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

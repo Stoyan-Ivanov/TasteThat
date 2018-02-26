@@ -35,15 +35,11 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
 
     private ArrayList<Combination> likedCombinations;
     private CombinationsRecyclerViewAdapter adapter;
-    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
-
-        unbinder = ButterKnife.bind(this, view);
+        View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
         selectedSectionHeader.setText(R.string.liked_header);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
@@ -94,11 +90,5 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
     @Override
     public void notifyAdapterOnSearchCancel() {
         adapter.setNewData(likedCombinations);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

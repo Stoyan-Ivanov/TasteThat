@@ -51,7 +51,6 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private boolean processLike = false;
     private boolean isLiked;
     private long likes;
-    private Unbinder unbinder;
 
     @OnClick(R.id.fab_add_combination)
         void inflateNewAddCombinationFragment() {
@@ -61,10 +60,8 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view  = inflater.inflate(R.layout.fragment_base_recyclerview, container, false);
+        View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
-        unbinder = ButterKnife.bind(this, view);
         allCombinations = new ArrayList<>();
 
         fabAddCombination.setVisibility(View.VISIBLE);
@@ -203,11 +200,5 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         });
 
         return isLiked;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

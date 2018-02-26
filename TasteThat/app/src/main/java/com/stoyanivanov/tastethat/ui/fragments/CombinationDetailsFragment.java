@@ -2,6 +2,7 @@ package com.stoyanivanov.tastethat.ui.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CombinationDetailsFragment extends Fragment {
+public class CombinationDetailsFragment extends BaseFragment {
 
     @BindView(R.id.ctv_combination_details_header) CustomTextView combinationNameHeader;
     @BindView(R.id.iv_back_arrow) ImageView backArrow;
@@ -39,7 +40,6 @@ public class CombinationDetailsFragment extends Fragment {
 
     private Combination currCombination;
     private String activityName;
-    private Unbinder unbinder;
 
     public static Fragment newInstance(String activityName, Combination combination) {
         Bundle arguments = new Bundle();
@@ -66,11 +66,9 @@ public class CombinationDetailsFragment extends Fragment {
         }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_combination_details, container, false);
-
-        unbinder = ButterKnife.bind(this, view);
+        View view = inflateCurrentView(R.layout.fragment_combination_details, inflater, container);
 
         getExtraArguments();
         loadCombinationName();
@@ -93,7 +91,9 @@ public class CombinationDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.popBackStack();
+                if (fragmentManager != null) {
+                    fragmentManager.popBackStack();
+                }
             }
         });
     }
@@ -129,11 +129,5 @@ public class CombinationDetailsFragment extends Fragment {
             images.get(2).setVisibility(View.GONE);
             images.get(3).setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

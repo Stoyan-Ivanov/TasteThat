@@ -14,7 +14,7 @@ import com.stoyanivanov.tastethat.constants.StartConstants;
 
 public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
-    public BottomNavigationView bottomNavigationView;
+    public static BottomNavigationView bottomNavigationView;
     public static String fragmentTag;
 
 

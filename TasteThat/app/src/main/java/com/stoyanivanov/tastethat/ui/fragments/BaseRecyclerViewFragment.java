@@ -10,9 +10,7 @@ import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 
-public abstract class BaseRecyclerViewFragment extends Fragment {
-
-
+public abstract class BaseRecyclerViewFragment extends BaseFragment {
 
     protected void configureSearchWidget(final EditText searchBar, final ImageView searchIcon,
                                     final ImageView cancelSearch, final CustomTextView selectedSectionHeader) {

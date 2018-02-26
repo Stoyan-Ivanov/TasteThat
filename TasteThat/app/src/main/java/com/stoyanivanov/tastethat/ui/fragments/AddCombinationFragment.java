@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class AddCombinationFragment extends Fragment {
+public class AddCombinationFragment extends BaseFragment {
 
     @BindView(R.id.ll_add_fields_container) LinearLayout addFieldsContainer;
     @BindView(R.id.btn_add_combination) Button addCombination;
@@ -42,10 +42,8 @@ public class AddCombinationFragment extends Fragment {
 
     private ArrayList<View> allFields = new ArrayList<>();
     private ViewGroup container;
-    private Unbinder unbinder;
 
     public static AddCombinationFragment newInstance() {
-
         return new AddCombinationFragment();
     }
 
@@ -55,17 +53,16 @@ public class AddCombinationFragment extends Fragment {
         }
 
     @OnClick(R.id.btn_add_discard)
-        void discardchanges(View view) {
+        void discardChanges(View view) {
             discardUserChanges();
             TasteThatApplication.hideVirtualKeyboard(view);
         }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_combination, container, false);
+        View view = inflateCurrentView(R.layout.fragment_add_combination, inflater, container);
 
-        unbinder = ButterKnife.bind(this, view);
         this.container = container;
 
         allFields.clear();
@@ -112,38 +109,29 @@ public class AddCombinationFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
 
-        View newField = inflater.inflate(R.layout.add_field_inflatable,container,false);
+        View newField = inflater.inflate(R.layout.add_field_inflatable, container,false);
         if (newField != null) {
             allFields.add(newField);
-
-            Button newFieldBtn = newField.findViewById(R.id.btn_add_new_et);
-            CustomTextView fieldCounter = newField.findViewById(R.id.ctv_et_counter);
-
-            newField.findViewById(R.id.et_component).requestFocus();
-
-            if (allFields.size() >= Constants.MAX_ADD_FIELDS) {
-                newFieldBtn.setVisibility(View.INVISIBLE);
-            } else {
-                newFieldBtn.setOnClickListener(newFieldBtnOnclick);
-            }
-
-            fieldCounter.setText(generateStringForFieldCounter());
-
-//            newField.findViewById(R.id.et_component).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//                @Override
-//                public void onFocusChange(View v, boolean hasFocus) {
-//                    if(hasFocus) {
-//                        showVirtualKeyboard();
-//                    } else {
-//                        hideVirtualKeyboard(v);
-//                    }
-//                }
-//            });
-
-            newField.requestFocus();
-
+            configureNewField(newField);
             addFieldsContainer.addView(newField);
         }
+    }
+
+    private void configureNewField(View newField) {
+        Button newFieldBtn = newField.findViewById(R.id.btn_add_new_et);
+        CustomTextView fieldCounter = newField.findViewById(R.id.ctv_et_counter);
+
+        newField.findViewById(R.id.et_component).requestFocus();
+
+        if (allFields.size() >= Constants.MAX_ADD_FIELDS) {
+            newFieldBtn.setVisibility(View.INVISIBLE);
+        } else {
+            newFieldBtn.setOnClickListener(newFieldBtnOnclick);
+        }
+
+        fieldCounter.setText(generateStringForFieldCounter());
+
+        newField.requestFocus();
     }
 
     @NonNull
@@ -175,11 +163,5 @@ public class AddCombinationFragment extends Fragment {
         }
 
         return components;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }
