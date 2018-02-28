@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseBottomNavigationActivity {
+public class MainActivity extends BaseFragmentContainerActivity {
 
     @BindView(R.id.view_pager) ViewPager viewPager;
     private MenuItem prevMenuItem;
@@ -80,7 +80,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
                 });
     }
 
-    public void instantiateViewPager () {
+    private void instantiateViewPager () {
         ArrayList<Fragment> fragments = getFragments();
         FragmentPagerAdapter fragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
 
@@ -131,14 +131,7 @@ public class MainActivity extends BaseBottomNavigationActivity {
 
     public void replaceFragment(Fragment fragment) {
         bottomNavVisibilityCheck();
-
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
+        super.replaceFragment(fragment);
     }
 
     private void bottomNavVisibilityCheck() {

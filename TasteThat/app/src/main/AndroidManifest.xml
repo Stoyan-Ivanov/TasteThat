@@ -55,7 +55,8 @@
         <activity
             android:name=".ui.activities.ImageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activities.MyAchievementsActivity"></activity>
+        <activity android:name=".ui.activities.MyAchievementsActivity" />
+        <activity android:name=".ui.activities.BaseFragmentContainerActivity"></activity>
     </application>
 
 </manifest>

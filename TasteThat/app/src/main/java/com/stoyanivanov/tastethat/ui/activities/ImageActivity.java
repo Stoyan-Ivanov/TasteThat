@@ -22,7 +22,7 @@ import com.stoyanivanov.tastethat.ui.fragments.ChooseImageFragment;
 
 import java.util.ArrayList;
 
-public class ImageActivity extends BaseBottomNavigationActivity {
+public class ImageActivity extends BaseFragmentContainerActivity {
     private ArrayList<String> componentsNames;
     private ArrayList<String> componentsUrls = new ArrayList<>();
     private ArrayList<Picture> pictures = new ArrayList<>();
@@ -49,13 +49,7 @@ public class ImageActivity extends BaseBottomNavigationActivity {
 
     public void replaceFragment() {
         if(currComponent < componentsNames.size()) {
-            ChooseImageFragment nextFragment = ChooseImageFragment.newInstance(componentsNames.get(currComponent));
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-            transaction.replace(R.id.fragment_container, nextFragment);
-            transaction.commit();
+            replaceFragment(ChooseImageFragment.newInstance(componentsNames.get(currComponent)));
 
         } else {
             saveCombinationToDB();

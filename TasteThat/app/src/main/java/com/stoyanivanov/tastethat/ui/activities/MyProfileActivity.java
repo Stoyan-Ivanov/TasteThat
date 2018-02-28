@@ -14,7 +14,7 @@ import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 
-public class MyProfileActivity extends BaseBottomNavigationActivity {
+public class MyProfileActivity extends BaseFragmentContainerActivity {
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
         Intent intent = new Intent(context, MyProfileActivity.class);
@@ -44,16 +44,6 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
         }
 
         return fragment;
-    }
-
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
     }
 
     @Override
