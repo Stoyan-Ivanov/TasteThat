@@ -40,7 +40,7 @@ public class ImageActivity extends BaseBottomNavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image);
+        setContentView(R.layout.activity_base_layout);
 
         currComponent = 0;
         componentsNames = getIntent().getStringArrayListExtra(StartConstants.EXTRA_COMPONENTS);
@@ -54,7 +54,7 @@ public class ImageActivity extends BaseBottomNavigationActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-            transaction.replace(R.id.image_selection_container, nextFragment);
+            transaction.replace(R.id.fragment_container, nextFragment);
             transaction.commit();
 
         } else {

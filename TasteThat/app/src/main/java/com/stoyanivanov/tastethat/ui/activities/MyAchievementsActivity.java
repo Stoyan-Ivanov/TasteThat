@@ -1,5 +1,7 @@
 package com.stoyanivanov.tastethat.ui.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
+import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.models.Achievement;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
@@ -25,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
-public class MyAchievementsActivity extends AppCompatActivity {
+public class MyAchievementsActivity extends BaseBottomNavigationActivity {
     private ArrayList<Achievement> achievements;
     private MyAchievementsRecyclerViewAdapter adapter;
     private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -36,6 +39,14 @@ public class MyAchievementsActivity extends AppCompatActivity {
     CustomTextView ctvUserName;
     @BindView(R.id.rv_achievements)
     RecyclerView recyclerView;
+
+    public static Intent getIntent(Context context, int bottomNavOption) {
+        Intent intent = new Intent(context, MyAchievementsActivity.class);
+        intent.putExtra(StartConstants.EXTRA_NAV_OPTION, bottomNavOption);
+        intent.putExtra(StartConstants.EXTRA_FLAG, StartConstants.EXTRA_FLAG_VALUE);
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +82,8 @@ public class MyAchievementsActivity extends AppCompatActivity {
 
     private void displayUserInfo() {
         String userPhotoUrl = currUser.getPhotoUrl().toString();
-        Glide.with(getApplicationContext()).load(userPhotoUrl)
-                //.centerCrop()
+        Glide.with(getApplicationContext())
+                .load(userPhotoUrl)
                 .into(ivProfilePic);
 
         ctvUserName.setText(currUser.getDisplayName());

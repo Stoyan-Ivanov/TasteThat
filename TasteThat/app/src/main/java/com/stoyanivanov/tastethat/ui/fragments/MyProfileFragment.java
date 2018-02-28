@@ -2,6 +2,7 @@ package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stoyanivanov.tastethat.ui.activities.LoginActivity;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.ui.activities.MyAchievementsActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
@@ -50,8 +52,9 @@ public class MyProfileFragment extends BaseFragment {
         tvUsername.setText(currUser.getDisplayName());
 
         String userPhotoUrl = currUser.getPhotoUrl().toString();
-        Glide.with(getActivity().getApplicationContext()).load(userPhotoUrl)
-                //.centerCrop()
+        Glide.with(getActivity()
+                .getApplicationContext())
+                .load(userPhotoUrl)
                 .into(ivProfilePic);
     }
 
@@ -70,13 +73,16 @@ public class MyProfileFragment extends BaseFragment {
                     break;
 
                 case R.id.btn_achievements:
-                    startActivity(MyProfileActivity.getIntent(getActivity(),
-                            BottomNavigationOptions.MY_PROFILE, FragmentTags.ACHIEVEMENTS_FRAGMENT));
+                    startActivity(MyAchievementsActivity.getIntent(getActivity(),
+                            BottomNavigationOptions.MY_PROFILE));
                     break;
 
                 case R.id.btn_logout:
                     signOut();
                     break;
+
+                default:
+                    Log.e("SII", "onClick: No such fragment!");
             }
         }
     };

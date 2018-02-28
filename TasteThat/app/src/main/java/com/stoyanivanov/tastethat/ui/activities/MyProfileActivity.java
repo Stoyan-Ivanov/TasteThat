@@ -28,7 +28,7 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_profile);
+        setContentView(R.layout.activity_base_layout);
 
         replaceFragment(fragmentToDisplay());
     }
@@ -41,8 +41,6 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
             case FragmentTags.LIKED_FRAGMENT : fragment = new LikedCombinationsFragment(); break;
 
             case FragmentTags.UPLOADS_FRAGMENT : fragment = new UploadedCombinationsFragment(); break;
-
-            case FragmentTags.ACHIEVEMENTS_FRAGMENT : fragment = new AchievementsFragment(); break;
         }
 
         return fragment;
@@ -52,7 +50,7 @@ public class MyProfileActivity extends BaseBottomNavigationActivity {
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        transaction.replace(R.id.user_fragment_container, fragment);
+        transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
 
         transaction.commit();
