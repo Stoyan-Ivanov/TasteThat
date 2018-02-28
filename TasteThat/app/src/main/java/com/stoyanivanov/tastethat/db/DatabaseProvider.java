@@ -14,6 +14,7 @@ import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
+import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
@@ -78,18 +79,16 @@ public class DatabaseProvider {
         TasteThatApplication.showToast(String.valueOf((R.string.toast_successfull_adding)));
     }
 
-    public void getCombinations(final String nodeId, final ArrayList<Combination> combinations, final AllCombinationsFragment fragment) {
-            Query query;
+    public void getCombinations(final String nodeId, final ArrayList<Combination> combinations,
+                                final AllCombinationsFragment fragment, final int orderCriteria) {
 
-            if(nodeId == null) {
-                query = tableCombinations
-                        .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                        .orderByChild("timestamp");
-            } else {
-                query = tableCombinations
-                        .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                        .orderByChild("timestamp")
-                        .startAt((long)combinations.get(combinations.size() - 1).getTimestamp(),nodeId +1);
+            Query query;
+            switch(orderCriteria) {
+                case BaseRecyclerViewFragment.ORDER_MOST_LIKED:
+                    query = getQueryOrderByLikes(tableCombinations, nodeId, combinations);
+                    break;
+
+                default: query = getQueryOrderByTimestamp(tableCombinations, nodeId, combinations);
             }
 
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,6 +105,42 @@ public class DatabaseProvider {
                 }
 
                 @Override public void onCancelled(DatabaseError databaseError) {}});
+    }
+
+    private Query getQueryOrderByTimestamp(DatabaseReference tableReference,
+                                        String nodeId, final ArrayList<Combination> combinations) {
+        Query query;
+
+        if(nodeId == null) {
+            query = tableReference
+                    .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
+                    .orderByChild("timestamp");
+        } else {
+            query = tableReference
+                    .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
+                    .orderByChild("timestamp")
+                    .startAt((long)combinations.get(combinations.size() - 1).getTimestamp(),nodeId +1);
+        }
+
+        return query;
+    }
+
+    private Query getQueryOrderByLikes(DatabaseReference tableReference,
+                                           String nodeId, final ArrayList<Combination> combinations) {
+        Query query;
+
+        if(nodeId == null) {
+            query = tableReference
+                    .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
+                    .orderByChild("likes");
+        } else {
+            query = tableReference
+                    .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
+                    .orderByChild("likes")
+                    .startAt((long)combinations.get(combinations.size() - 1).getTimestamp(),nodeId +1);
+        }
+
+        return query;
     }
 
     public void getCombinationLikes(Combination combination, final CombinationsViewHolder viewHolder) {

@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
+import com.stoyanivanov.tastethat.ui.activities.BaseBottomNavigationActivity;
 import com.stoyanivanov.tastethat.ui.activities.MainActivity;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
@@ -66,6 +67,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
         fabAddCombination.setVisibility(View.VISIBLE);
         selectedSectionHeader.setText(R.string.all_combinations_header);
+        setupOptionsMenu(view);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         loadCombinations(null);
@@ -75,7 +77,8 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     }
 
     private void loadCombinations(String nodeId) {
-        DatabaseProvider.getInstance().getCombinations(nodeId, allCombinations, this);
+        DatabaseProvider.getInstance().getCombinations(nodeId, allCombinations,
+                this, BaseRecyclerViewFragment.ORDER_TIMESTAMP);
     }
 
     private void loadMoreCombinations(){

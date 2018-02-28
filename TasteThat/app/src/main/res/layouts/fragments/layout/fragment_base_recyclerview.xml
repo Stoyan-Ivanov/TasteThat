@@ -19,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true"
-            android:focusableInTouchMode="true"
-            >
+            android:focusableInTouchMode="true">
 
             <ImageView
                 android:id="@+id/iv_search_icon"
@@ -40,13 +39,26 @@
 
                 android:layout_centerHorizontal="true"
                 app:layout_marginLeftPercent="4%"
+                app:layout_marginRightPercent="4%"
                 app:layout_marginTopPercent="10%"
                 app:layout_marginBottomPercent="10%"
 
                 android:layout_toEndOf="@+id/iv_search_icon"
+                android:layout_toStartOf="@+id/iv_options_menu"
 
                 android:gravity="center"
                 android:textColor="@color/white"
+                />
+
+            <ImageView
+                android:id="@+id/iv_options_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_marginRightPercent = "4%"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_options"
                 />
 
             <EditText
