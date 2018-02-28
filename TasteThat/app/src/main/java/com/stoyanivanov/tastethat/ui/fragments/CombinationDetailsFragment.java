@@ -112,7 +112,7 @@ public class CombinationDetailsFragment extends BaseFragment {
 
         for(int i = 0; i < components.size(); i++) {
             Glide.with(TasteThatApplication.getStaticContext())
-                    .load(components.get(i).getComponentUrl())
+                    .load(components.get(i).getComponentImageUrl())
                     .centerCrop()
                     .into(images.get(i));
         }

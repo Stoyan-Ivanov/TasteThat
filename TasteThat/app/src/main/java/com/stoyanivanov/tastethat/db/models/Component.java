@@ -5,22 +5,22 @@ package com.stoyanivanov.tastethat.db.models;
  */
 
 public class Component {
-    private String name;
+    private String componentName;
     private String imageUrl;
 
     public Component() {
     }
 
-    public Component(String componentName, String componentUrl) {
-        this.name = componentName;
-        this.imageUrl = componentUrl;
+    public Component(String componentName, String imageUrl) {
+        this.componentName = componentName;
+        this.imageUrl = imageUrl;
     }
 
     public String getComponentName() {
-        return name;
+        return componentName;
     }
 
-    public String getComponentUrl() {
+    public String getComponentImageUrl() {
         return imageUrl;
     }
 }

@@ -56,8 +56,8 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
 
         username.setText("@"+combination.getUsername());
         combinationName.setText(combination.toString());
-        loadImage(leftImg, components.get(0).getComponentUrl());
-        loadImage(rightImg, components.get(1).getComponentUrl());
+        loadImage(leftImg, components.get(0).getComponentImageUrl());
+        loadImage(rightImg, components.get(1).getComponentImageUrl());
 
         DatabaseProvider.getInstance().getCombinationLikes(combination, this);
 

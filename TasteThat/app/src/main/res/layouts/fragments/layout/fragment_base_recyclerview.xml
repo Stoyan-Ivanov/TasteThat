@@ -43,7 +43,7 @@
                 app:layout_marginTopPercent="10%"
                 app:layout_marginBottomPercent="10%"
 
-                android:layout_toRightOf="@+id/iv_search_icon"
+                android:layout_toEndOf="@+id/iv_search_icon"
 
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -54,14 +54,17 @@
                 app:layout_widthPercent="65%"
                 android:layout_height="match_parent"
 
-                android:layout_toRightOf="@+id/iv_search_icon"
-                android:layout_toLeftOf="@+id/iv_cancel_search"
+                android:layout_toStartOf="@+id/iv_search_icon"
+                android:layout_toEndOf="@+id/iv_cancel_search"
                 app:layout_marginLeftPercent="4%"
                 app:layout_marginRightPercent="4%"
                 app:layout_marginTopPercent="18%"
                 app:layout_marginBottomPercent="18%"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
 
-                android:hint="What goes with..."
+                android:hint="@string/searchBar_hint"
+                android:textColorHint="@color/aluminum"
                 android:maxLines="1"
                 android:inputType="text"
                 android:textColor="@color/black"

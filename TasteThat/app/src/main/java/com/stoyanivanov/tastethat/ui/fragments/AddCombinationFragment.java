@@ -39,6 +39,7 @@ public class AddCombinationFragment extends BaseFragment {
     @BindView(R.id.btn_add_discard) ImageView discardChanges;
     @BindView(R.id.view_first_ingredient) View firstIngredientField;
     @BindView(R.id.view_second_ingredient) View secondIngredientField;
+    @BindView(R.id.iv_back_arrow) ImageView backArrow;
 
     private ArrayList<View> allFields = new ArrayList<>();
     private ViewGroup container;
@@ -67,8 +68,18 @@ public class AddCombinationFragment extends BaseFragment {
 
         allFields.clear();
         configureFirstTwoFields();
+        configureBackButton();
 
         return view;
+    }
+
+    private void configureBackButton() {
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+            }
+        });
     }
 
 

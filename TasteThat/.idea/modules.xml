@@ -3,13 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TasteThat.iml" filepath="$PROJECT_DIR$/TasteThat.iml" />
-      <module fileurl="file://C:\Users\Ivan\Desktop\TasteThat\TasteThat\TasteThat.iml" filepath="C:\Users\Ivan\Desktop\TasteThat\TasteThat\TasteThat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Ivan\Desktop\TasteThat\TasteThat\app\app.iml" filepath="C:\Users\Ivan\Desktop\TasteThat\TasteThat\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
-      <module fileurl="file://C:\Users\Ivan\Desktop\TasteThat\TasteThat\facebook\facebook.iml" filepath="C:\Users\Ivan\Desktop\TasteThat\TasteThat\facebook\facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook-login/facebook-login.iml" filepath="$PROJECT_DIR$/facebook-login/facebook-login.iml" />
-      <module fileurl="file://C:\Users\Ivan\Desktop\TasteThat\TasteThat\facebook-login\facebook-login.iml" filepath="C:\Users\Ivan\Desktop\TasteThat\TasteThat\facebook-login\facebook-login.iml" />
     </modules>
   </component>
 </project>

@@ -19,14 +19,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/iv_back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_marginLeftPercent = "3%"
+
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_arrow_left" />
+
             <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
                 android:id="@+id/tv_add_combination_header"
 
-                app:layout_widthPercent = "70%"
+                app:layout_widthPercent = "75%"
                 android:layout_height = "match_parent"
 
-                app:layout_marginTopPercent = "3%"
                 android:layout_centerHorizontal="true"
+                app:layout_marginLeftPercent="1%"
+                app:layout_marginRightPercent="1%"
+                app:layout_marginTopPercent="3%"
+                app:layout_marginBottomPercent="3%"
+                android:layout_toEndOf="@+id/iv_back_arrow"
+                android:layout_toStartOf="@+id/btn_add_discard"
 
                 android:text="@string/add_combination_frag_header"
                 android:lines="1"
@@ -39,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                app:layout_marginRightPercent="4%"
+                app:layout_marginRightPercent="3%"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"

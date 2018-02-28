@@ -50,4 +50,6 @@
         android:layout_below="@+id/ab_my_achievements_header"
     />
 
+    <include layout="@layout/bottom_navigation"/>
+
 </android.support.percent.PercentRelativeLayout>
