@@ -16,7 +16,7 @@ import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.db.models.Pair;
+import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.network.models.Picture;
 import com.stoyanivanov.tastethat.ui.fragments.ChooseImageFragment;
 
@@ -73,10 +73,10 @@ public class ImageActivity extends BaseBottomNavigationActivity {
         FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
         String combinationKey = DatabaseReferences.tableCombinations.push().getKey();
 
-        ArrayList<Pair> components = new ArrayList<>();
+        ArrayList<Component> components = new ArrayList<>();
 
         for(int i = 0; i < componentsNames.size(); i++) {
-            components.add(new Pair(componentsNames.get(i), componentsUrls.get(i)));
+            components.add(new Component(componentsNames.get(i), componentsUrls.get(i)));
         }
 
         final Combination newCombination = new Combination(combinationKey, components, currUser.getUid(),

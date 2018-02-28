@@ -46,8 +46,6 @@ public class MainActivity extends BaseBottomNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButterKnife.bind(this);
-
         addControlToBottomNavigation();
         instantiateViewPager();
         viewPagerBeginPage();

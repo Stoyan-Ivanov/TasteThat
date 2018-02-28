@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 public class Combination implements Parcelable {
     private String combinationKey, userId, username;
-    private ArrayList<Pair> components;
+    private ArrayList<Component> components;
     private Object timestamp;
 
-    public Combination(String combinationName, ArrayList<Pair> components,
+    public Combination(String combinationName, ArrayList<Component> components,
                        String userId, String username, Object timestamp) {
 
         this.combinationKey = combinationName;
@@ -31,7 +31,7 @@ public class Combination implements Parcelable {
         return combinationKey;
     }
 
-    public ArrayList<Pair> getComponents() {
+    public ArrayList<Component> getComponents() {
         return components;
     }
 

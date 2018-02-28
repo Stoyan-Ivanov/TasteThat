@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.db.models.Pair;
+import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.ui.activities.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.StartConstants;
@@ -25,9 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class CombinationDetailsFragment extends BaseFragment {
 
@@ -108,7 +106,7 @@ public class CombinationDetailsFragment extends BaseFragment {
     }
 
     private void loadImages() {
-        ArrayList<Pair> components = currCombination.getComponents();
+        ArrayList<Component> components = currCombination.getComponents();
 
         hideImageviewsIfNotUsed(components.size());
 

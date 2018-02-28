@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
-import com.stoyanivanov.tastethat.db.models.Pair;
+import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
@@ -51,7 +51,7 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Combination combination, final OnClickViewHolder listener, final int position) {
-        ArrayList<Pair> components = combination.getComponents();
+        ArrayList<Component> components = combination.getComponents();
         combinationKey = combination.getCombinationKey();
 
         username.setText("@"+combination.getUsername());

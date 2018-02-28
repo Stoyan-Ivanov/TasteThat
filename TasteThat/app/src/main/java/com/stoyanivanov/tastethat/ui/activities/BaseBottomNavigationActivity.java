@@ -12,6 +12,8 @@ import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 
+import butterknife.ButterKnife;
+
 public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
 
     public static BottomNavigationView bottomNavigationView;
@@ -34,6 +36,8 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+
+        ButterKnife.bind(this);
 
         initBottomNavigation();
         addControlToBottomNavigation();
