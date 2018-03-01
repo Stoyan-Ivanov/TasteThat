@@ -18,6 +18,7 @@ import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsRecyclerViewAdapter;
+import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 
@@ -41,14 +42,32 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
                              Bundle savedInstanceState) {
         View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
-        uploadedCombinations = new ArrayList<>();
-
-        DatabaseProvider.getInstance().getUploadedCombinations(this);
+        startLoadingCombinations();
 
         selectedSectionHeader.setText(R.string.uploads_header);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         return view;
+    }
+
+    @Override
+    public void startLoadingCombinations() {
+        if(uploadedCombinations == null) {
+            uploadedCombinations = new ArrayList<>();
+        } else {
+            uploadedCombinations.clear();
+        }
+        loadCombinations(null);
+    }
+
+    private void loadCombinations(String nodeId) {
+        DatabaseProvider.getInstance().getUploadedCombinations(nodeId, uploadedCombinations,
+                this, super.currORDER);
+    }
+
+    private void loadMoreCombinations(){
+        String nodeId = uploadedCombinations.get(uploadedCombinations.size() - 1).getCombinationKey();
+        loadCombinations(nodeId);
     }
 
     public void onDataGathered(ArrayList<Combination> combinations) {
@@ -62,7 +81,8 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     protected void instantiateRV() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickViewHolder() {
             @Override
             public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
@@ -78,8 +98,12 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
         recyclerView.setAdapter(adapter);
 
-        RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore() {
+                loadMoreCombinations();
+            }
+        });
     }
 
     @Override

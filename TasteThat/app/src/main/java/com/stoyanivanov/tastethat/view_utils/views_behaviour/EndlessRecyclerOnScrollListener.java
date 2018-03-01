@@ -27,6 +27,10 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
         this.floatingActionButton = floatingActionButton;
     }
 
+    public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager) {
+        this.mLinearLayoutManager = linearLayoutManager;
+    }
+
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
@@ -36,10 +40,14 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
 
         if (dy > 0 && bottomNavigationView.isShown()) {
             bottomNavigationView.setVisibility(View.GONE);
-            floatingActionButton.setVisibility(View.GONE);
+            if(floatingActionButton != null) {
+                floatingActionButton.setVisibility(View.GONE);
+            }
         } else if (dy < 0 || dy == 0) {
             bottomNavigationView.setVisibility(View.VISIBLE);
-            floatingActionButton.setVisibility(View.VISIBLE);
+            if(floatingActionButton != null) {
+                floatingActionButton.setVisibility(View.VISIBLE);
+            }
         }
         //
 

@@ -10,11 +10,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
+import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
-import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
@@ -79,12 +79,12 @@ public class DatabaseProvider {
         TasteThatApplication.showToast(String.valueOf((R.string.toast_successfull_adding)));
     }
 
-    public void getCombinations(final String nodeId, final ArrayList<Combination> combinations,
-                                final AllCombinationsFragment fragment, final int orderCriteria) {
+    public void getAllCombinations(final String nodeId, final ArrayList<Combination> combinations,
+                                   final AllCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
             Query query;
             switch(orderCriteria) {
-                case BaseRecyclerViewFragment.ORDER_MOST_LIKED:
+                case MOST_LIKED:
                     query = getQueryOrderByLikes(tableCombinations, nodeId, combinations);
                     break;
 
@@ -137,7 +137,7 @@ public class DatabaseProvider {
             query = tableReference
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
                     .orderByChild("likes")
-                    .startAt((long)combinations.get(combinations.size() - 1).getTimestamp(),nodeId +1);
+                    .startAt((long)combinations.get(combinations.size() - 1).getLikes(),nodeId +1);
         }
 
         return query;
@@ -159,35 +159,57 @@ public class DatabaseProvider {
                 });
     }
 
-    public void getLikedCombinations(final LikedCombinationsFragment fragment) {
-        final ArrayList<Combination> likedCombinations = new ArrayList<>();
+    public void getLikedCombinations(final String nodeId, final ArrayList<Combination> likedCombinations,
+                                     final LikedCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
-        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(Constants.USER_LIKED_COMBINATIONS)
-                .addValueEventListener(new ValueEventListener() {
+        final DatabaseReference userLikedCombinations = tableUsers.child(FirebaseAuth.getInstance()
+                        .getCurrentUser().getUid()).child(Constants.USER_LIKED_COMBINATIONS);
 
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            Combination currCombination = dataSnapshot.getValue(Combination.class);
-                            likedCombinations.add(currCombination);
-                        }
+        Query query;
+        switch(orderCriteria) {
+            case MOST_LIKED:
+                query = getQueryOrderByLikes(userLikedCombinations, nodeId, likedCombinations);
+                break;
 
-                        fragment.onDataGathered(likedCombinations);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("SII", "onCancelled: error");
-                    }
-                });
+            default:
+                query = getQueryOrderByTimestamp(userLikedCombinations, nodeId, likedCombinations);
+        }
+
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Combination currCombination = dataSnapshot.getValue(Combination.class);
+                    likedCombinations.add(currCombination);
+                }
+
+                fragment.onDataGathered(likedCombinations);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("SII", "onCancelled: error");
+            }
+        });
     }
 
-    public void getUploadedCombinations(final UploadedCombinationsFragment fragment) {
-        final ArrayList<Combination> uploadedCombinations = new ArrayList<>();
+    public void getUploadedCombinations(final String nodeId, final ArrayList<Combination> uploadedCombinations,
+                                        final UploadedCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
-        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .addValueEventListener(new ValueEventListener() {
+        final DatabaseReference userUploadedCombinations = tableUsers.child(FirebaseAuth.getInstance()
+                .getCurrentUser().getUid()).child(Constants.USER_UPLOADED_COMBINATIONS);
+
+        Query query;
+        switch(orderCriteria) {
+            case MOST_LIKED:
+                query = getQueryOrderByLikes(userUploadedCombinations, nodeId, uploadedCombinations);
+                break;
+
+            default:
+                query = getQueryOrderByTimestamp(userUploadedCombinations, nodeId, uploadedCombinations);
+        }
+
+        query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         uploadedCombinations.clear();

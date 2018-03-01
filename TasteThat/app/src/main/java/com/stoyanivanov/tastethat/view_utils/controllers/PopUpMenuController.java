@@ -1,11 +1,15 @@
 package com.stoyanivanov.tastethat.view_utils.controllers;
 
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.constants.ContentOrder;
+import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
@@ -27,25 +31,75 @@ public class PopUpMenuController {
         this.viewHolder = viewHolder;
     }
 
+    public PopUpMenuController(PopupMenu popupMenu) {
+        this.popupMenu = popupMenu;
+    }
+
     public void inflatePopupMenu(final int position, final String combinationKey) {
         this.combinationKey = combinationKey;
 
         switch (rvTag) {
             case Constants.RV_ALL_COMBINATIONS:
-                allCombinationsPopup(position);
+                allCombinationsVHPopup(position);
                 break;
 
             case Constants.RV_UPLOADED_COMBINATIONS:
-                uploadedCombinationsPopup(position);
+                uploadedCombinationsVHPopup(position);
                 break;
 
             case Constants.RV_LIKED_COMBINATIONS:
-                likedCombinationsPopup();
+                likedCombinationsVHPopup();
                 break;
         }
     }
 
-    private void allCombinationsPopup(final int position) {
+    public void inflatePopupMenu(ContentOrder contentOrder, BaseRecyclerViewFragment fragment) {
+        switch (contentOrder) {
+            case TIMESTAMP: orderByLikesPopup(fragment, ContentOrder.TIMESTAMP); break;
+            case MOST_LIKED: orderByTimestampPopup(fragment, ContentOrder.MOST_LIKED); break;
+        }
+    }
+
+    private void orderByLikesPopup(final BaseRecyclerViewFragment fragment,
+                                   final ContentOrder contentOrder) {
+
+        showPopup(R.menu.actionbar_menu_likes);
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.order_by_likes:
+                        fragment.currORDER = contentOrder;
+                        fragment.startLoadingCombinations();
+                        TasteThatApplication.showToast("orderbyLiked");
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void orderByTimestampPopup(final BaseRecyclerViewFragment fragment,
+                                       final ContentOrder contentOrder) {
+        showPopup(R.menu.actionbar_menu_timestamp);
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.order_by_timestamp:
+                        fragment.currORDER = contentOrder;
+                        fragment.startLoadingCombinations();
+                        //TasteThatApplication.showToast("orderbyTimestamp");
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void allCombinationsVHPopup(final int position) {
         showPopup(R.menu.popup_menu_all_combinations);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -65,7 +119,7 @@ public class PopUpMenuController {
 
     }
 
-    private void uploadedCombinationsPopup(final int position) {
+    private void uploadedCombinationsVHPopup(final int position) {
         showPopup(R.menu.popup_menu_uploaded_combinations);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -87,7 +141,7 @@ public class PopUpMenuController {
 
     }
 
-    private void likedCombinationsPopup() {
+    private void likedCombinationsVHPopup() {
         showPopup(R.menu.popup_menu_liked_combinations);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -101,15 +155,14 @@ public class PopUpMenuController {
                 return true;
             }
         });
-
     }
 
-    private void showPopup(int menuId) {
+    public void showPopup(int menuId) {
         popupMenu.getMenuInflater().inflate(menuId, popupMenu.getMenu());
         popupMenu.show();
     }
 
-    public void deleteCombinationFromDB() {
+    private void deleteCombinationFromDB() {
         tableCombinations.child(combinationKey).removeValue();
 
         tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
