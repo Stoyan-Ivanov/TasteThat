@@ -42,11 +42,10 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
                              Bundle savedInstanceState) {
         View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
-        startLoadingCombinations();
-
         selectedSectionHeader.setText(R.string.uploads_header);
         configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
+        startLoadingCombinations();
         return view;
     }
 

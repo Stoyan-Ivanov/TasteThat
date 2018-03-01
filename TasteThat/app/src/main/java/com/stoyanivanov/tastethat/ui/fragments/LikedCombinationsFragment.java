@@ -103,8 +103,6 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
         });
     }
 
-
-
     @Override
     public void startFilteringContent() {
         adapter.setNewData(likedCombinations);

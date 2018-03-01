@@ -61,6 +61,7 @@ public class DatabaseProvider {
                         long negativeTimestamp = 0 - Long.parseLong(dataSnapshot.getValue().toString());
 
                         newCombination.setTimestamp(negativeTimestamp);
+                        saveCombinationToMyUploads(newCombination);
                         timestampReference.setValue(negativeTimestamp);
                     }
                 }
@@ -71,12 +72,14 @@ public class DatabaseProvider {
             }
         });
 
+        TasteThatApplication.showToast(String.valueOf((R.string.toast_successfull_adding)));
+    }
+
+    private void saveCombinationToMyUploads(Combination newCombination) {
         DatabaseReferences.tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .child(combinationKey)
+                .child(newCombination.getCombinationKey())
                 .setValue(newCombination);
-
-        TasteThatApplication.showToast(String.valueOf((R.string.toast_successfull_adding)));
     }
 
     public void getAllCombinations(final String nodeId, final ArrayList<Combination> combinations,
@@ -175,7 +178,7 @@ public class DatabaseProvider {
                 query = getQueryOrderByTimestamp(userLikedCombinations, nodeId, likedCombinations);
         }
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -209,10 +212,9 @@ public class DatabaseProvider {
                 query = getQueryOrderByTimestamp(userUploadedCombinations, nodeId, uploadedCombinations);
         }
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        uploadedCombinations.clear();
                         for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                             Combination currCombination = dataSnapshot.getValue(Combination.class);
                             uploadedCombinations.add(currCombination);

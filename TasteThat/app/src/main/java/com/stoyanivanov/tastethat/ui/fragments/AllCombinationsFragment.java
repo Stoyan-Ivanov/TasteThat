@@ -77,7 +77,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         } else {
             allCombinations.clear();
             if(adapter != null) {
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
             }
         }
         loadCombinations(null);
