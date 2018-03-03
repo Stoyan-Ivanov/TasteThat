@@ -135,12 +135,12 @@ public class DatabaseProvider {
         if(nodeId == null) {
             query = tableReference
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("likes");
+                    .orderByChild("negativeLikes");
         } else {
             query = tableReference
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("likes")
-                    .startAt((long)combinations.get(combinations.size() - 1).getLikes(),nodeId +1);
+                    .orderByChild("negativeLikes")
+                    .startAt((long)combinations.get(combinations.size() - 1).getNegativeLikes(),nodeId +1);
         }
 
         return query;

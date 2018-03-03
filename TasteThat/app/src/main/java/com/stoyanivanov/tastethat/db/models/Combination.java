@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Combination implements Parcelable {
     private String combinationKey, userId, username;
-    private int likes;
+    private int negativeLikes;
     private ArrayList<Component> components;
     private Object timestamp;
 
@@ -23,7 +23,7 @@ public class Combination implements Parcelable {
         this.userId = userId;
         this.username = username;
         this.timestamp = timestamp;
-        this.likes = 0;
+        this.negativeLikes = 0;
     }
 
     public Combination() {
@@ -53,8 +53,8 @@ public class Combination implements Parcelable {
         this.timestamp = timestamp;
     }
 
-    public int getLikes() {
-        return likes;
+    public int getNegativeLikes() {
+        return negativeLikes;
     }
 
     @Override

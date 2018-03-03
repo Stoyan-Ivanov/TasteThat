@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "firebase-tastethat",
-    "tastethat": "firebase-tastethat"
+    "default": "firebase-tastethat"
   }
 }

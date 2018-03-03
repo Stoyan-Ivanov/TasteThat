@@ -1,7 +1,6 @@
 package com.stoyanivanov.tastethat.view_utils.controllers;
 
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,45 +52,28 @@ public class PopUpMenuController {
         }
     }
 
-    public void inflatePopupMenu(ContentOrder contentOrder, BaseRecyclerViewFragment fragment) {
-        switch (contentOrder) {
-            case TIMESTAMP: orderByLikesPopup(fragment, ContentOrder.TIMESTAMP); break;
-            case MOST_LIKED: orderByTimestampPopup(fragment, ContentOrder.MOST_LIKED); break;
-        }
+    public void inflatePopupMenu(BaseRecyclerViewFragment fragment) {
+        orderContentByPopup(fragment);
     }
 
-    private void orderByLikesPopup(final BaseRecyclerViewFragment fragment,
-                                   final ContentOrder contentOrder) {
+    private void orderContentByPopup(final BaseRecyclerViewFragment fragment) {
 
-        showPopup(R.menu.actionbar_menu_likes);
+        showPopup(R.menu.actionbar_menu_order);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.order_by_likes:
-                        fragment.currORDER = contentOrder;
+                        fragment.currORDER = ContentOrder.MOST_LIKED;
                         fragment.startLoadingCombinations();
-                        TasteThatApplication.showToast("orderbyLiked");
+                        TasteThatApplication.showToast("Ordering by likes...");
                         break;
-                }
-                return true;
-            }
-        });
-    }
 
-    private void orderByTimestampPopup(final BaseRecyclerViewFragment fragment,
-                                       final ContentOrder contentOrder) {
-        showPopup(R.menu.actionbar_menu_timestamp);
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
                     case R.id.order_by_timestamp:
-                        fragment.currORDER = contentOrder;
+                        fragment.currORDER = ContentOrder.TIMESTAMP;
                         fragment.startLoadingCombinations();
-                        //TasteThatApplication.showToast("orderbyTimestamp");
+                        TasteThatApplication.showToast("Ordering by timestamp...");
                         break;
                 }
                 return true;
@@ -107,9 +89,11 @@ public class PopUpMenuController {
             public boolean onMenuItemClick(MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.pm_rv_all_share:
+                        showNotAvailableToast();
                         break;
 
                     case R.id.pm_rv_all_report:
+                        showNotAvailableToast();
                         break;
 
                 }
@@ -127,6 +111,7 @@ public class PopUpMenuController {
             public boolean onMenuItemClick(MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.pm_rv_uploaded_share:
+                       showNotAvailableToast();
                         break;
 
                     case R.id.pm_rv_uploaded_delete:
@@ -149,15 +134,15 @@ public class PopUpMenuController {
             public boolean onMenuItemClick(MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.pm_rv_liked_share:
+                        showNotAvailableToast();
                         break;
-
                 }
                 return true;
             }
         });
     }
 
-    public void showPopup(int menuId) {
+    private void showPopup(int menuId) {
         popupMenu.getMenuInflater().inflate(menuId, popupMenu.getMenu());
         popupMenu.show();
     }
@@ -170,4 +155,7 @@ public class PopUpMenuController {
                 .child(combinationKey).removeValue();
     }
 
+    private void showNotAvailableToast() {
+        TasteThatApplication.showToast("Not available yet!");
+    }
 }

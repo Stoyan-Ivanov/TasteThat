@@ -34,7 +34,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), optionsMenu);
                 PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu);
-                popUpMenuController.inflatePopupMenu(currORDER, BaseRecyclerViewFragment.this);
+                popUpMenuController.inflatePopupMenu(BaseRecyclerViewFragment.this);
             }
         });
     }
