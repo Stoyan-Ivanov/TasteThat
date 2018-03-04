@@ -39,7 +39,13 @@
     <string name="toast_successfull_adding">Combination added!</string>
     <string name="toast_invalid_input">Please provide a valid input</string>
     <string name="toast_not_available">"Not available yet!"</string>
+    <string name="toast_caching_enabled">Data caching is enabled!</string>
+    <string name="toast_caching_disabled">Data caching is disabled!</string>
 
     <string name="searchBar_hint">What goes with…</string>
+
+    <!-- Switches -->
+    <string name="switch_data_caching_header">Data caching</string>
+    <string name="switch_notifications_header">Notifications</string>
 
 </resources>

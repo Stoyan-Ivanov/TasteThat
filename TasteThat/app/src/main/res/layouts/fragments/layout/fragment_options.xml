@@ -35,13 +35,27 @@
     </android.support.design.widget.AppBarLayout>
 
     <Switch
-        android:id="@+id/sw_notifications"
+        android:id="@+id/sw_caching"
         app:layout_widthPercent = "70%"
         app:layout_heightPercent = "10%"
 
         app:layout_marginTopPercent = "30%"
-        app:layout_marginLeftPercent = "15%"
-        android:text="Notifications"
+        android:layout_centerHorizontal="true"
+        android:text="@string/switch_data_caching_header"
+        android:textAlignment="center"
+
+        />
+
+    <Switch
+        android:id="@+id/sw_notifications"
+        app:layout_widthPercent = "70%"
+        app:layout_heightPercent = "10%"
+
+        app:layout_marginTopPercent = "5%"
+        android:layout_centerHorizontal="true"
+
+        android:layout_below="@+id/sw_caching"
+        android:text="@string/switch_notifications_header"
         android:textAlignment="center"
         />
 
