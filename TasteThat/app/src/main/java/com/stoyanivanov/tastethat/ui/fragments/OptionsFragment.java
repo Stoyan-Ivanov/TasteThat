@@ -45,14 +45,10 @@ public class OptionsFragment extends BaseFragment {
 
                 if (isChecked) {
                     TasteThatApplication.showToast(TasteThatApplication
-                            .getStaticContext()
-                            .getResources()
-                            .getString(R.string.toast_caching_enabled));
+                            .getStringFromId(R.string.toast_caching_enabled));
                 } else {
                     TasteThatApplication.showToast(TasteThatApplication
-                            .getStaticContext()
-                            .getResources()
-                            .getString(R.string.toast_caching_disabled));
+                            .getStringFromId(R.string.toast_caching_disabled));
                 }
             }
         });

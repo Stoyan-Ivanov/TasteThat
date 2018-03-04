@@ -41,6 +41,9 @@
     <string name="toast_not_available">"Not available yet!"</string>
     <string name="toast_caching_enabled">Data caching is enabled!</string>
     <string name="toast_caching_disabled">Data caching is disabled!</string>
+    <string name="toast_provide_email">Please enter a valid email</string>
+    <string name="toast_provide_password">Please enter a valid password</string>
+    <string name="toast_unable_to_register_user">Unable to register user!</string>
 
     <string name="searchBar_hint">What goes with…</string>
 

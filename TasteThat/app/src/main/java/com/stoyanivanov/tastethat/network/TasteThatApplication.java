@@ -59,4 +59,8 @@ public class TasteThatApplication extends Application {
     public static Context getStaticContext() {
         return applicationContext;
     }
+
+    public static String getStringFromId(int id) {
+        return applicationContext.getResources().getString(id);
+    }
 }

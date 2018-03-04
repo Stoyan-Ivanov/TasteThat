@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.stoyanivanov.tastethat.ui.activities.RegistrationActivity">
+
+    <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
+        android:id="@+id/ctv_intro_header"
+
+        android:gravity="center"
+        android:text="@string/login_header"
+        android:textColor="@color/colorThunderbirdRed"
+
+        app:layout_heightPercent="20%"
+        android:layout_width="match_parent"
+
+        app:layout_marginTopPercent="5%"
+        android:layout_centerHorizontal="true"
+        />
+
+
+    <EditText
+        android:id="@+id/et_register_email"
+        app:layout_widthPercent="80%"
+        app:layout_heightPercent="8%"
+
+        app:layout_marginTopPercent="2%"
+        android:layout_centerHorizontal="true"
+
+        android:drawableStart="@drawable/ic_account"
+        android:drawablePadding="6dp"
+        android:backgroundTint="@color/colorPrimary"
+
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:layout_below="@+id/ctv_intro_header"
+        />
+
+    <EditText
+        android:id="@+id/et_register_password"
+        app:layout_widthPercent="80%"
+        app:layout_heightPercent="8%"
+
+        app:layout_marginTopPercent="2%"
+        android:layout_centerHorizontal="true"
+
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="6dp"
+        android:backgroundTint="@color/colorPrimary"
+
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:layout_below="@+id/et_register_email"
+        />
+
+    <Button
+        android:id="@+id/btn_register"
+        app:layout_widthPercent="55%"
+        app:layout_heightPercent="9%"
+
+        app:layout_marginTopPercent="2%"
+        android:layout_centerHorizontal="true"
+
+        android:background="@drawable/custom_button_shape"
+        android:text="Register"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+
+        android:layout_below="@id/et_register_password"
+        />
+
+    <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
+        android:id="@+id/ctv_login_trigger"
+        app:layout_widthPercent="80%"
+        app:layout_heightPercent="5%"
+
+        app:layout_marginTopPercent="2%"
+        android:layout_centerHorizontal="true"
+
+        android:gravity="center"
+        android:textColor="@color/colorThunderbirdRed"
+        android:text="Already have an account? Sign in!"
+        android:layout_below="@+id/btn_register"
+        />
+
+
+
+</android.support.percent.PercentRelativeLayout>
