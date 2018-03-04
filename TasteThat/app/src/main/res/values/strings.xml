@@ -31,13 +31,14 @@
     <string name="all_combinations_header">All Combinations</string>
     <string name="uploads_header">Uploaded Combinations</string>
     <string name="liked_header">Liked Combinations</string>
+    <string name="login_header">Taste that</string>
+    <string name="add_combination_frag_header">Add your combination</string>
+    <string name="options_header">Options</string>
 
     <!-- Toasts -->
     <string name="toast_successfull_adding">Combination added!</string>
     <string name="toast_invalid_input">Please provide a valid input</string>
-    <string name="login_header">Taste that</string>
-    <string name="add_combination_frag_header">Add your combination</string>
-    <string name="options_header">Options</string>
+    <string name="toast_not_available">"Not available yet!"</string>
 
     <string name="searchBar_hint">What goes with…</string>
 

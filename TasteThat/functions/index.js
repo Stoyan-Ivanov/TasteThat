@@ -1,4 +1,11 @@
 const functions = require('firebase-functions');
+
+// // Create and Deploy Your First Cloud Functions
+// // https://firebase.google.com/docs/functions/write-firebase-functions
+//
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//  response.send("Hello from Firebase!");
+// });
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
@@ -70,4 +77,31 @@ exports.uploadAchievementsChecker = functions.database
 			}
 		});
 	});
+});
+
+exports.negativeLikesUpdaterOnWrite = functions.database
+.ref('likes/{pushId}').onWrite(event => {
+	
+	const pushId = event.params.pushId;
+	const negativeLikes = 0 - event.data.numChildren();
+
+	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
+	
+	const getNegativeLikesPromise = admin.database().ref('combinations'+ pushId)
+	return  getNegativeLikesPromise.once('value').then(snapshot => {
+		snapshot.forEach(combination => {
+			var userId = combination.child('userId').val();
+			console.log(userId);
+			admin.database().ref('users').child(userId).child('uploadedCombinations').child(pushId).child("negativeLikes").set(negativeLikes);	
+		});
+	});		
+});
+
+exports.negativeLikesUpdaterOnDelete = functions.database
+.ref('likes/{pushId}').onDelete(event => {
+	
+	const pushId = event.params.pushId;
+	const negativeLikes = 0 - event.data.numChildren();
+
+	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
 });

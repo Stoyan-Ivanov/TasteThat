@@ -17,7 +17,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.ui.activities.BaseBottomNavigationActivity;
 import com.stoyanivanov.tastethat.ui.activities.MainActivity;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
@@ -30,20 +29,12 @@ import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_rec
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
-
-    @BindView(R.id.et_search) EditText searchBar;
-    @BindView(R.id.iv_cancel_search) ImageView cancelSearch;
-    @BindView(R.id.iv_search_icon) ImageView searchIcon;
-    @BindView(R.id.ctv_selected_section_header) CustomTextView selectedSectionHeader;
-    @BindView(R.id.rv) RecyclerView recyclerView;
     @BindView(R.id.fab_add_combination) FloatingActionButton fabAddCombination;
 
     private CombinationsRecyclerViewAdapter adapter;
@@ -63,22 +54,31 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                              Bundle savedInstanceState) {
         View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
-        allCombinations = new ArrayList<>();
-
         fabAddCombination.setVisibility(View.VISIBLE);
         selectedSectionHeader.setText(R.string.all_combinations_header);
         setupOptionsMenu(view);
-        configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
-        loadCombinations(null);
-
+        startLoadingCombinations();
 
         return view;
     }
 
-    private void loadCombinations(String nodeId) {
-        DatabaseProvider.getInstance().getCombinations(nodeId, allCombinations,
-                this, BaseRecyclerViewFragment.ORDER_TIMESTAMP);
+    @Override
+    public void startLoadingCombinations() {
+        if(allCombinations == null) {
+            allCombinations = new ArrayList<>();
+        } else {
+            allCombinations.clear();
+            if(adapter != null) {
+                //adapter.notifyDataSetChanged();
+            }
+        }
+        loadCombinations(null);
+    }
+
+    public void loadCombinations(String nodeId) {
+        DatabaseProvider.getInstance().getAllCombinations(nodeId, allCombinations,
+                                                this, super.currORDER);
     }
 
     private void loadMoreCombinations(){
@@ -87,12 +87,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     }
 
     public void onDataGathered(ArrayList<Combination> combinations) {
-            if(adapter == null) {
-                allCombinations = combinations;
-                instantiateRV();
-            } else {
-                adapter.setNewData(combinations);
-            }
+        if(adapter == null) {
+            allCombinations = combinations;
+            instantiateRV();
+        } else {
+            adapter.setNewData(combinations);
+        }
     }
 
     @Override
