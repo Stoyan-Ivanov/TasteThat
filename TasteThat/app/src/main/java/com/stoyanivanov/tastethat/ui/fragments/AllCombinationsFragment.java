@@ -35,12 +35,6 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
-
-    @BindView(R.id.et_search) EditText searchBar;
-    @BindView(R.id.iv_cancel_search) ImageView cancelSearch;
-    @BindView(R.id.iv_search_icon) ImageView searchIcon;
-    @BindView(R.id.ctv_selected_section_header) CustomTextView selectedSectionHeader;
-    @BindView(R.id.rv) RecyclerView recyclerView;
     @BindView(R.id.fab_add_combination) FloatingActionButton fabAddCombination;
 
     private CombinationsRecyclerViewAdapter adapter;
@@ -63,7 +57,6 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         fabAddCombination.setVisibility(View.VISIBLE);
         selectedSectionHeader.setText(R.string.all_combinations_header);
         setupOptionsMenu(view);
-        configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         startLoadingCombinations();
 

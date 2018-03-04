@@ -28,12 +28,6 @@ import butterknife.Unbinder;
 
 public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
-    @BindView(R.id.rv) RecyclerView recyclerView;
-    @BindView(R.id.et_search) EditText searchBar;
-    @BindView(R.id.iv_cancel_search) ImageView cancelSearch;
-    @BindView(R.id.iv_search_icon) ImageView searchIcon;
-    @BindView(R.id.ctv_selected_section_header) CustomTextView selectedSectionHeader;
-
     private ArrayList<Combination> uploadedCombinations;
     private CombinationsRecyclerViewAdapter adapter;
 
@@ -43,7 +37,6 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
         View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
         selectedSectionHeader.setText(R.string.uploads_header);
-        configureSearchWidget(searchBar,searchIcon,cancelSearch,selectedSectionHeader);
 
         startLoadingCombinations();
         return view;

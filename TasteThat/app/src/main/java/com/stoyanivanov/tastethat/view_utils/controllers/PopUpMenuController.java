@@ -156,6 +156,9 @@ public class PopUpMenuController {
     }
 
     private void showNotAvailableToast() {
-        TasteThatApplication.showToast("Not available yet!");
+        TasteThatApplication.showToast(TasteThatApplication
+                .getStaticContext()
+                .getResources()
+                .getString(R.string.toast_not_available));
     }
 }
