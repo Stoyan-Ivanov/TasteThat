@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
 public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.google_sign_in_button) SignInButton googleSignInBtn;
-    @BindView(R.id.tv_intro_header) TextView header;
+    @BindView(R.id.ctv_intro_header) TextView header;
     @BindView(R.id.facebook_login_button) LoginButton facebookSignInButton;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();

@@ -38,7 +38,7 @@ public class CustomTextView extends android.support.v7.widget.AppCompatTextView 
 
     private TextPaint mPaint;
 
-    private float mMaxTextSize = 120;
+    private float mMaxTextSize = 250;
 
     private float mSpacingMult = 1.0f;
 
