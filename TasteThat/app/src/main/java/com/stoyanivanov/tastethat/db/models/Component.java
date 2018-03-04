@@ -6,14 +6,14 @@ package com.stoyanivanov.tastethat.db.models;
 
 public class Component {
     private String componentName;
-    private String imageUrl;
+    private String componentImageUrl;
 
     public Component() {
     }
 
     public Component(String componentName, String imageUrl) {
         this.componentName = componentName;
-        this.imageUrl = imageUrl;
+        this.componentImageUrl = imageUrl;
     }
 
     public String getComponentName() {
@@ -21,6 +21,6 @@ public class Component {
     }
 
     public String getComponentImageUrl() {
-        return imageUrl;
+        return componentImageUrl;
     }
 }
