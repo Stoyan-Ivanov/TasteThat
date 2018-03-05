@@ -2,7 +2,6 @@ package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.controllers.PopUpMenuController;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 

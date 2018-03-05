@@ -10,11 +10,8 @@ import android.os.Bundle;
 
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.BuildConfig;
@@ -44,7 +41,7 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import butterknife.BindView;

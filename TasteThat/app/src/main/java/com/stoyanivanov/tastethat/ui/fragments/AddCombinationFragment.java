@@ -4,23 +4,17 @@ package com.stoyanivanov.tastethat.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.activities.ImageActivity;
-import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
@@ -28,9 +22,7 @@ import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class AddCombinationFragment extends BaseFragment {
 

@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 

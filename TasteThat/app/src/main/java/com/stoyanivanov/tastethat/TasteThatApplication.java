@@ -1,4 +1,4 @@
-package com.stoyanivanov.tastethat.network;
+package com.stoyanivanov.tastethat;
 
 import android.app.Application;
 import android.content.Context;

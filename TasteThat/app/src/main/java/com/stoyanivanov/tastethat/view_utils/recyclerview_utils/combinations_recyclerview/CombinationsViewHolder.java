@@ -13,7 +13,7 @@ import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.controllers.PopUpMenuController;
 

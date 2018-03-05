@@ -13,7 +13,7 @@ import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;

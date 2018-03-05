@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,7 +14,7 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.constants.ViewPagerPages;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.OptionsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.MyProfileFragment;
@@ -25,7 +23,6 @@ import com.stoyanivanov.tastethat.view_utils.MyFragmentPagerAdapter;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseFragmentContainerActivity {
 

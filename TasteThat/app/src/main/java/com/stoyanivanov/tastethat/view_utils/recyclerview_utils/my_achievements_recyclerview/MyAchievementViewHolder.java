@@ -6,7 +6,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.db.models.Achievement;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import butterknife.BindView;

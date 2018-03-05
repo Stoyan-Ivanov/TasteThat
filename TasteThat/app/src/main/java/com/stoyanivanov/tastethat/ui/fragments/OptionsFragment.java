@@ -3,7 +3,6 @@ package com.stoyanivanov.tastethat.ui.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.widget.Switch;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 
 import butterknife.BindView;
 
