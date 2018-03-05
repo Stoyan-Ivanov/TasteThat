@@ -1,6 +1,7 @@
 package com.stoyanivanov.tastethat.ui.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
+import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.network.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
@@ -23,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegistrationActivity extends AppCompatActivity {
+    @BindView(R.id.ctv_intro_header) CustomTextView header;
     @BindView(R.id.et_register_email) EditText etEmail;
     @BindView(R.id.et_register_password) EditText etPassword;
     @BindView(R.id.ctv_login_trigger) CustomTextView loginTrigger;
@@ -32,6 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
     void registerUser() {
         String email = etEmail.getText().toString().trim();
         String password  = etPassword.getText().toString().trim();
+        final int minSymbolsForValidPassword = 6;
 
         if(TextUtils.isEmpty(email)){
             TasteThatApplication.showToast(TasteThatApplication
@@ -42,6 +46,12 @@ public class RegistrationActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(password)){
             TasteThatApplication.showToast(TasteThatApplication
                     .getStringFromId(R.string.toast_provide_password));
+            return;
+        }
+
+        if(password.length() < minSymbolsForValidPassword) {
+            TasteThatApplication.showToast(TasteThatApplication
+                    .getStringFromId(R.string.toast_not_long_enough_password));
             return;
         }
 
@@ -61,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.ctv_login_trigger)
-    void startLoginActivitity() {
+    void startLoginActivity() {
         startActivity(new Intent(this, LoginActivity.class));
     }
 
@@ -71,5 +81,8 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         ButterKnife.bind(this);
+
+        Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), Constants.LOGIN_HEADER_TV_FONT);
+        header.setTypeface(custom_font);
     }
 }

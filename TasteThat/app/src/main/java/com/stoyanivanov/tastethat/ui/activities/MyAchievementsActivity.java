@@ -81,12 +81,22 @@ public class MyAchievementsActivity extends BaseBottomNavigationActivity {
     }
 
     private void displayUserInfo() {
-        String userPhotoUrl = currUser.getPhotoUrl().toString();
-        Glide.with(getApplicationContext())
-                .load(userPhotoUrl)
-                .into(ivProfilePic);
+        String userPhotoUrl = "";
+        if(currUser.getPhotoUrl() != null) {
+            userPhotoUrl = currUser.getPhotoUrl().toString();
+        }
 
-        ctvUserName.setText(currUser.getDisplayName());
+        if(userPhotoUrl.isEmpty()) {
+            ivProfilePic.setImageResource(R.drawable.default_user_picture);
+        } else {
+            Glide.with(this)
+                    .load(userPhotoUrl)
+                    .into(ivProfilePic);
+        }
+
+        if(currUser != null) {
+            ctvUserName.setText(currUser.getDisplayName());
+        }
     }
 
     private void instantiateRV() {
