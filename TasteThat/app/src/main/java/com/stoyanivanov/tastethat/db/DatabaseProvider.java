@@ -72,7 +72,7 @@ public class DatabaseProvider {
             }
         });
 
-        TasteThatApplication.showToast(String.valueOf((R.string.toast_successfull_adding)));
+        TasteThatApplication.showToast(TasteThatApplication.getStringFromId((R.string.toast_successfull_adding)));
     }
 
     private void saveCombinationToMyUploads(Combination newCombination) {

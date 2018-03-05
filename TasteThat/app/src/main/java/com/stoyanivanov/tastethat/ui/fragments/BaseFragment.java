@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     Unbinder unbinder;
 
     protected View inflateCurrentView(int layoutResID, LayoutInflater inflater, ViewGroup container) {
