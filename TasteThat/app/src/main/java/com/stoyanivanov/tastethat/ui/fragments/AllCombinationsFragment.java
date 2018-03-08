@@ -40,6 +40,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private CombinationsRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
     private Combination currentCombination;
+    private CustomTextView likesField;
     private boolean processLike = false;
     private boolean isLiked;
     private long likes;
@@ -111,9 +112,8 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         likes = dataSnapshot.child(combinationKey).getChildrenCount();
+                        combinationIsLiked(combinationKey);
 
-                        long manipulatedLikes = (controlLikesInDB(likes, combinationKey));
-                        likeCounter.setText(String.valueOf(manipulatedLikes));
                     }
 
                     @Override
@@ -137,6 +137,14 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         });
     }
 
+    private void setLikesInLikesField() {
+        if(isLiked) {
+            likesField.setText(String.valueOf(--likes));
+        } else {
+            likesField.setText(String.valueOf(++likes));
+        }
+    }
+
     @Override
     public void startFilteringContent() {
         adapter.setNewData(allCombinations);
@@ -148,15 +156,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         adapter.setNewData(allCombinations);
     }
 
-    public long controlLikesInDB(long likes, String nameOfCombination) {
-        if(combinationIsLiked(nameOfCombination)) {
-            return --likes;
-        }
-
-        return ++likes;
-    }
-
-    public boolean combinationIsLiked(final String combinationKey) {
+    public void combinationIsLiked(final String combinationKey) {
 
         processLike = true;
         isLiked = false;
@@ -193,6 +193,8 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                             processLike = false;
 
                         }
+
+                        setLikesInLikesField();
                     }
                 }
 
@@ -201,7 +203,5 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                 Log.d("SII", "OnCancel: combinationIsLiked");
             }
         });
-
-        return isLiked;
     }
 }

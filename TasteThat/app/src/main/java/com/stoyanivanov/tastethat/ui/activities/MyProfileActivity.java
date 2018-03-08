@@ -45,14 +45,4 @@ public class MyProfileActivity extends BaseFragmentContainerActivity {
 
         return fragment;
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        startActivity(MainActivity.getIntent(getBaseContext(),
-                BottomNavigationOptions.MY_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
-
-        finish();
-    }
 }
