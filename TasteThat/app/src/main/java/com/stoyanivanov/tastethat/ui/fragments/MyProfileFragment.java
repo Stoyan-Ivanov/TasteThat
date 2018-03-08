@@ -49,13 +49,25 @@ public class MyProfileFragment extends BaseFragment {
     }
 
     private void loadUserData() {
-        tvUsername.setText(currUser.getDisplayName());
+        if(currUser.getDisplayName() != null) {
+            tvUsername.setText(currUser.getDisplayName());
+        } else {
+            tvUsername.setText(currUser.getEmail());
+        }
 
-        String userPhotoUrl = currUser.getPhotoUrl().toString();
-        Glide.with(getActivity()
-                .getApplicationContext())
-                .load(userPhotoUrl)
-                .into(ivProfilePic);
+        String userPhotoUrl = "";
+        if(currUser.getPhotoUrl() != null) {
+            userPhotoUrl = currUser.getPhotoUrl().toString();
+        }
+
+        if(userPhotoUrl.isEmpty()) {
+            ivProfilePic.setImageResource(R.drawable.default_user_picture);
+        } else {
+            Glide.with(getActivity()
+                    .getApplicationContext())
+                    .load(userPhotoUrl)
+                    .into(ivProfilePic);
+        }
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {

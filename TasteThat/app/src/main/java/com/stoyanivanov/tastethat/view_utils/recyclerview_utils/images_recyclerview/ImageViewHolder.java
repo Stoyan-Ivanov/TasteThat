@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.models.Picture;
 
 import butterknife.BindView;

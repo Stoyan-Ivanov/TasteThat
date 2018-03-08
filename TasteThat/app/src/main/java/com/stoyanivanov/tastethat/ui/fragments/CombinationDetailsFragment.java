@@ -17,7 +17,7 @@ import com.stoyanivanov.tastethat.ui.activities.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.network.TasteThatApplication;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import java.util.ArrayList;

@@ -37,6 +37,7 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
         View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
         selectedSectionHeader.setText(R.string.uploads_header);
+        optionsMenu.setImageAlpha(0);
 
         startLoadingCombinations();
         return view;

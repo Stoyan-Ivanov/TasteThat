@@ -23,4 +23,7 @@ public class Constants {
     public static final int MAX_ADD_FIELDS = 4;
     public static final int MIN_REQUIRED_COMPONENTS = 2;
     public static final int NUMBER_OF_IMAGE_COLUMNS = 3;
+
+    public static final String SHARED_PREFERENCES = "SharedPrefs";
+    public static final String CACHING_KEY = "caching";
 }
