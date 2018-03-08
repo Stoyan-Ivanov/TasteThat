@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.ctv_registration_trigger)
     void startRegistrationActivity() {
         startActivity(new Intent(this, RegistrationActivity.class));
+        finish();
     }
 
     @OnClick(R.id.btn_sign_in)

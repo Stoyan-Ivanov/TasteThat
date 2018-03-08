@@ -43,7 +43,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private CustomTextView likesField;
     private boolean processLike = false;
     private boolean isLiked;
-    private long likes;
+    private long likes = 0;
 
     @OnClick(R.id.fab_add_combination)
         void inflateNewAddCombinationFragment() {
@@ -70,9 +70,6 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
             allCombinations = new ArrayList<>();
         } else {
             allCombinations.clear();
-            if(adapter != null) {
-                //adapter.notifyDataSetChanged();
-            }
         }
         loadCombinations(null);
     }
@@ -106,6 +103,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
             @Override
             public void onItemClick(Combination combination, final CustomTextView likeCounter, int position) {
                 final String combinationKey = combination.getCombinationKey();
+                likesField = likeCounter;
                 currentCombination = combination;
 
                 tableLikes.addListenerForSingleValueEvent(new ValueEventListener() {

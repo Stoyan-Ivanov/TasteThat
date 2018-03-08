@@ -73,6 +73,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @OnClick(R.id.ctv_login_trigger)
     void startLoginActivity() {
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override

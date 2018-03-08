@@ -32,6 +32,12 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
     private CombinationsRecyclerViewAdapter adapter;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        instantiateRV();
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
