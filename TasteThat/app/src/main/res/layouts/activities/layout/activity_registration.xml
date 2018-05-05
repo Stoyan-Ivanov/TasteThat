@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stoyanivanov.tastethat.ui.activities.RegistrationActivity">
+    tools:context="com.stoyanivanov.tastethat.ui.activities.registration_activity.RegistrationActivity">
 
     <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
         android:id="@+id/ctv_intro_header"

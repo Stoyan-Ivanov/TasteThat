@@ -2,8 +2,6 @@ package com.stoyanivanov.tastethat.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +16,7 @@ import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.network.models.Picture;
+import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.fragments.ChooseImageFragment;
 
 import java.util.ArrayList;

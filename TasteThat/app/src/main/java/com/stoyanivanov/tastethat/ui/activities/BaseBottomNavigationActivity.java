@@ -1,16 +1,16 @@
 package com.stoyanivanov.tastethat.ui.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
+import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 
 import butterknife.ButterKnife;
 
@@ -60,32 +60,28 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
     protected void addControlToBottomNavigation() {
 
         bottomNavigationView.setOnNavigationItemSelectedListener (
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                item -> {
+                    item.setEnabled(true);
 
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem item) {
-                        item.setEnabled(true);
+                    switch (item.getItemId()) {
+                        case R.id.nav_button_home:
+                            startActivity(MainActivity.getIntent(getBaseContext(),
+                                    BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
+                            break;
 
-                        switch (item.getItemId()) {
-                            case R.id.nav_button_home:
-                                startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
-                                break;
+                        case R.id.nav_button_profile:
+                            startActivity(MainActivity.getIntent(getBaseContext(),
+                                    BottomNavigationOptions.MY_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
+                            break;
 
-                            case R.id.nav_button_profile:
-                                startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.MY_PROFILE, FragmentTags.MY_PROFILE_FRAGMENT));
-                                break;
-
-                            case R.id.nav_button_options:
-                                startActivity(MainActivity.getIntent(getBaseContext(),
-                                        BottomNavigationOptions.OPTIONS, FragmentTags.OPTIONS_FRAGMENT));
-                                break;
-                        }
-
-                        finish();
-                        return true;
+                        case R.id.nav_button_options:
+                            startActivity(MainActivity.getIntent(getBaseContext(),
+                                    BottomNavigationOptions.OPTIONS, FragmentTags.OPTIONS_FRAGMENT));
+                            break;
                     }
+
+                    finish();
+                    return true;
                 });
     }
 

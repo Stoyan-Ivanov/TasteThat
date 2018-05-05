@@ -14,11 +14,7 @@ public abstract class BasePresenter<V extends BaseViewContract> {
 
     public BasePresenter() {
         disposables = new CompositeDisposable();
-
-        inject();
     }
-
-    protected abstract void inject();
 
     public void addDisposable(Disposable disposable) {
         disposables.add(disposable);

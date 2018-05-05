@@ -42,6 +42,8 @@ import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.TasteThatApplication;
+import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
+import com.stoyanivanov.tastethat.ui.activities.registration_activity.RegistrationActivity;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import butterknife.BindView;

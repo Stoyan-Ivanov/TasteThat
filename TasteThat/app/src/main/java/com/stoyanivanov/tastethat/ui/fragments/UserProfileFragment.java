@@ -2,7 +2,6 @@ package com.stoyanivanov.tastethat.ui.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,7 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.ui.activities.MainActivity;
+import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.StartConstants;
@@ -29,8 +28,6 @@ import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.user_achievement
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 

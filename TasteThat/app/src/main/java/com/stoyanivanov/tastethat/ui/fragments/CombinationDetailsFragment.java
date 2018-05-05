@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.db.models.Component;
-import com.stoyanivanov.tastethat.ui.activities.MainActivity;
+import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.models.Combination;
