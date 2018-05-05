@@ -30,6 +30,11 @@ android {
                     ]
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -64,6 +69,10 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.x.x'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
     testCompile 'junit:junit:4.12'
 }
 
