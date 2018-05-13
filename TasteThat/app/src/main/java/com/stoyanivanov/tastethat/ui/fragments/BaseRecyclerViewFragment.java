@@ -46,62 +46,47 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
 
     protected void setupOptionsMenu(View view) {
         final ImageView optionsMenu = view.findViewById(R.id.iv_options_menu);
-        optionsMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(view.getContext(), optionsMenu);
-                PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu);
-                popUpMenuController.inflatePopupMenu(BaseRecyclerViewFragment.this);
-            }
+        optionsMenu.setOnClickListener(view1 -> {
+            PopupMenu popupMenu = new PopupMenu(view1.getContext(), optionsMenu);
+            PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu);
+            popUpMenuController.inflatePopupMenu(BaseRecyclerViewFragment.this);
         });
     }
 
     private void configureSearchWidget() {
 
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    TasteThatApplication.showVirtualKeyboard();
-                } else {
-                    TasteThatApplication.hideVirtualKeyboard(v);
-                }
-            }
-        });
-
-        searchBar.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
-                    startFilteringContent();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(searchBar.getVisibility() == View.VISIBLE) {
-                    startFilteringContent();
-                    TasteThatApplication.hideVirtualKeyboard(v);
-                } else {
-                    showAppBarSearch(searchBar,cancelSearch,selectedSectionHeader, optionsMenu);
-                }
-            }
-        });
-
-        cancelSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifyAdapterOnSearchCancel();
-                searchBar.setText("");
+        searchBar.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus) {
+                TasteThatApplication.showVirtualKeyboard();
+            } else {
                 TasteThatApplication.hideVirtualKeyboard(v);
-                showAppBarHeader(searchBar,cancelSearch,selectedSectionHeader, optionsMenu);
             }
+        });
+
+        searchBar.setOnKeyListener((v, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                startFilteringContent();
+                return true;
+            }
+            return false;
+        });
+
+        searchIcon.setOnClickListener(v -> {
+            if(searchBar.getVisibility() == View.VISIBLE) {
+                startFilteringContent();
+                TasteThatApplication.hideVirtualKeyboard(v);
+            } else {
+                showAppBarSearch(searchBar,cancelSearch,selectedSectionHeader, optionsMenu);
+            }
+        });
+
+        cancelSearch.setOnClickListener(v -> {
+            notifyAdapterOnSearchCancel();
+            searchBar.setText("");
+            TasteThatApplication.hideVirtualKeyboard(v);
+            showAppBarHeader(searchBar,cancelSearch,selectedSectionHeader, optionsMenu);
         });
     }
 

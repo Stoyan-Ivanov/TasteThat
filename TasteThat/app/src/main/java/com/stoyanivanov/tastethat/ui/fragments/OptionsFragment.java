@@ -37,18 +37,16 @@ public class OptionsFragment extends BaseFragment {
         cachingSwitch.setChecked(sharedPrefs.getBoolean(Constants.CACHING_KEY, false));
 
 
-        cachingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                editor.putBoolean(Constants.CACHING_KEY, isChecked);
-                editor.apply();
+        cachingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean(Constants.CACHING_KEY, isChecked);
+            editor.apply();
 
-                if (isChecked) {
-                    TasteThatApplication.showToast(TasteThatApplication
-                            .getStringFromId(R.string.toast_caching_enabled));
-                } else {
-                    TasteThatApplication.showToast(TasteThatApplication
-                            .getStringFromId(R.string.toast_caching_disabled));
-                }
+            if (isChecked) {
+                TasteThatApplication.showToast(TasteThatApplication
+                        .getStringFromId(R.string.toast_caching_enabled));
+            } else {
+                TasteThatApplication.showToast(TasteThatApplication
+                        .getStringFromId(R.string.toast_caching_disabled));
             }
         });
 

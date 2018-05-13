@@ -84,9 +84,7 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, likedCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
-
-            }
+            public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {}
 
             @Override
             public void onItemLongClick(Combination combination) {
