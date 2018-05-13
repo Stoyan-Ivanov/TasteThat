@@ -1,10 +1,9 @@
-package com.stoyanivanov.tastethat.ui.activities;
+package com.stoyanivanov.tastethat.ui.activities.image_activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,15 +16,14 @@ import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.db.models.Component;
-import com.stoyanivanov.tastethat.network.models.Picture;
+import com.stoyanivanov.tastethat.ui.activities.BaseFragmentContainerActivity;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.fragments.ChooseImageFragment;
 
 import java.util.ArrayList;
 
-public class ImageActivity extends BaseFragmentContainerActivity {
-    private ArrayList<Component> components;
-    private ArrayList<Picture> pictures = new ArrayList<>();
+public class ImageActivity extends BaseFragmentContainerActivity implements  ImageActivityContract{
+    private ImageActivityPresenter mPresenter;
 
     public static Intent getIntent(Context context, String fragmentTag, ArrayList<Component> components) {
         Intent intent = new Intent(context, ImageActivity.class);
@@ -41,29 +39,18 @@ public class ImageActivity extends BaseFragmentContainerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_layout);
 
-        getExtras();
-        replaceFragment(ChooseImageFragment.newInstance(components, 0));
+        mPresenter = new ImageActivityPresenter(this);
+        mPresenter.setExtras(getIntent());
+        mPresenter.inflateFirstFragment();
     }
 
-    private void getExtras() {
-        components = getIntent().getParcelableArrayListExtra(StartConstants.EXTRA_COMPONENTS);
-    }
-
-
+    @Override
     public void replaceFragment(Fragment fragment) {
-            super.replaceFragment(fragment);
+        super.replaceFragment(fragment);
     }
 
     public void saveCombinationToDB(ArrayList<Component> components) {
-
-        FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-        String combinationKey = DatabaseReferences.tableCombinations.push().getKey();
-
-        final Combination newCombination = new Combination(combinationKey, components, currUser.getUid(),
-                currUser.getDisplayName(), ServerValue.TIMESTAMP);
-
-        DatabaseProvider.getInstance().saveCombination(newCombination);
-
+        mPresenter.saveCombinationToDB(components);
         startActivity(MainActivity.getIntent(this, BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
     }
 }

@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.db.models.Component;
-import com.stoyanivanov.tastethat.ui.activities.ImageActivity;
+import com.stoyanivanov.tastethat.ui.activities.image_activity.ImageActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;

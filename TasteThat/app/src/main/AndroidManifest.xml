@@ -53,7 +53,7 @@
             android:name=".ui.activities.MyProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activities.ImageActivity"
+            android:name=".ui.activities.image_activity.ImageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.MyAchievementsActivity"
