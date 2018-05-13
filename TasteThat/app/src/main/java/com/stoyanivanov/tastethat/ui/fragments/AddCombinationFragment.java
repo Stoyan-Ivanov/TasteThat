@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.TasteThatApplication;
+import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.ui.activities.ImageActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
@@ -42,7 +43,14 @@ public class AddCombinationFragment extends BaseFragment {
 
     @OnClick(R.id.btn_add_combination)
         void startNewImageActivity() {
-            startImageActivity();
+            ArrayList<Component> components = getAllComponents();
+
+            if(components.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
+                startActivity(ImageActivity.getIntent(getActivity(),
+                        FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
+            } else {
+                TasteThatApplication.showToast(getString(R.string.toast_invalid_input));
+            }
         }
 
     @OnClick(R.id.btn_add_discard)
@@ -66,12 +74,7 @@ public class AddCombinationFragment extends BaseFragment {
     }
 
     private void configureBackButton() {
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getFragmentManager().popBackStack();
-            }
-        });
+        backArrow.setOnClickListener(view -> getFragmentManager().popBackStack());
     }
 
 
@@ -100,12 +103,9 @@ public class AddCombinationFragment extends BaseFragment {
         fieldCounterSecond.setText(generateStringForFieldCounter());
     }
 
-    View.OnClickListener newFieldBtnOnclick =  new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            v.setVisibility(View.INVISIBLE);
-            inflateNewField();
-        }
+    View.OnClickListener newFieldBtnOnclick = v -> {
+        v.setVisibility(View.INVISIBLE);
+        inflateNewField();
     };
 
     private void inflateNewField() {
@@ -142,26 +142,15 @@ public class AddCombinationFragment extends BaseFragment {
         return Integer.toString(allFields.size()) + "/" + Integer.toString(Constants.MAX_ADD_FIELDS);
     }
 
-    private void startImageActivity() {
-        ArrayList<String> components = getAllComponents();
-
-        if(components.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
-            startActivity(ImageActivity.getIntent(getActivity(),
-                    FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
-        } else {
-            TasteThatApplication.showToast(getString(R.string.toast_invalid_input));
-        }
-    }
-
-    private ArrayList<String> getAllComponents() {
-        ArrayList<String> components = new ArrayList<>();
+    private ArrayList<Component> getAllComponents() {
+        ArrayList<Component> components = new ArrayList<>();
 
         for (View field: allFields) {
             EditText editText = field.findViewById(R.id.et_component);
-            String component =  editText.getText().toString();
+            String componentName =  editText.getText().toString();
 
-            if(!component.equals("")) {
-                components.add(component);
+            if(!componentName.equals("")) {
+                components.add(new Component(componentName));
             }
         }
 

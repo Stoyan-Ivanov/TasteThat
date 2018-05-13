@@ -34,16 +34,8 @@ public class NetworkManager {
     }
 
     private NetworkManager() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient httpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(interceptor)
-                .build();
-
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://api.qwant.com/api/search/")
-                .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create());
 
         retrofit = builder.build();
@@ -59,6 +51,7 @@ public class NetworkManager {
             public void onResponse(Call<NextImagesResponse> call, Response<NextImagesResponse> response) {
                 NextImagesResponse nextImagesResponse = response.body();
                 ArrayList<Picture> pictures = nextImagesResponse.getData().getResult().getPictures();
+                Log.d("SII", "onResponse: " + component);
                 fragment.onImagesGathered(pictures);
             }
 

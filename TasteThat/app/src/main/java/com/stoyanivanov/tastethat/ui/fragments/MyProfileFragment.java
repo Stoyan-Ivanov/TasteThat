@@ -70,32 +70,29 @@ public class MyProfileFragment extends BaseFragment {
         }
     }
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
-        public void onClick(View v) {
+    View.OnClickListener clickListener = v -> {
+        switch(v.getId()) {
+            case R.id.btn_liked_combinations:
+                startActivity(MyProfileActivity.getIntent(getActivity(),
+                        BottomNavigationOptions.MY_PROFILE, FragmentTags.LIKED_FRAGMENT));
+                break;
 
-            switch(v.getId()) {
-                case R.id.btn_liked_combinations:
-                    startActivity(MyProfileActivity.getIntent(getActivity(),
-                            BottomNavigationOptions.MY_PROFILE, FragmentTags.LIKED_FRAGMENT));
-                    break;
+            case R.id.btn_uploaded_combinations:
+                startActivity(MyProfileActivity.getIntent(getActivity(),
+                        BottomNavigationOptions.MY_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
+                break;
 
-                case R.id.btn_uploaded_combinations:
-                    startActivity(MyProfileActivity.getIntent(getActivity(),
-                            BottomNavigationOptions.MY_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
-                    break;
+            case R.id.btn_achievements:
+                startActivity(MyAchievementsActivity.getIntent(getActivity(),
+                        BottomNavigationOptions.MY_PROFILE));
+                break;
 
-                case R.id.btn_achievements:
-                    startActivity(MyAchievementsActivity.getIntent(getActivity(),
-                            BottomNavigationOptions.MY_PROFILE));
-                    break;
+            case R.id.btn_logout:
+                signOut();
+                break;
 
-                case R.id.btn_logout:
-                    signOut();
-                    break;
-
-                default:
-                    Log.e("SII", "onClick: No such fragment!");
-            }
+            default:
+                Log.e("SII", "onClick: No such fragment!");
         }
     };
 
