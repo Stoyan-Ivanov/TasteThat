@@ -8,7 +8,7 @@
     tools:context="com.stoyanivanov.tastethat.ui.activities.registration_activity.RegistrationActivity">
 
     <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-        android:id="@+id/ctv_intro_header"
+        android:id="@+id/tv_intro_title"
 
         android:gravity="center"
         android:text="@string/login_header"
@@ -36,7 +36,7 @@
 
         android:inputType="textEmailAddress"
         android:hint="Email"
-        android:layout_below="@+id/ctv_intro_header"
+        android:layout_below="@+id/tv_intro_title"
         />
 
     <EditText

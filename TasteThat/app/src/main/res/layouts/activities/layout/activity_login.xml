@@ -1,123 +1,152 @@
-<android.support.percent.PercentRelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.activities.LoginActivity">
+    tools:context=".ui.activities.LoginActivity"
+    android:padding="16dp">
 
-    <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-        android:id="@+id/ctv_intro_header"
+    <TextView
+        android:id="@+id/tv_intro_title"
 
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+
+        android:layout_marginStart="8dp"
         android:gravity="center"
         android:text="@string/login_header"
         android:textColor="@color/colorThunderbirdRed"
-
-        app:layout_heightPercent="20%"
-        android:layout_width="match_parent"
-
-        app:layout_marginTopPercent="5%"
-        android:layout_centerHorizontal="true"
-         />
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/et_login_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <EditText
         android:id="@+id/et_login_email"
-        app:layout_widthPercent="80%"
-        app:layout_heightPercent="8%"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
-        app:layout_marginTopPercent="2%"
+        android:layout_below="@+id/tv_intro_title"
+
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
 
-        android:drawableStart="@drawable/ic_account"
-        android:drawablePadding="6dp"
+        android:layout_marginStart="8dp"
         android:backgroundTint="@color/colorPrimary"
-
-        android:inputType="textEmailAddress"
+        android:drawablePadding="6dp"
+        android:drawableStart="@drawable/ic_account"
         android:hint="Email"
-        android:layout_below="@+id/ctv_intro_header"
-        />
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/et_login_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_login_password"
-        app:layout_widthPercent="80%"
-        app:layout_heightPercent="8%"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
-        app:layout_marginTopPercent="2%"
+        android:layout_below="@+id/et_login_email"
         android:layout_centerHorizontal="true"
 
-        android:drawableStart="@drawable/ic_lock"
-        android:drawablePadding="6dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
 
-        android:inputType="textPassword"
+        android:backgroundTint="@color/colorPrimary"
+        android:drawablePadding="6dp"
+        android:drawableStart="@drawable/ic_lock"
         android:hint="Password"
-        android:layout_below="@+id/et_login_email"
-        />
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_sign_in"
-        app:layout_widthPercent="55%"
-        app:layout_heightPercent="9%"
-
-        app:layout_marginTopPercent="2%"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
 
         android:background="@drawable/custom_button_shape"
         android:text="Sign In"
-        android:textSize="18sp"
         android:textColor="@color/white"
-
-        android:layout_below="@id/et_login_password"
-        />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/ctv_login_alternative"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
         android:id="@+id/ctv_registration_trigger"
-        app:layout_widthPercent="80%"
-        app:layout_heightPercent="5%"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
-        app:layout_marginTopPercent="2%"
         android:layout_centerHorizontal="true"
 
+        android:layout_marginBottom="16dp"
+
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:textColor="@color/colorThunderbirdRed"
         android:text="No account yet? Create one!"
-        android:layout_below="@+id/btn_sign_in"
-        />
+        android:textColor="@color/colorThunderbirdRed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
         android:id="@+id/ctv_login_alternative"
-        app:layout_widthPercent="20%"
-        app:layout_heightPercent="6%"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
-        app:layout_marginTopPercent="2%"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
 
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:gravity="center"
         android:text="OR"
         android:textColor="@color/colorPrimary"
-
-        android:layout_below="@+id/ctv_registration_trigger"
-        />
+        app:layout_constraintBottom_toTopOf="@id/google_sign_in_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_sign_in_button"
-        app:layout_widthPercent="70%"
-        app:layout_heightPercent="9%"
-
-        app:layout_marginTopPercent="1%"
-        android:layout_centerHorizontal="true"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
         android:layout_below="@+id/ctv_login_alternative"
-        />
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@id/facebook_login_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebook_login_button"
-        app:layout_widthPercent="70%"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
-        app:layout_marginTopPercent = "2%"
         android:layout_below="@+id/google_sign_in_button"
-        />
-</android.support.percent.PercentRelativeLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@id/ctv_registration_trigger"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

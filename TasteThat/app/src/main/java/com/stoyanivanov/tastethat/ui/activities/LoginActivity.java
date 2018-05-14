@@ -54,7 +54,7 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.google_sign_in_button) SignInButton googleSignInBtn;
-    @BindView(R.id.ctv_intro_header) CustomTextView header;
+    @BindView(R.id.tv_intro_title) CustomTextView header;
     @BindView(R.id.facebook_login_button) LoginButton facebookSignInButton;
     @BindView(R.id.et_login_email) EditText etEmail;
     @BindView(R.id.et_login_password) EditText etPassword;

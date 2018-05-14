@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RegistrationActivity extends BaseActivity<RegistrationActivityPresenter> implements RegistrationActivityContract {
-    @BindView(R.id.ctv_intro_header) CustomTextView header;
+    @BindView(R.id.tv_intro_title) CustomTextView header;
     @BindView(R.id.et_register_email) EditText etEmail;
     @BindView(R.id.et_register_password) EditText etPassword;
     @BindView(R.id.ctv_login_trigger) CustomTextView loginTrigger;
