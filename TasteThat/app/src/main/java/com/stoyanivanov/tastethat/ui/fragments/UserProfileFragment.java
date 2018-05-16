@@ -80,32 +80,26 @@ public class UserProfileFragment extends BaseFragment {
     }
 
     private void instantiateButtons() {
-        uploadsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(uploadedCombinations == null) {
-                    getUserUploadedCombinations();
-                }
-
-                setPurpleColorToText(uploadsBtn);
-                setBlackColorToText(likesBtn);
-
-                adapter.setNewData(uploadedCombinations);
+        uploadsBtn.setOnClickListener(v -> {
+            if(uploadedCombinations == null) {
+                getUserUploadedCombinations();
             }
+
+            setPurpleColorToText(uploadsBtn);
+            setBlackColorToText(likesBtn);
+
+            adapter.setNewData(uploadedCombinations);
         });
 
-        likesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(likedCombinations == null) {
-                    getUserLikedCombinations();
-                }
-
-                setPurpleColorToText(likesBtn);
-                setBlackColorToText(uploadsBtn);
-
-                adapter.setNewData(likedCombinations);
+        likesBtn.setOnClickListener(v -> {
+            if(likedCombinations == null) {
+                getUserLikedCombinations();
             }
+
+            setPurpleColorToText(likesBtn);
+            setBlackColorToText(uploadsBtn);
+
+            adapter.setNewData(likedCombinations);
         });
     }
 
@@ -157,7 +151,7 @@ public class UserProfileFragment extends BaseFragment {
 
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {}
+            public void onItemClick(Combination combination, TextView likeCounter, int position) {}
 
             @Override
             public void onItemLongClick(Combination combination) {

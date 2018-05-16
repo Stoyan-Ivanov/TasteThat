@@ -6,9 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_outer"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="290dp"
 
-    card_view:cardBackgroundColor="@android:color/transparent"
+    android:background="@drawable/grey_border_shape"
     card_view:cardCornerRadius="0dp"
     card_view:cardElevation="0dp"
 
@@ -21,24 +21,27 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/grey_border_shape">
 
         <TextView
             android:id="@+id/vh_username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:gravity="center_vertical|start"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:textSize="24sp"
+
+            android:gravity="center_vertical|start"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:textSize="18sp"
+            card_view:layout_constraintBottom_toTopOf="@+id/vh_iv_leftImg"
             card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@id/vh_options"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@id/vh_options"/>
+            card_view:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageView
@@ -56,30 +59,33 @@
             android:id="@+id/vh_iv_leftImg"
             android:layout_width="0dp"
             android:layout_height="170dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="8dp"
             android:background="@color/white"
-            card_view:layout_constraintTop_toBottomOf="@+id/vh_username"
+            card_view:layout_constraintEnd_toStartOf="@id/vh_iv_rightImg"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@id/vh_iv_rightImg" />
+            card_view:layout_constraintTop_toBottomOf="@+id/vh_username" />
 
         <ImageView
             android:id="@+id/vh_iv_rightImg"
             android:layout_width="0dp"
             android:layout_height="170dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginTop="8dp"
             android:background="@color/white"
-            card_view:layout_constraintTop_toBottomOf="@+id/vh_username"
+            android:paddingEnd="4dp"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@id/vh_iv_leftImg"/>
+            card_view:layout_constraintStart_toEndOf="@id/vh_iv_leftImg"
+            card_view:layout_constraintTop_toBottomOf="@+id/vh_username" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@id/vh_iv_leftImg"
-            card_view:layout_constraintVertical_bias="0.0">
+            card_view:layout_constraintTop_toBottomOf="@id/vh_iv_leftImg">
 
             <TextView
                 android:id="@+id/vh_tv_combinationName"
@@ -88,47 +94,37 @@
 
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/aluminum"
                 android:textSize="24sp"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
-
-            <TextView
-                android:id="@+id/vh_tv_like_counter"
+            <RatingBar
+                style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_height="35dp"
+
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:paddingStart="8dp"
-
-                android:background="@drawable/black_border_shape"
-                android:drawablePadding="8dp"
-                android:drawableStart="@drawable/ic_love_heart_svg"
-
-                android:gravity="center_vertical"
-                android:minWidth="80dp"
-                android:textSize="24sp"
+                android:numStars="5"
+                android:stepSize="0.5"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/vh_tv_combinationName" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/btn_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Rate"
-                android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:background="@drawable/black_border_shape"
+                android:paddingStart="16dp"
+                android:text="Rate"
+                android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"

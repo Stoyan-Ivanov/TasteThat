@@ -2,19 +2,19 @@
 <android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/prl_edittext_holder"
         android:layout_width="match_parent"
-        app:layout_heightPercent = "65%"
+        app:layout_heightPercent = "50%"
         >
 
         <EditText
             android:id="@+id/et_component"
             app:layout_widthPercent = "70%"
-            app:layout_heightPercent = "60%"
+            app:layout_heightPercent = "75%"
 
             android:layout_alignParentEnd="true"
             app:layout_marginRightPercent = "5%"
@@ -28,7 +28,7 @@
         <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
             android:id="@+id/ctv_et_counter"
             app:layout_widthPercent = "15%"
-            app:layout_heightPercent = "50%"
+            app:layout_heightPercent = "60%"
 
             android:layout_toLeftOf="@+id/et_component"
             android:layout_centerVertical="true"
@@ -39,7 +39,7 @@
     <Button
         android:id="@+id/btn_add_new_et"
         app:layout_widthPercent = "40%"
-        app:layout_heightPercent = "30%"
+        app:layout_heightPercent = "35%"
 
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/prl_edittext_holder"

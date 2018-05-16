@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
@@ -84,7 +85,7 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, CustomTextView likeCounter, int position) {
+            public void onItemClick(Combination combination, TextView likeCounter, int position) {
             }
 
             @Override

@@ -17,11 +17,10 @@ import java.util.ArrayList;
  */
 
 public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<CombinationsViewHolder> {
-    private ArrayList<Combination> mData = new ArrayList<>();
+    private ArrayList<Combination> mData;
     private OnClickViewHolder listener;
     private String rvTag;
     private CustomFilter customFilter;
-    private LayoutInflater inflater;
 
     public CombinationsRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnClickViewHolder listener) {
         this.rvTag = rvTag;
@@ -39,8 +38,8 @@ public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<Combin
     @Override
     public CombinationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.from(parent.getContext())
-                .inflate(R.layout.rv_combination_holder, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.viewholder_combination, parent, false);
 
         return new CombinationsViewHolder(view, rvTag, this);
     }

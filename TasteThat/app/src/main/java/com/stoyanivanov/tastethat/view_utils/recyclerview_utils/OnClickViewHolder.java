@@ -1,5 +1,7 @@
 package com.stoyanivanov.tastethat.view_utils.recyclerview_utils;
 
+import android.widget.TextView;
+
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
@@ -8,7 +10,7 @@ import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
  */
 
 public interface OnClickViewHolder {
-    void onItemClick(Combination combination, CustomTextView likeCounter, int position);
+    void onItemClick(Combination combination, TextView likeCounter, int position);
 
     void onItemLongClick(Combination combination);
 }

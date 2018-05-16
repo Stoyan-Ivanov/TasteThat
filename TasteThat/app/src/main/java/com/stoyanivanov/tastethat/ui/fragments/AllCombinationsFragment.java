@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,7 +38,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private CombinationsRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
     private Combination currentCombination;
-    private CustomTextView likesField;
+    private TextView likesField;
     private boolean processLike = false;
     private boolean isLiked;
     private long likes = 0;
@@ -98,7 +99,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, final CustomTextView likeCounter, int position) {
+            public void onItemClick(Combination combination, final TextView likeCounter, int position) {
                 final String combinationKey = combination.getCombinationKey();
                 likesField = likeCounter;
                 currentCombination = combination;

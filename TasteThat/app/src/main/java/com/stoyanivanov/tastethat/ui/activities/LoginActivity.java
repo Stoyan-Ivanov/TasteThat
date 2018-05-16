@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.BuildConfig;
@@ -54,7 +55,7 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.google_sign_in_button) SignInButton googleSignInBtn;
-    @BindView(R.id.tv_intro_title) CustomTextView header;
+    @BindView(R.id.tv_intro_title) TextView title;
     @BindView(R.id.facebook_login_button) LoginButton facebookSignInButton;
     @BindView(R.id.et_login_email) EditText etEmail;
     @BindView(R.id.et_login_password) EditText etPassword;
@@ -93,14 +94,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            startMainActivity();
-                        } else {
-                            showFailedLogin();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        startMainActivity();
+                    } else {
+                        showFailedLogin();
                     }
                 });
     }
@@ -131,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), Constants.LOGIN_HEADER_TV_FONT);
-        header.setTypeface(custom_font);
+        title.setTypeface(custom_font);
 
 
         facebookCallbackManager = CallbackManager.Factory.create();
@@ -156,13 +154,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() != null) {
-                    startMainActivity();
-                    finish();
-                }
+        authStateListener = firebaseAuth -> {
+            if (firebaseAuth.getCurrentUser() != null) {
+                startMainActivity();
+                finish();
             }
         };
 
@@ -172,12 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        TasteThatApplication.showToast("Something went wrong!");
-                    }
-                })
+                .enableAutoManage(this, connectionResult -> TasteThatApplication.showToast("Something went wrong!"))
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
@@ -206,16 +196,13 @@ public class LoginActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(final GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "signInWithCredential:success");
 
-                            startMainActivity();
-                        } else {
-                            showFailedLogin();
-                        }
+                        startMainActivity();
+                    } else {
+                        showFailedLogin();
                     }
                 });
     }
@@ -225,16 +212,13 @@ public class LoginActivity extends AppCompatActivity {
 
         final AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                .addOnCompleteListener(this, task -> {
+                    Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
-                        if (task.isSuccessful()) {
-                            startMainActivity();
-                        } else {
-                            showFailedLogin();
-                        }
+                    if (task.isSuccessful()) {
+                        startMainActivity();
+                    } else {
+                        showFailedLogin();
                     }
                 });
     }

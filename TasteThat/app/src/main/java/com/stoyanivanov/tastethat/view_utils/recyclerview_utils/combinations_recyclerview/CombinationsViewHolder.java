@@ -29,8 +29,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CombinationsViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.vh_tv_combinationName) CustomTextView combinationName;
-    @BindView(R.id.vh_tv_like_counter) CustomTextView likeCounter;
+    @BindView(R.id.vh_tv_combinationName) TextView combinationName;
+    @BindView(R.id.vh_tv_like_counter) TextView likeCounter;
     @BindView(R.id.vh_username) TextView username;
     @BindView(R.id.vh_iv_leftImg) ImageView leftImg;
     @BindView(R.id.vh_iv_rightImg) ImageView rightImg;
@@ -61,18 +61,11 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
 
         DatabaseProvider.getInstance().getCombinationLikes(combination, this);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                listener.onItemClick(combination, likeCounter, position);
-            }
-        });
+        itemView.setOnClickListener(v -> listener.onItemClick(combination, likeCounter, position));
 
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                listener.onItemLongClick(combination);
-                return true;
-            }
+        itemView.setOnLongClickListener(v -> {
+            listener.onItemLongClick(combination);
+            return true;
         });
 
         if(components.size() > Constants.MIN_REQUIRED_COMPONENTS) {
@@ -96,15 +89,12 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setPopUpMenu(final int position) {
-        options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
+        options.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
 
-                PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag,
-                                                            CombinationsViewHolder.this);
-                popUpMenuController.inflatePopupMenu(position, combinationKey);
-            }
+            PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag,
+                                                        CombinationsViewHolder.this);
+            popUpMenuController.inflatePopupMenu(position, combinationKey);
         });
     }
 }
