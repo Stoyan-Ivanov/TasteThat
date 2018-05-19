@@ -85,13 +85,10 @@ public class CombinationDetailsFragment extends BaseFragment {
     }
 
     private void configureButtons() {
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                if (fragmentManager != null) {
-                    fragmentManager.popBackStack();
-                }
+        backArrow.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getFragmentManager();
+            if (fragmentManager != null) {
+                fragmentManager.popBackStack();
             }
         });
     }

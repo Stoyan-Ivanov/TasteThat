@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_rate_combination_title"
@@ -19,12 +21,12 @@
         android:textSize="32sp"
         android:textStyle="bold"
         android:typeface="sans"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/tv_combination_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_combination_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -32,6 +34,7 @@
         android:layout_marginStart="8dp"
         android:textColor="@color/black"
         android:textSize="32sp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/rating_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -46,12 +49,12 @@
         android:layout_marginStart="8dp"
         android:numStars="5"
         android:stepSize="1"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_submit_rating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_submit_rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="112dp"

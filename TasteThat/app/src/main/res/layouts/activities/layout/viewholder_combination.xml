@@ -102,6 +102,7 @@
                 card_view:layout_constraintTop_toTopOf="parent" />
 
             <RatingBar
+                android:id="@+id/combination_vh_rating_bar"
                 style="@android:style/Widget.Holo.RatingBar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -120,6 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
@@ -129,6 +131,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/combination_vh_rating_bar"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/vh_tv_combinationName" />
 
@@ -136,7 +139,7 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/vh_civ_expand_combinatiov"
+            android:id="@+id/vh_civ_expand_combination"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_above="@+id/vh_name_holder"

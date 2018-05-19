@@ -12,5 +12,6 @@ public class DatabaseReferences {
     public static  DatabaseReference tableLikes = database.getReference().child(Constants.LIKES_TABLE);
     public static DatabaseReference tableUsers = database.getReference().child(Constants.USER_TABLE);
     public static DatabaseReference tableCombinations = database.getReference().child(Constants.COMBINATIONS_TABLE);
+    public static DatabaseReference tableCombinationRating = database.getReference().child(Constants.COMBINATION_RATINGS);
 
 }

@@ -39,7 +39,7 @@ public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<Combin
     public CombinationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rv_combination_holder, parent, false);
+                .inflate(R.layout.viewholder_combination, parent, false);
 
         return new CombinationsViewHolder(view, rvTag, this);
     }

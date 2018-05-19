@@ -8,6 +8,7 @@ public class Constants {
 
     public static final String COMBINATIONS_TABLE = "combinations";
     public static final String LIKES_TABLE = "likes";
+    public static final String COMBINATION_RATINGS = "combination_ratings";
 
     public static final String USER_TABLE = "users";
     public static final String USER_UPLOADED_COMBINATIONS = "uploadedCombinations";

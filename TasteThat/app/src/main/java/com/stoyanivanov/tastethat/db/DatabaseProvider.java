@@ -75,11 +75,24 @@ public class DatabaseProvider {
         TasteThatApplication.showToast(TasteThatApplication.getStringFromId((R.string.toast_successfull_adding)));
     }
 
+
+
     private void saveCombinationToMyUploads(Combination newCombination) {
-        DatabaseReferences.tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        DatabaseReferences.tableUsers
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .child(newCombination.getCombinationKey())
                 .setValue(newCombination);
+    }
+
+    public void saveRatingForCombination(Combination combination, float rating) {
+        if(combination != null) {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReferences.tableCombinationRating
+                    .child(combination.getCombinationKey())
+                    .child(userId)
+                    .setValue(rating);
+        }
     }
 
     public void getAllCombinations(final String nodeId, final ArrayList<Combination> combinations,
@@ -154,7 +167,7 @@ public class DatabaseProvider {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String numberOfLikes = String.valueOf(dataSnapshot.getChildrenCount());
-                        viewHolder.setLikes(numberOfLikes);
+                        //viewHolder.setLikes(numberOfLikes);
                     }
 
                     @Override

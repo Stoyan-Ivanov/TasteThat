@@ -151,10 +151,12 @@ public class UserProfileFragment extends BaseFragment {
 
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, TextView likeCounter, int position) {}
+            public void onRateButtonClicked(Combination combination) {
+
+            }
 
             @Override
-            public void onItemLongClick(Combination combination) {
+            public void onItemClick(Combination combination) {
                 if(activityName.equals(MainActivity.class.getSimpleName())) {
                     ((MainActivity) getActivity())
                             .replaceFragment(CombinationDetailsFragment.newInstance(activityName, currCombination));

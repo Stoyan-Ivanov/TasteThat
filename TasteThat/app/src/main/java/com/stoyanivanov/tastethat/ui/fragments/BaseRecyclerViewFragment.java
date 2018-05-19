@@ -114,7 +114,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
 
     protected abstract void notifyAdapterOnSearchCancel();
 
-    protected abstract void instantiateRV();
+    protected abstract void instantiateRecyclerView();
 
     public abstract void startLoadingCombinations();
 }
