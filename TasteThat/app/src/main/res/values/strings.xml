@@ -49,7 +49,7 @@
     <string name="searchBar_hint">What goes with…</string>
 
     <!-- Switches -->
-    <string name="switch_data_caching_header">Data caching</string>
-    <string name="switch_notifications_header">Notifications</string>
+    <string name="switch_data_caching_header">Data caching </string>
+    <string name="switch_notifications_header">Notifications </string>
 
 </resources>
