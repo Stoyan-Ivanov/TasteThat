@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class ImageActivityPresenter extends BasePresenter {
     private ArrayList<Component> components;
+    private String description;
     private ImageActivityContract mView;
 
     public ImageActivityPresenter(ImageActivityContract view) {
@@ -28,6 +29,7 @@ public class ImageActivityPresenter extends BasePresenter {
 
     public void setExtras(Intent intent) {
         components = intent.getParcelableArrayListExtra(StartConstants.EXTRA_COMPONENTS);
+        description = intent.getStringExtra(StartConstants.EXTRA_DESCRIPTION);
     }
 
     public void inflateFirstFragment() {
@@ -41,7 +43,7 @@ public class ImageActivityPresenter extends BasePresenter {
         String combinationKey = DatabaseReferences.tableCombinations.push().getKey();
 
         final Combination newCombination = new Combination(combinationKey, components, currUser.getUid(),
-                currUser.getDisplayName(), ServerValue.TIMESTAMP);
+                currUser.getDisplayName(), ServerValue.TIMESTAMP, description);
 
         DatabaseProvider.getInstance().saveCombination(newCombination);
     }

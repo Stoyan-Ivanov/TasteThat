@@ -33,6 +33,7 @@ public class AddCombinationFragment extends BaseFragment {
     @BindView(R.id.view_first_ingredient) View firstIngredientField;
     @BindView(R.id.view_second_ingredient) View secondIngredientField;
     @BindView(R.id.iv_back_arrow) ImageView backArrow;
+    @BindView(R.id.et_description) EditText etDescription;
 
     private ArrayList<View> allFields = new ArrayList<>();
     private ViewGroup container;
@@ -44,10 +45,11 @@ public class AddCombinationFragment extends BaseFragment {
     @OnClick(R.id.btn_add_combination)
         void startNewImageActivity() {
             ArrayList<Component> components = getAllComponents();
+            String description = getDescription();
 
             if(components.size() >= Constants.MIN_REQUIRED_COMPONENTS) {
                 startActivity(ImageActivity.getIntent(getActivity(),
-                        FragmentTags.CHOOSE_IMAGE_FRAGMENT, components));
+                        FragmentTags.CHOOSE_IMAGE_FRAGMENT, components, description));
             } else {
                 TasteThatApplication.showToast(getString(R.string.toast_invalid_input));
             }
@@ -155,5 +157,14 @@ public class AddCombinationFragment extends BaseFragment {
         }
 
         return components;
+    }
+
+    public String getDescription() {
+        String description = etDescription.getText().toString();
+
+        if(description.equals("")) {
+            description = "Missing combination description!";
+        }
+        return description;
     }
 }

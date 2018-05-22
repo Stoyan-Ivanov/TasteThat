@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.stoyanivanov.tastethat.R;
@@ -29,10 +30,10 @@ import butterknife.OnClick;
 
 public class CombinationDetailsFragment extends BaseFragment {
 
-    @BindView(R.id.ctv_combination_details_header) CustomTextView combinationNameHeader;
+    @BindView(R.id.ctv_combination_details_header) TextView combinationNameHeader;
     @BindView(R.id.iv_back_arrow) ImageView backArrow;
-    @BindView(R.id.ctv_details_username) CustomTextView authorName;
-    @BindView(R.id.ctv_combination_details_description) CustomTextView combinationDescription;
+    @BindView(R.id.ctv_details_username) TextView authorName;
+    @BindView(R.id.ctv_combination_details_description) TextView combinationDescription;
     @BindViews({R.id.iv_top_left, R.id.iv_top_right,
             R.id.iv_bottom_left, R.id.iv_bottom_right}) List<ImageView> images;
 
@@ -98,8 +99,7 @@ public class CombinationDetailsFragment extends BaseFragment {
     }
 
     private void loadAuthorName() {
-        String authorField = getString(R.string.author_field) + currCombination.getUsername();
-        authorName.setText(authorField);
+        authorName.setText(getString(R.string.author_field, currCombination.getUsername()));
     }
 
     private void loadImages() {
@@ -116,6 +116,7 @@ public class CombinationDetailsFragment extends BaseFragment {
     }
 
     private void loadDescription() {
+        combinationDescription.setText(currCombination.getDescription());
     }
 
     //ToDo: REFACTOR AS SOON AS POSSIBLE
