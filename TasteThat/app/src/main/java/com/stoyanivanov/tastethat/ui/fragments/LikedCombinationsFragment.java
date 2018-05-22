@@ -14,6 +14,7 @@ import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolde
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsRecyclerViewAdapter;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.decoration.SpacesItemDecoration;
 import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
@@ -88,6 +89,7 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
             }
         });
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onLoadMore() {

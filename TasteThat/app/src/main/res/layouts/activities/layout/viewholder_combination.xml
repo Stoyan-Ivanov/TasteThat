@@ -6,16 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_outer"
     android:layout_width="match_parent"
-    android:layout_height="290dp"
+    android:layout_height="296dp"
 
     android:background="@drawable/grey_border_shape"
     card_view:cardCornerRadius="0dp"
     card_view:cardElevation="0dp"
 
-    android:layout_marginTop="1dp"
-    android:layout_marginBottom="0dp"
-    android:layout_marginRight="7dp"
-    android:layout_marginLeft="7dp"
     android:clickable="true"
     android:focusable="true">
 
@@ -94,6 +90,7 @@
 
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:textColor="@color/aluminum"
                 android:textSize="24sp"
@@ -104,21 +101,23 @@
             <RatingBar
                 android:id="@+id/combination_vh_rating_bar"
                 style="@android:style/Widget.Holo.RatingBar"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:layout_marginEnd="8dp"
-                android:numStars="5"
-                android:stepSize="1"
+                android:layout_marginStart="8dp"
                 android:clickable="false"
                 android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="1"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/btn_rate"
                 card_view:layout_constraintTop_toBottomOf="@+id/vh_tv_combinationName" />
 
             <TextView
                 android:id="@+id/btn_rate"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -127,9 +126,10 @@
                 android:gravity="center"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
-                android:text="Rate"
+                android:text="@string/btn_rate"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
+                android:textStyle="bold"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toStartOf="@+id/combination_vh_rating_bar"
                 card_view:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,6 @@
             android:id="@+id/vh_civ_expand_combination"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_above="@+id/vh_name_holder"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"

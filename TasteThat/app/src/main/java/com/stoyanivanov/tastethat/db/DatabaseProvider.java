@@ -90,6 +90,7 @@ public class DatabaseProvider {
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReferences.tableCombinationRating
                     .child(combination.getCombinationKey())
+                    .child("users")
                     .child(userId)
                     .setValue(rating);
         }
