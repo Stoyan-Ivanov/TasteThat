@@ -25,7 +25,7 @@
     <string name="bottomnav_menu">Options</string>
 
     <!-- User -->
-    <string name="author_field">Uploaded by: @%S</string>
+    <string name="author_field">Uploaded by: @%s</string>
 
     <!-- Page headers -->
     <string name="all_combinations_header">All Combinations</string>
