@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-import butterknife.Optional;
-
 /**
  * Created by stoyan-ivanov on 03.10.17.
  */
@@ -15,7 +13,8 @@ public class Combination implements Parcelable {
     private String combinationKey;
     private String userId;
     private String username;
-    private int negativeLikes;
+    private float rating;
+    private float negativeRating;
     private ArrayList<Component> components;
     private Object timestamp;
     private String description;
@@ -28,7 +27,8 @@ public class Combination implements Parcelable {
         this.userId = userId;
         this.username = username;
         this.timestamp = timestamp;
-        this.negativeLikes = 0;
+        this.rating = 0;
+        this.negativeRating = 0;
         this.description = description;
     }
 
@@ -59,8 +59,8 @@ public class Combination implements Parcelable {
         this.timestamp = timestamp;
     }
 
-    public int getNegativeLikes() {
-        return negativeLikes;
+    public float getRating() {
+        return rating;
     }
 
     public String getDescription() {
@@ -73,29 +73,30 @@ public class Combination implements Parcelable {
 
     @Override
     public String toString() {
-        String displayString = "";
+        StringBuilder builder = new StringBuilder();
 
         for(int i = 0; i < components.size() - 2; i++ ) {
-            displayString += components.get(i).getComponentName() + ", ";
+            builder.append(components.get(i).getComponentName()).append(", ");
         }
-        displayString += components.get(components.size() - 2).getComponentName() + " & ";
-        displayString += components.get(components.size() - 1).getComponentName();
+        builder.append(components.get(components.size() - 2).getComponentName()).append(" & ");
+        builder.append(components.get(components.size() - 1).getComponentName());
 
-        return displayString;
+        return builder.toString();
     }
 
     protected Combination(Parcel in) {
         combinationKey = in.readString();
         userId = in.readString();
         username = in.readString();
-        negativeLikes = in.readInt();
+        rating = in.readInt();
+        negativeRating = in.readInt();
         if (in.readByte() == 0x01) {
-            components = new ArrayList<Component>();
+            components = new ArrayList<>();
             in.readList(components, Component.class.getClassLoader());
         } else {
             components = null;
         }
-        timestamp = (Object) in.readValue(Object.class.getClassLoader());
+        timestamp = in.readValue(Object.class.getClassLoader());
         description = in.readString();
     }
 
@@ -109,7 +110,8 @@ public class Combination implements Parcelable {
         dest.writeString(combinationKey);
         dest.writeString(userId);
         dest.writeString(username);
-        dest.writeInt(negativeLikes);
+        dest.writeFloat(rating);
+        dest.writeFloat(negativeRating);
         if (components == null) {
             dest.writeByte((byte) (0x00));
         } else {

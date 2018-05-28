@@ -56,13 +56,12 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
         ArrayList<Component> components = combination.getComponents();
         combinationKey = combination.getCombinationKey();
 
-        username.setText("@"+combination.getUsername());
+        username.setText(itemView.getContext().getString(R.string.author_field_viewholder, combination.getUsername()));
         combinationName.setText(combination.toString());
         loadImage(leftImg, components.get(0).getComponentImageUrl());
         loadImage(rightImg, components.get(1).getComponentImageUrl());
 
-
-        //DatabaseProvider.getInstance().getCombinationLikes(combination, this);
+        DatabaseProvider.getInstance().getCombinationRating(combination, this);
 
         //if (!combination.getUserId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             rateCombination.setOnClickListener(v -> listener.onRateButtonClicked(combination));
@@ -75,9 +74,9 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-//    public void setLikes(String likes) {
-//        likeCounter.setText(likes);
-//    }
+    public void setRating(float rating) {
+        combinationRatingBar.setRating(rating);
+    }
 
     private void loadImage(ImageView imageView, String url) {
         Glide.with(TasteThatApplication.getStaticContext())

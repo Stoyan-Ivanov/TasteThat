@@ -79,29 +79,57 @@ exports.uploadAchievementsChecker = functions.database
 	});
 });
 
-exports.negativeLikesUpdaterOnWrite = functions.database
-.ref('likes/{pushId}').onWrite(event => {
+// exports.negativeLikesUpdaterOnWrite = functions.database
+// .ref('likes/{pushId}').onWrite(event => {
 	
-	const pushId = event.params.pushId;
-	const negativeLikes = 0 - event.data.numChildren();
+// 	const pushId = event.params.pushId;
+// 	const negativeLikes = 0 - event.data.numChildren();
 
-	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
+// 	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
 	
-	const getNegativeLikesPromise = admin.database().ref('combinations'+ pushId)
-	return  getNegativeLikesPromise.once('value').then(snapshot => {
-		snapshot.forEach(combination => {
-			var userId = combination.child('userId').val();
-			console.log(userId);
-			admin.database().ref('users').child(userId).child('uploadedCombinations').child(pushId).child("negativeLikes").set(negativeLikes);	
+// 	const getNegativeLikesPromise = admin.database().ref('combinations'+ pushId)
+// 	return  getNegativeLikesPromise.once('value').then(snapshot => {
+// 		snapshot.forEach(combination => {
+// 			var userId = combination.child('userId').val();
+// 			console.log(userId);
+// 			admin.database().ref('users').child(userId).child('uploadedCombinations').child(pushId).child("negativeLikes").set(negativeLikes);	
+// 		});
+// 	});		
+// });
+
+// exports.negativeLikesUpdaterOnDelete = functions.database
+// .ref('likes/{pushId}').onDelete(event => {
+	
+// 	const pushId = event.params.pushId;
+// 	const negativeLikes = 0 - event.data.numChildren();
+
+// 	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
+// });
+
+
+exports.onRatingSubmitted = functions.database.ref('combination_ratings/{pushId}/users').onWrite(event => {
+
+	const pushId = event.params.pushId;
+	const numberOfRates =  event.data.numChildren();
+	console.log("rates: " + numberOfRates);
+
+	return admin.database().ref('combination_ratings/' + pushId +'/users').once('value').then( snapshot => {
+		var rating = 0;
+		var users = [];
+
+		snapshot.forEach(combination_rating => {
+			rating += combination_rating.val();
+			users.push(combination_rating.key);
+			console.log("current rating :" + rating);
 		});
-	});		
+		updateRatingField(rating / numberOfRates, pushId, users);
+
+	});
 });
 
-exports.negativeLikesUpdaterOnDelete = functions.database
-.ref('likes/{pushId}').onDelete(event => {
-	
-	const pushId = event.params.pushId;
-	const negativeLikes = 0 - event.data.numChildren();
+function updateRatingField(average_rating, pushId, users) {
+	admin.database().ref('combination_ratings').child(pushId).child("rating").set(average_rating);
+	admin.database().ref('combinations').child(pushId).child("rating").set(average_rating);
+	admin.database().ref('combinations').child(pushId).child("negativeRating").set(0 - average_rating);
+}
 
-	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
-});

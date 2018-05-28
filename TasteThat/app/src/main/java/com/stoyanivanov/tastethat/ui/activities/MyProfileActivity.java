@@ -45,4 +45,10 @@ public class MyProfileActivity extends BaseFragmentContainerActivity {
 
         return fragment;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

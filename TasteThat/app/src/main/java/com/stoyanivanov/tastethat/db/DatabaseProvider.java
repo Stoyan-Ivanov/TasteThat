@@ -21,9 +21,11 @@ import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_rec
 
 import java.util.ArrayList;
 
+import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinationRating;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinations;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableLikes;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
+import static java.lang.Math.toIntExact;
 
 /**
  * Created by Stoyan on 2.2.2018 г..
@@ -101,7 +103,7 @@ public class DatabaseProvider {
 
             Query query;
             switch(orderCriteria) {
-                case MOST_LIKED:
+                case HIGHEST_RATING:
                     query = getQueryOrderByLikes(tableCombinations, nodeId, combinations);
                     break;
 
@@ -149,26 +151,29 @@ public class DatabaseProvider {
         if(nodeId == null) {
             query = tableReference
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("negativeLikes");
+                    .orderByChild("negativeRating");
         } else {
             query = tableReference
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("negativeLikes")
-                    .startAt((long)combinations.get(combinations.size() - 1).getNegativeLikes(),nodeId +1);
+                    .orderByChild("negativeRating")
+                    .startAt((long)combinations.get(combinations.size() - 1).getRating(),nodeId +1);
         }
 
         return query;
     }
 
-    public void getCombinationLikes(Combination combination, final CombinationsViewHolder viewHolder) {
+    public void getCombinationRating(Combination combination, final CombinationsViewHolder viewHolder) {
 
-        tableLikes.child(combination.getCombinationKey())
+        tableCombinationRating.child(combination.getCombinationKey())
+                .child("rating")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String numberOfLikes = String.valueOf(dataSnapshot.getChildrenCount());
-                        //viewHolder.setLikes(numberOfLikes);
+                        Long rating = (Long)dataSnapshot.getValue();
+                        if (rating != null) {
+                            viewHolder.setRating(rating.intValue());
+                        }
                     }
 
                     @Override
@@ -184,7 +189,7 @@ public class DatabaseProvider {
 
         Query query;
         switch(orderCriteria) {
-            case MOST_LIKED:
+            case HIGHEST_RATING:
                 query = getQueryOrderByLikes(userLikedCombinations, nodeId, likedCombinations);
                 break;
 
@@ -218,7 +223,7 @@ public class DatabaseProvider {
 
         Query query;
         switch(orderCriteria) {
-            case MOST_LIKED:
+            case HIGHEST_RATING:
                 query = getQueryOrderByLikes(userUploadedCombinations, nodeId, uploadedCombinations);
                 break;
 
