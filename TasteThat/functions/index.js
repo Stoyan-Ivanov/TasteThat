@@ -79,34 +79,10 @@ exports.uploadAchievementsChecker = functions.database
 	});
 });
 
-// exports.negativeLikesUpdaterOnWrite = functions.database
-// .ref('likes/{pushId}').onWrite(event => {
-	
-// 	const pushId = event.params.pushId;
-// 	const negativeLikes = 0 - event.data.numChildren();
-
-// 	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
-	
-// 	const getNegativeLikesPromise = admin.database().ref('combinations'+ pushId)
-// 	return  getNegativeLikesPromise.once('value').then(snapshot => {
-// 		snapshot.forEach(combination => {
-// 			var userId = combination.child('userId').val();
-// 			console.log(userId);
-// 			admin.database().ref('users').child(userId).child('uploadedCombinations').child(pushId).child("negativeLikes").set(negativeLikes);	
-// 		});
-// 	});		
-// });
-
-// exports.negativeLikesUpdaterOnDelete = functions.database
-// .ref('likes/{pushId}').onDelete(event => {
-	
-// 	const pushId = event.params.pushId;
-// 	const negativeLikes = 0 - event.data.numChildren();
-
-// 	admin.database().ref('combinations').child(pushId).child('negativeLikes').set(negativeLikes);
-// });
-
-
+/*
+	name: onRatingSubmitted
+	description: function that calculates the average rating of a combination.
+*/
 exports.onRatingSubmitted = functions.database.ref('combination_ratings/{pushId}/users').onWrite(event => {
 
 	const pushId = event.params.pushId;
@@ -132,4 +108,5 @@ function updateRatingField(average_rating, pushId, users) {
 	admin.database().ref('combinations').child(pushId).child("rating").set(average_rating);
 	admin.database().ref('combinations').child(pushId).child("negativeRating").set(0 - average_rating);
 }
+
 

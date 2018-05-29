@@ -20,6 +20,8 @@ import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinationRating;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinations;
@@ -164,7 +166,7 @@ public class DatabaseProvider {
 
         tableCombinationRating.child(combination.getCombinationKey())
                 .child("rating")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -250,5 +252,33 @@ public class DatabaseProvider {
                 .child(Constants.USER_RATED_COMBINATIONS)
                 .child(combination.getCombinationKey())
                 .setValue(combination);
+    }
+
+    public void deleteCombination(String combinationKey) {
+        tableCombinations.child(combinationKey).removeValue();
+
+        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.USER_UPLOADED_COMBINATIONS)
+                .child(combinationKey).removeValue();
+
+        tableCombinationRating
+                .child(combinationKey)
+                .child("users")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                       for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                           String userId = postSnapshot.getKey();
+                           Log.d("SII", "onDataChange: " + userId);
+                           tableUsers.child(userId).child(Constants.USER_RATED_COMBINATIONS).child(combinationKey).removeValue();
+                       }
+                        tableCombinationRating.child(combinationKey).removeValue();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("SII", "onCancelled: " + databaseError.getMessage());
+                    }
+                });
     }
 }
