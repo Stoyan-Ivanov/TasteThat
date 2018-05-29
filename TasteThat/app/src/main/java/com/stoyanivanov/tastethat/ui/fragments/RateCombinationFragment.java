@@ -34,6 +34,7 @@ public class RateCombinationFragment extends BaseFragment {
         float rating = ratingBar.getRating();
 
         DatabaseProvider.getInstance().saveRatingForCombination(mCombination, rating);
+        DatabaseProvider.getInstance().saveCombinationToUserRated(mCombination);
         popCurrentFragment();
     }
     

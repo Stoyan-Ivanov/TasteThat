@@ -209,7 +209,7 @@ public class UserProfileFragment extends BaseFragment {
         likedCombinations = new ArrayList<>();
 
         tableUsers.child(userId)
-                .child(Constants.USER_LIKED_COMBINATIONS)
+                .child(Constants.USER_RATED_COMBINATIONS)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override

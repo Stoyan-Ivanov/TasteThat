@@ -17,6 +17,7 @@ import com.stoyanivanov.tastethat.ui.activities.MyAchievementsActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
+import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import butterknife.BindView;
@@ -99,5 +100,6 @@ public class MyProfileFragment extends BaseFragment {
     private void signOut() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
     }
 }

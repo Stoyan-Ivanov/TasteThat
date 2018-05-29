@@ -31,7 +31,7 @@
     <!-- Page headers -->
     <string name="all_combinations_header">All Combinations</string>
     <string name="uploads_header">Uploaded Combinations</string>
-    <string name="liked_header">Liked Combinations</string>
+    <string name="rated_header">Rated Combinations</string>
     <string name="login_header">Taste that</string>
     <string name="add_combination_frag_header">Add your combination</string>
     <string name="options_header">Options</string>

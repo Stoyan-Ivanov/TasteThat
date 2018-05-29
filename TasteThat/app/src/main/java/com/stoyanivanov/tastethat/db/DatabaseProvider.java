@@ -23,9 +23,7 @@ import java.util.ArrayList;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinationRating;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinations;
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableLikes;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
-import static java.lang.Math.toIntExact;
 
 /**
  * Created by Stoyan on 2.2.2018 г..
@@ -185,7 +183,7 @@ public class DatabaseProvider {
                                      final LikedCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
         final DatabaseReference userLikedCombinations = tableUsers.child(FirebaseAuth.getInstance()
-                        .getCurrentUser().getUid()).child(Constants.USER_LIKED_COMBINATIONS);
+                        .getCurrentUser().getUid()).child(Constants.USER_RATED_COMBINATIONS);
 
         Query query;
         switch(orderCriteria) {
@@ -245,5 +243,12 @@ public class DatabaseProvider {
                         Log.d("SII", "onCancelled: error");
                     }
                 });
+    }
+
+    public void saveCombinationToUserRated(Combination combination) {
+        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.USER_RATED_COMBINATIONS)
+                .child(combination.getCombinationKey())
+                .setValue(combination);
     }
 }

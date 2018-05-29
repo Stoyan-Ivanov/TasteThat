@@ -35,7 +35,7 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
                              Bundle savedInstanceState) {
         View view = inflateCurrentView(R.layout.fragment_base_recyclerview, inflater, container);
 
-        selectedSectionHeader.setText(R.string.liked_header);
+        selectedSectionHeader.setText(R.string.rated_header);
         optionsMenu.setImageAlpha(0);
 
         startLoadingCombinations();

@@ -12,7 +12,7 @@ public class Constants {
 
     public static final String USER_TABLE = "users";
     public static final String USER_UPLOADED_COMBINATIONS = "uploadedCombinations";
-    public static final String USER_LIKED_COMBINATIONS = "likedCombinations";
+    public static final String USER_RATED_COMBINATIONS = "ratedCombinations";
     public static final String USER_ACHIEVEMENTS = "achievements";
 
     public static final String LOGIN_HEADER_TV_FONT = "font/Allura-Regular.ttf";

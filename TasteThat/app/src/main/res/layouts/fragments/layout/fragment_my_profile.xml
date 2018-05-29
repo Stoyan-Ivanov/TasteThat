@@ -55,7 +55,7 @@
         app:layout_marginTopPercent="1%"
         android:layout_below="@id/tv_username"
 
-        android:text="Liked"
+        android:text="@string/rated_button_title"
         android:textColor="@color/white"
         android:background="@drawable/custom_button_shape"
         />
@@ -69,7 +69,7 @@
         app:layout_marginTopPercent="1%"
         android:layout_below="@id/btn_liked_combinations"
 
-        android:text="Uploaded"
+        android:text="@string/uploaded_button_title"
         android:textColor="@color/white"
         android:background="@drawable/custom_button_shape"
         />
@@ -83,7 +83,7 @@
         app:layout_marginTopPercent="1%"
         android:layout_below="@id/btn_uploaded_combinations"
 
-        android:text="Achievements"
+        android:text="@string/achievements_button_title"
         android:textColor="@color/white"
         android:background="@drawable/custom_button_shape"
         />
@@ -97,7 +97,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/btn_achievements"
 
-        android:text="Logout"
+        android:text="@string/logout_button_title"
         android:textColor="#FAF448"
         android:background="@drawable/custom_button_shape"
         />

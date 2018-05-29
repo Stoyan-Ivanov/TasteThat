@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -26,6 +28,10 @@ public abstract class BaseFragment extends Fragment {
         if (fragmentManager != null) {
             fragmentManager.popBackStack();
         }
+    }
+
+    protected String  getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
 
