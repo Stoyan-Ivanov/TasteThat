@@ -32,7 +32,7 @@ public class CustomFilter implements Filterable {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                String searched = charSequence.toString();
+                searched = charSequence.toString();
                 ArrayList<Combination> filteredData = new ArrayList<>();
 
                 if (searched.isEmpty()) {

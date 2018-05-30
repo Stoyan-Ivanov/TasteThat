@@ -21,6 +21,7 @@ import com.stoyanivanov.tastethat.network.models.Picture;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.images_recyclerview.ImagesRecyclerViewAdapter;
 import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
+import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,10 @@ public class ChooseImageFragment extends BaseFragment {
     private ArrayList<Component> mComponents;
     private int mComponentsPosition;
     private String mComponentName;
+    private ArrayList<Picture> allPictures;
+    private final int STARTING_OFFSET = 0;
+    private final int OFFSET_STEP = 30;
+    private int offset = STARTING_OFFSET;
 
     public static ChooseImageFragment newInstance(ArrayList<Component> components, int componentPosition) {
         ChooseImageFragment fragment = new ChooseImageFragment();
@@ -50,12 +55,13 @@ public class ChooseImageFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        View view = inflateCurrentView(R.layout.fragment_choose_image, inflater, container);
         getExtras();
+        allPictures = new ArrayList<>();
         mComponentName = mComponents.get(mComponentsPosition).getComponentName();
 
-        NetworkManager.getInstance().getNextImages(mComponentName, this);
-        return inflateCurrentView(R.layout.fragment_choose_image, inflater, container);
+        NetworkManager.getInstance().getNextImages(mComponentName, this, offset);
+        return view;
     }
 
     @Override
@@ -70,12 +76,20 @@ public class ChooseImageFragment extends BaseFragment {
     }
 
     public void onImagesGathered(ArrayList<Picture> pictures) {
-        configureRecyclerView(pictures);
+        if(recyclerView.getAdapter() == null) {
+            allPictures.addAll(pictures);
+            configureRecyclerView(allPictures);
+        } else {
+            allPictures.addAll(pictures);
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     private void configureRecyclerView(ArrayList<Picture> pictures) {
-        recyclerView.setLayoutManager(new GridLayoutManager(TasteThatApplication.getStaticContext(),
-                                                            Constants.NUMBER_OF_IMAGE_COLUMNS));
+        GridLayoutManager layoutManager = new GridLayoutManager(TasteThatApplication.getStaticContext(),
+                Constants.NUMBER_OF_IMAGE_COLUMNS);
+
+        recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(new ImagesRecyclerViewAdapter(pictures, (position, picture) -> {
             mComponents.get(mComponentsPosition).setComponentImageUrl("https:" + picture.getThumbnailUrl());
@@ -87,7 +101,16 @@ public class ChooseImageFragment extends BaseFragment {
             }
         }));
 
-        RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore() {
+                loadMoreImages();
+            }
+        });
+    }
+
+    private void loadMoreImages() {
+        offset += OFFSET_STEP;
+        NetworkManager.getInstance().getNextImages(mComponentName, this, offset);
     }
 }

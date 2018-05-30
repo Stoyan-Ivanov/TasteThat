@@ -25,12 +25,13 @@
     <string name="bottomnav_menu">Options</string>
 
     <!-- User -->
-    <string name="author_field">Author: @</string>
+    <string name="author_field">Uploaded by: @%s</string>
+    <string name="author_field_viewholder">\@%s</string>
 
     <!-- Page headers -->
     <string name="all_combinations_header">All Combinations</string>
     <string name="uploads_header">Uploaded Combinations</string>
-    <string name="liked_header">Liked Combinations</string>
+    <string name="rated_header">Rated Combinations</string>
     <string name="login_header">Taste that</string>
     <string name="add_combination_frag_header">Add your combination</string>
     <string name="options_header">Options</string>
@@ -49,7 +50,9 @@
     <string name="searchBar_hint">What goes with…</string>
 
     <!-- Switches -->
-    <string name="switch_data_caching_header">Data caching</string>
-    <string name="switch_notifications_header">Notifications</string>
+    <string name="switch_data_caching_header">Data caching </string>
+    <string name="switch_notifications_header">Notifications </string>
+
+
 
 </resources>

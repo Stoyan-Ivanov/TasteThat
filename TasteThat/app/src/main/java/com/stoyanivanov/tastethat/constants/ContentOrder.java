@@ -5,6 +5,6 @@ package com.stoyanivanov.tastethat.constants;
  */
 
 public enum ContentOrder {
-    MOST_LIKED,
+    HIGHEST_RATING,
     TIMESTAMP;
 }

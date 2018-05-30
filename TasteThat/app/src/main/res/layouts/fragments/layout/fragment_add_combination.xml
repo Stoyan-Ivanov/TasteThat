@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,114 +11,168 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout3"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.percent.PercentRelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_add_combination_header"
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/iv_back_arrow"
+                android:layout_toStartOf="@+id/btn_add_discard"
+
+                android:gravity="center"
+                android:lines="1"
+                android:text="@string/add_combination_frag_header"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_back_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                app:layout_marginLeftPercent = "3%"
-
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_arrow_left" />
 
-            <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-                android:id="@+id/tv_add_combination_header"
-
-                app:layout_widthPercent = "75%"
-                android:layout_height = "match_parent"
-
-                android:layout_centerHorizontal="true"
-                app:layout_marginLeftPercent="1%"
-                app:layout_marginRightPercent="1%"
-                app:layout_marginTopPercent="3%"
-                app:layout_marginBottomPercent="3%"
-                android:layout_toEndOf="@+id/iv_back_arrow"
-                android:layout_toStartOf="@+id/btn_add_discard"
-
-                android:text="@string/add_combination_frag_header"
-                android:lines="1"
-                android:gravity="center"
-                android:textColor="@color/white"
-                />
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_arrow_left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/btn_add_discard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                app:layout_marginRightPercent="3%"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/ic_cancel_search"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_marginRightPercent="3%" />
 
-        </android.support.percent.PercentRelativeLayout>
+        </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-        android:id="@+id/ctv_ingredient_label"
-        app:layout_widthPercent = "85%"
-        app:layout_heightPercent = "10%"
+    <TextView
+        android:id="@+id/tv_ingredient_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_centerHorizontal="true"
 
-        android:text="Enter the components"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        />
+        android:text="Enter the components"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout3" />
 
     <ScrollView
         android:id="@+id/scrollview_add"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ctv_ingredient_label"
-        android:layout_above="@id/btn_add_combination">
+        android:layout_height="0dp"
+        android:layout_below="@+id/tv_ingredient_label"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ingredient_label">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/ll_add_fields_container"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarAlwaysDrawVerticalTrack="true">
+            android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/view_first_ingredient"
-                android:layout_width="wrap_content"
-                android:layout_height="140dp"
+            <LinearLayout
+                android:id="@+id/ll_add_fields_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                layout="@layout/add_field_inflatable" />
+                <include
+                    android:id="@+id/view_first_ingredient"
+                    layout="@layout/add_field_inflatable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp" />
 
-            <include
-                android:id="@+id/view_second_ingredient"
-                android:layout_width="wrap_content"
-                android:layout_height="140dp"
+                <include
+                    android:id="@+id/view_second_ingredient"
+                    layout="@layout/add_field_inflatable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp" />
+            </LinearLayout>
 
-                layout="@layout/add_field_inflatable" />
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="Description"
+                android:inputType="text"
+                android:singleLine="false"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_add_fields_container" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_add_combination"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_button_shape"
+                android:text="Add Combination"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_description" />
+
+        </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_add_combination"
-        app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "10%"
 
-        android:layout_alignParentBottom="true"
-        app:layout_marginBottomPercent = "10%"
-        android:layout_centerHorizontal="true"
-
-        android:text="Add Combination"
-        android:textColor="@color/white"
-        android:background="@drawable/custom_button_shape"
-        />
-</android.support.percent.PercentRelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-<ScrollView
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,146 +7,168 @@
     android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.CombinationDetailsFragment"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
-    <android.support.percent.PercentRelativeLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/abl_header_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:verticalScrollbarPosition="right">
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/abl_header_bar"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:elevation="4dp">
-
-            <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/iv_back_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                app:layout_marginLeftPercent = "2%"
-
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_arrow_left" />
 
-                <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-                    android:id="@+id/ctv_combination_details_header"
-                    app:layout_widthPercent="80%"
-                    app:layout_heightPercent="65%"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_arrow_left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/iv_back_arrow"
-                    app:layout_marginLeftPercent="3%"
+            <TextView
+                android:id="@+id/ctv_combination_details_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
 
-                    android:gravity="center"
-                    android:textColor="@color/white"/>
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/iv_back_arrow"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_back_arrow"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </android.support.percent.PercentRelativeLayout>
-        </android.support.design.widget.AppBarLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/abl_header_bar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ctv_details_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="16dp"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/accent_700"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_top_left"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@id/iv_top_right"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_details_username" />
+
+            <ImageView
+                android:id="@+id/iv_top_right"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+
+                android:layout_below="@+id/ctv_details_username"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_top_left"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_details_username" />
+
+            <ImageView
+                android:id="@+id/iv_bottom_left"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@id/iv_bottom_right"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_top_left" />
+
+            <ImageView
+                android:id="@+id/iv_bottom_right"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_bottom_left"
+                app:layout_constraintTop_toBottomOf="@+id/iv_top_right" />
+
+            <TextView
+                android:id="@+id/ctv_combination_details_description_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
 
 
-        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-            android:id="@+id/ctv_details_username"
-            app:layout_widthPercent = "80%"
-            app:layout_heightPercent = "5%"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="start|center_vertical"
+                android:text="Description:"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_bottom_left" />
 
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/abl_header_bar"
+            <TextView
+                android:id="@+id/ctv_combination_details_description"
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="start|center_vertical"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_combination_details_description_header" />
 
-            app:layout_marginTopPercent = "2%"
-            android:textColor="@color/accent_700"
-            />
-
-        <ImageView
-            android:id = "@+id/iv_top_left"
-            app:layout_widthPercent = "45%"
-            app:layout_heightPercent = "30%"
-
-            android:layout_below="@+id/ctv_details_username"
-            android:layout_alignParentLeft = "true"
-            android:layout_alignParentStart = "true"
-
-            app:layout_marginLeftPercent = "3%"
-            app:layout_marginStartPercent = "3%"
-            app:layout_marginTopPercent = "2%"
-            />
-
-        <ImageView
-            android:id = "@+id/iv_top_right"
-            app:layout_widthPercent = "45%"
-            app:layout_heightPercent = "30%"
-
-            android:layout_below="@+id/ctv_details_username"
-            android:layout_alignParentRight = "true"
-            android:layout_alignParentEnd = "true"
-
-            app:layout_marginRightPercent = "3%"
-            app:layout_marginEndPercent = "3%"
-            app:layout_marginTopPercent = "2%"
-            />
-
-
-        <ImageView
-            android:id = "@+id/iv_bottom_left"
-            app:layout_widthPercent = "45%"
-            app:layout_heightPercent = "30%"
-
-            android:layout_below="@id/iv_top_left"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-
-            app:layout_marginLeftPercent = "3%"
-            app:layout_marginStartPercent = "3%"
-            app:layout_marginTopPercent = "3%"
-
-            />
-
-        <ImageView
-            android:id = "@+id/iv_bottom_right"
-            app:layout_widthPercent = "45%"
-            app:layout_heightPercent = "30%"
-
-            android:layout_below="@id/iv_top_right"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-
-            app:layout_marginRightPercent = "3%"
-            app:layout_marginEndPercent = "3%"
-            app:layout_marginTopPercent = "3%"
-            />
-
-        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-            android:id="@+id/ctv_combination_details_description_header"
-            app:layout_widthPercent = "50%"
-            app:layout_heightPercent = "8%"
-
-            android:layout_below="@+id/iv_bottom_left"
-            app:layout_marginLeftPercent = "3%"
-            app:layout_marginStartPercent = "3%"
-            app:layout_marginTopPercent = "2%"
-
-            android:text="Description:"
-            android:textColor="@color/black"
-            android:gravity="center"
-            />
-
-        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-            android:id="@+id/ctv_combination_details_description"
-
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/ctv_combination_details_description_header"
-
-            app:layout_heightPercent="30%"
-            app:layout_marginTopPercent="3%"
-            app:layout_widthPercent="94%" />
-
-    </android.support.percent.PercentRelativeLayout>
-
-</ScrollView>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

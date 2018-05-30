@@ -25,11 +25,12 @@ import java.util.ArrayList;
 public class ImageActivity extends BaseFragmentContainerActivity implements  ImageActivityContract{
     private ImageActivityPresenter mPresenter;
 
-    public static Intent getIntent(Context context, String fragmentTag, ArrayList<Component> components) {
+    public static Intent getIntent(Context context, String fragmentTag, ArrayList<Component> components, String description) {
         Intent intent = new Intent(context, ImageActivity.class);
         intent.putExtra(StartConstants.EXTRA_FRAGMENT_TAG, fragmentTag);
         intent.putExtra(StartConstants.EXTRA_FLAG, StartConstants.EXTRA_FLAG_VALUE);
         intent.putParcelableArrayListExtra(StartConstants.EXTRA_COMPONENTS, components);
+        intent.putExtra(StartConstants.EXTRA_DESCRIPTION, description);
 
         return intent;
     }

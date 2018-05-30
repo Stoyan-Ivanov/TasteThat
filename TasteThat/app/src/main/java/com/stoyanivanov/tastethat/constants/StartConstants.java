@@ -16,4 +16,5 @@ public class StartConstants {
 
     public static final String EXTRA_FRAGMENT_COMBINATION = "currCombination";
     public static final String EXTRA_ACTIVITY_NAME = "activity";
+    public static final String EXTRA_DESCRIPTION = "description";
 }

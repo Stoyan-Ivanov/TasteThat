@@ -1,7 +1,9 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -27,6 +29,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
     @BindView(R.id.ctv_selected_section_header) CustomTextView selectedSectionHeader;
     @BindView(R.id.rv) RecyclerView recyclerView;
     @BindView(R.id.iv_options_menu) ImageView optionsMenu;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     public ContentOrder currORDER = ContentOrder.TIMESTAMP;
 
@@ -36,11 +39,23 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
+    private void configureSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            new Handler().postDelayed(() -> {
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                startLoadingCombinations();
+            }, 500);
+        });
+    }
+
     @Override
     protected View inflateCurrentView(int layoutResID, LayoutInflater inflater, ViewGroup container) {
         View view = super.inflateCurrentView(layoutResID, inflater, container);
 
         configureSearchWidget();
+        configureSwipeRefresh();
         return view;
     }
 
@@ -114,7 +129,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
 
     protected abstract void notifyAdapterOnSearchCancel();
 
-    protected abstract void instantiateRV();
+    protected abstract void instantiateRecyclerView();
 
     public abstract void startLoadingCombinations();
 }

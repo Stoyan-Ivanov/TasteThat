@@ -4,12 +4,20 @@ import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.TasteThatApplication;
+import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
@@ -60,45 +68,39 @@ public class PopUpMenuController {
 
         showPopup(R.menu.actionbar_menu_order);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.order_by_likes:
-                        fragment.currORDER = ContentOrder.MOST_LIKED;
-                        fragment.startLoadingCombinations();
-                        TasteThatApplication.showToast("Ordering by likes...");
-                        break;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.order_by_likes:
+                    fragment.currORDER = ContentOrder.HIGHEST_RATING;
+                    fragment.startLoadingCombinations();
+                    TasteThatApplication.showToast("Ordering by likes...");
+                    break;
 
-                    case R.id.order_by_timestamp:
-                        fragment.currORDER = ContentOrder.TIMESTAMP;
-                        fragment.startLoadingCombinations();
-                        TasteThatApplication.showToast("Ordering by timestamp...");
-                        break;
-                }
-                return true;
+                case R.id.order_by_timestamp:
+                    fragment.currORDER = ContentOrder.TIMESTAMP;
+                    fragment.startLoadingCombinations();
+                    TasteThatApplication.showToast("Ordering by timestamp...");
+                    break;
             }
+            return true;
         });
     }
 
     private void allCombinationsVHPopup(final int position) {
         showPopup(R.menu.popup_menu_all_combinations);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch(item.getItemId()) {
-                    case R.id.pm_rv_all_share:
-                        showNotAvailableToast();
-                        break;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch(item.getItemId()) {
+                case R.id.pm_rv_all_share:
+                    showNotAvailableToast();
+                    break;
 
-                    case R.id.pm_rv_all_report:
-                        showNotAvailableToast();
-                        break;
+                case R.id.pm_rv_all_report:
+                    showNotAvailableToast();
+                    break;
 
-                }
-                return true;
             }
+            return true;
         });
 
     }
@@ -106,22 +108,19 @@ public class PopUpMenuController {
     private void uploadedCombinationsVHPopup(final int position) {
         showPopup(R.menu.popup_menu_uploaded_combinations);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch(item.getItemId()) {
-                    case R.id.pm_rv_uploaded_share:
-                       showNotAvailableToast();
-                        break;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch(item.getItemId()) {
+                case R.id.pm_rv_uploaded_share:
+                   showNotAvailableToast();
+                    break;
 
-                    case R.id.pm_rv_uploaded_delete:
-                        viewHolder.deleteViewHolderFromRV(position);
-                        deleteCombinationFromDB();
-                        break;
+                case R.id.pm_rv_uploaded_delete:
+                    viewHolder.deleteViewHolderFromRV(position);
+                    deleteCombinationFromDB();
+                    break;
 
-                }
-                return true;
             }
+            return true;
         });
 
     }
@@ -129,16 +128,13 @@ public class PopUpMenuController {
     private void likedCombinationsVHPopup() {
         showPopup(R.menu.popup_menu_liked_combinations);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch(item.getItemId()) {
-                    case R.id.pm_rv_liked_share:
-                        showNotAvailableToast();
-                        break;
-                }
-                return true;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch(item.getItemId()) {
+                case R.id.pm_rv_liked_share:
+                    showNotAvailableToast();
+                    break;
             }
+            return true;
         });
     }
 
@@ -148,11 +144,7 @@ public class PopUpMenuController {
     }
 
     private void deleteCombinationFromDB() {
-        tableCombinations.child(combinationKey).removeValue();
-
-        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(Constants.USER_UPLOADED_COMBINATIONS)
-                .child(combinationKey).removeValue();
+        DatabaseProvider.getInstance().deleteCombination(combinationKey);
     }
 
     private void showNotAvailableToast() {

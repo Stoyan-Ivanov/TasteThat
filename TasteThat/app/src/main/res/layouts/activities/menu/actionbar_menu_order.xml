@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/order_by_likes"
-        android:title="Order by likes"/>
+        android:title="@string/order_by_rating"/>
 
     <item
         android:id="@+id/order_by_timestamp"
-        android:title="Order by timestamp"/>
+        android:title="@string/order_by_timestamp"/>
 </menu>

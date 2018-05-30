@@ -74,7 +74,7 @@ public class MyProfileFragment extends BaseFragment {
         switch(v.getId()) {
             case R.id.btn_liked_combinations:
                 startActivity(MyProfileActivity.getIntent(getActivity(),
-                        BottomNavigationOptions.MY_PROFILE, FragmentTags.LIKED_FRAGMENT));
+                        BottomNavigationOptions.MY_PROFILE, FragmentTags.RATED_COMBINATIONS_FRAGMENT));
                 break;
 
             case R.id.btn_uploaded_combinations:
@@ -99,5 +99,6 @@ public class MyProfileFragment extends BaseFragment {
     private void signOut() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
     }
 }

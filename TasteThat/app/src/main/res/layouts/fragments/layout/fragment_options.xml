@@ -1,4 +1,4 @@
-<android.support.percent.PercentRelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,57 +7,93 @@
     tools:context=".ui.fragments.OptionsFragment">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.percent.PercentRelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
+            <TextView
                 android:id="@+id/ctv_options_header"
 
-                app:layout_widthPercent = "70%"
-                android:layout_height = "match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-                app:layout_marginTopPercent = "3%"
-                android:layout_centerHorizontal="true"
-
-                android:text="@string/options_header"
-                android:lines="1"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:gravity="center"
+                android:lines="1"
+                android:text="@string/options_header"
                 android:textColor="@color/white"
-                />
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_marginTopPercent="3%" />
 
-        </android.support.percent.PercentRelativeLayout>
+        </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <Switch
-        android:id="@+id/sw_caching"
-        app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "10%"
-
-        app:layout_marginTopPercent = "30%"
-        android:layout_centerHorizontal="true"
-        android:text="@string/switch_data_caching_header"
-        android:textAlignment="center"
-
-        />
-
-    <Switch
-        android:id="@+id/sw_notifications"
-        app:layout_widthPercent = "70%"
-        app:layout_heightPercent = "10%"
-
-        app:layout_marginTopPercent = "5%"
-        android:layout_centerHorizontal="true"
-
-        android:layout_below="@+id/sw_caching"
-        android:text="@string/switch_notifications_header"
-        android:textAlignment="center"
-        />
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/options_constraint_layout"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        android:background="@drawable/grey_border_shape">
 
 
-</android.support.percent.PercentRelativeLayout>
+        <Switch
+            android:id="@+id/sw_caching"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:switchPadding="8dp"
+            android:text="@string/switch_data_caching_header"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toTopOf="@+id/sw_notifications"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/options_constraint_layout" />
+
+        <Switch
+            android:id="@+id/sw_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="8dp"
+            android:switchPadding="8dp"
+            android:text="@string/switch_notifications_header"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sw_caching" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,27 +1,22 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.decoration.SpacesItemDecoration;
 import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnScrollListener;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -29,19 +24,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
-
 
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     @BindView(R.id.fab_add_combination) FloatingActionButton fabAddCombination;
 
     private CombinationsRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
-    private Combination currentCombination;
-    private TextView likesField;
-    private boolean processLike = false;
-    private boolean isLiked;
-    private long likes = 0;
 
     @OnClick(R.id.fab_add_combination)
         void inflateNewAddCombinationFragment() {
@@ -85,45 +73,33 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     public void onDataGathered(ArrayList<Combination> combinations) {
         if(adapter == null) {
             allCombinations = combinations;
-            instantiateRV();
+            instantiateRecyclerView();
         } else {
             adapter.setNewData(combinations);
         }
     }
 
     @Override
-    protected void instantiateRV() {
+    protected void instantiateRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, final TextView likeCounter, int position) {
-                final String combinationKey = combination.getCombinationKey();
-                likesField = likeCounter;
-                currentCombination = combination;
-
-                tableLikes.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        likes = dataSnapshot.child(combinationKey).getChildrenCount();
-                        combinationIsLiked(combinationKey);
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {}
-                });
+            public void onRateButtonClicked(Combination combination) {
+                ((MainActivity) getActivity())
+                        .replaceFragment(RateCombinationFragment.newInstance(combination));
             }
 
             @Override
-            public void onItemLongClick(Combination combination) {
+            public void onItemClick(Combination combination) {
                 ((MainActivity) getActivity())
                         .replaceFragment(CombinationDetailsFragment.newInstance(MainActivity.class.getSimpleName(), combination));
             }
         });
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager, fabAddCombination) {
             @Override
@@ -131,14 +107,6 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                 loadMoreCombinations();
             }
         });
-    }
-
-    private void setLikesInLikesField() {
-        if(isLiked) {
-            likesField.setText(String.valueOf(--likes));
-        } else {
-            likesField.setText(String.valueOf(++likes));
-        }
     }
 
     @Override
@@ -150,54 +118,5 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     @Override
     public void notifyAdapterOnSearchCancel() {
         adapter.setNewData(allCombinations);
-    }
-
-    public void combinationIsLiked(final String combinationKey) {
-
-        processLike = true;
-        isLiked = false;
-
-        tableLikes.child(combinationKey).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (processLike) {
-                        FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-
-                        if (dataSnapshot.hasChild(currUser.getUid())) {
-                            tableLikes.child(combinationKey)
-                                    .child(currUser.getUid()).removeValue();
-
-                            tableUsers.child(currUser.getUid())
-                                    .child(Constants.USER_LIKED_COMBINATIONS)
-                                    .child(combinationKey)
-                                    .removeValue();
-
-                            isLiked = true;
-                            processLike = false;
-
-                        } else {
-                            tableLikes.child(combinationKey)
-                                    .child(currUser.getUid()).setValue(currUser.getEmail());
-
-                            tableUsers.child(currUser.getUid())
-                                    .child(Constants.USER_LIKED_COMBINATIONS)
-                                    .child(combinationKey)
-                                    .setValue(currentCombination);
-
-                            isLiked = false;
-                            processLike = false;
-
-                        }
-
-                        setLikesInLikesField();
-                    }
-                }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("SII", "OnCancel: combinationIsLiked");
-            }
-        });
     }
 }

@@ -15,14 +15,14 @@ import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
-import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
+import com.stoyanivanov.tastethat.ui.fragments.RatedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
 import java.util.ArrayList;
 
+import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinationRating;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinations;
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableLikes;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
 /**
@@ -75,11 +75,25 @@ public class DatabaseProvider {
         TasteThatApplication.showToast(TasteThatApplication.getStringFromId((R.string.toast_successfull_adding)));
     }
 
+
+
     private void saveCombinationToMyUploads(Combination newCombination) {
-        DatabaseReferences.tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        DatabaseReferences.tableUsers
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .child(newCombination.getCombinationKey())
                 .setValue(newCombination);
+    }
+
+    public void saveRatingForCombination(Combination combination, float rating) {
+        if(combination != null) {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReferences.tableCombinationRating
+                    .child(combination.getCombinationKey())
+                    .child("users")
+                    .child(userId)
+                    .setValue(rating);
+        }
     }
 
     public void getAllCombinations(final String nodeId, final ArrayList<Combination> combinations,
@@ -87,8 +101,8 @@ public class DatabaseProvider {
 
             Query query;
             switch(orderCriteria) {
-                case MOST_LIKED:
-                    query = getQueryOrderByLikes(tableCombinations, nodeId, combinations);
+                case HIGHEST_RATING:
+                    query = getQueryOrderByRating(tableCombinations, nodeId, combinations);
                     break;
 
                 default: query = getQueryOrderByTimestamp(tableCombinations, nodeId, combinations);
@@ -128,33 +142,36 @@ public class DatabaseProvider {
         return query;
     }
 
-    private Query getQueryOrderByLikes(DatabaseReference tableReference,
-                                           String nodeId, final ArrayList<Combination> combinations) {
+    private Query getQueryOrderByRating(DatabaseReference tableReference,
+                                        String nodeId, final ArrayList<Combination> combinations) {
         Query query;
 
         if(nodeId == null) {
             query = tableReference
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("negativeLikes");
+                    .orderByChild("negativeRating");
         } else {
             query = tableReference
                     .limitToFirst(TOTAL_COMBINATIONS_FOR_ONE_LOAD)
-                    .orderByChild("negativeLikes")
-                    .startAt((long)combinations.get(combinations.size() - 1).getNegativeLikes(),nodeId +1);
+                    .orderByChild("negativeRating")
+                    .startAt((long)combinations.get(combinations.size() - 1).getRating(),nodeId +1);
         }
 
         return query;
     }
 
-    public void getCombinationLikes(Combination combination, final CombinationsViewHolder viewHolder) {
+    public void getCombinationRating(Combination combination, final CombinationsViewHolder viewHolder) {
 
-        tableLikes.child(combination.getCombinationKey())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        tableCombinationRating.child(combination.getCombinationKey())
+                .child("rating")
+                .addValueEventListener(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String numberOfLikes = String.valueOf(dataSnapshot.getChildrenCount());
-                        viewHolder.setLikes(numberOfLikes);
+                        Long rating = (Long)dataSnapshot.getValue();
+                        if (rating != null) {
+                            viewHolder.setRating(rating.intValue());
+                        }
                     }
 
                     @Override
@@ -162,20 +179,20 @@ public class DatabaseProvider {
                 });
     }
 
-    public void getLikedCombinations(final String nodeId, final ArrayList<Combination> likedCombinations,
-                                     final LikedCombinationsFragment fragment, final ContentOrder orderCriteria) {
+    public void getRatedCombinations(final String nodeId, final ArrayList<Combination> ratedCombinations,
+                                     final RatedCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
         final DatabaseReference userLikedCombinations = tableUsers.child(FirebaseAuth.getInstance()
-                        .getCurrentUser().getUid()).child(Constants.USER_LIKED_COMBINATIONS);
+                        .getCurrentUser().getUid()).child(Constants.USER_RATED_COMBINATIONS);
 
         Query query;
         switch(orderCriteria) {
-            case MOST_LIKED:
-                query = getQueryOrderByLikes(userLikedCombinations, nodeId, likedCombinations);
+            case HIGHEST_RATING:
+                query = getQueryOrderByRating(userLikedCombinations, nodeId, ratedCombinations);
                 break;
 
             default:
-                query = getQueryOrderByTimestamp(userLikedCombinations, nodeId, likedCombinations);
+                query = getQueryOrderByTimestamp(userLikedCombinations, nodeId, ratedCombinations);
         }
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -184,10 +201,10 @@ public class DatabaseProvider {
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
-                    likedCombinations.add(currCombination);
+                    ratedCombinations.add(currCombination);
                 }
 
-                fragment.onDataGathered(likedCombinations);
+                fragment.onDataGathered(ratedCombinations);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -204,8 +221,8 @@ public class DatabaseProvider {
 
         Query query;
         switch(orderCriteria) {
-            case MOST_LIKED:
-                query = getQueryOrderByLikes(userUploadedCombinations, nodeId, uploadedCombinations);
+            case HIGHEST_RATING:
+                query = getQueryOrderByRating(userUploadedCombinations, nodeId, uploadedCombinations);
                 break;
 
             default:
@@ -224,6 +241,41 @@ public class DatabaseProvider {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.d("SII", "onCancelled: error");
+                    }
+                });
+    }
+
+    public void saveCombinationToUserRated(Combination combination) {
+        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.USER_RATED_COMBINATIONS)
+                .child(combination.getCombinationKey())
+                .setValue(combination);
+    }
+
+    public void deleteCombination(String combinationKey) {
+        tableCombinations.child(combinationKey).removeValue();
+
+        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.USER_UPLOADED_COMBINATIONS)
+                .child(combinationKey).removeValue();
+
+        tableCombinationRating
+                .child(combinationKey)
+                .child("users")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                       for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                           String userId = postSnapshot.getKey();
+                           Log.d("SII", "onDataChange: " + userId);
+                           tableUsers.child(userId).child(Constants.USER_RATED_COMBINATIONS).child(combinationKey).removeValue();
+                       }
+                        tableCombinationRating.child(combinationKey).removeValue();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("SII", "onCancelled: " + databaseError.getMessage());
                     }
                 });
     }

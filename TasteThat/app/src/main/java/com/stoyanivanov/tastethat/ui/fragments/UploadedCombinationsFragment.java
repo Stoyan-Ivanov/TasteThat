@@ -2,13 +2,9 @@ package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
@@ -16,16 +12,11 @@ import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
-import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsRecyclerViewAdapter;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.decoration.SpacesItemDecoration;
 import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
@@ -35,7 +26,7 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
     @Override
     public void onResume() {
         super.onResume();
-        instantiateRV();
+        instantiateRecyclerView();
     }
 
     @Override
@@ -73,23 +64,25 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
     public void onDataGathered(ArrayList<Combination> combinations) {
         if(adapter == null) {
             uploadedCombinations = combinations;
-            instantiateRV();
+            instantiateRecyclerView();
         } else {
             adapter.setNewData(combinations);
         }
     }
 
     @Override
-    protected void instantiateRV() {
+    protected void instantiateRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickViewHolder() {
             @Override
-            public void onItemClick(Combination combination, TextView likeCounter, int position) {
+            public void onRateButtonClicked(Combination combination) {
+                ((MyProfileActivity) getActivity())
+                        .replaceFragment(RateCombinationFragment.newInstance(combination));
             }
 
             @Override
-            public void onItemLongClick(Combination combination) {
+            public void onItemClick(Combination combination) {
                 ((MyProfileActivity) getActivity())
                         .replaceFragment(CombinationDetailsFragment
                             .newInstance(MyProfileActivity.class.getSimpleName(), combination));
@@ -97,6 +90,7 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
         });
 
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override

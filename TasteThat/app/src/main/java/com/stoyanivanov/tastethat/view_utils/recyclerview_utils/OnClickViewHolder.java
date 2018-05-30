@@ -10,7 +10,7 @@ import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
  */
 
 public interface OnClickViewHolder {
-    void onItemClick(Combination combination, TextView likeCounter, int position);
+    void onRateButtonClicked(Combination combination);
 
-    void onItemLongClick(Combination combination);
+    void onItemClick(Combination combination);
 }
