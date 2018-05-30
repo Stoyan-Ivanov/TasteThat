@@ -17,7 +17,6 @@ import com.stoyanivanov.tastethat.ui.activities.MyAchievementsActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
-import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import butterknife.BindView;
@@ -75,7 +74,7 @@ public class MyProfileFragment extends BaseFragment {
         switch(v.getId()) {
             case R.id.btn_liked_combinations:
                 startActivity(MyProfileActivity.getIntent(getActivity(),
-                        BottomNavigationOptions.MY_PROFILE, FragmentTags.LIKED_FRAGMENT));
+                        BottomNavigationOptions.MY_PROFILE, FragmentTags.RATED_COMBINATIONS_FRAGMENT));
                 break;
 
             case R.id.btn_uploaded_combinations:

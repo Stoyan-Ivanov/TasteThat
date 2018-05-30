@@ -19,10 +19,10 @@ import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnSc
 
 import java.util.ArrayList;
 
-public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
+public class RatedCombinationsFragment extends BaseRecyclerViewFragment {
 
-    private ArrayList<Combination> likedCombinations;
-    private CombinationsRecyclerViewAdapter adapter;
+    private ArrayList<Combination> mRatedCombinations;
+    private CombinationsRecyclerViewAdapter mAdapter;
 
     @Override
     public void onResume() {
@@ -44,30 +44,30 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void startLoadingCombinations() {
-        if(likedCombinations == null) {
-            likedCombinations = new ArrayList<>();
+        if(mRatedCombinations == null) {
+            mRatedCombinations = new ArrayList<>();
         } else {
-            likedCombinations.clear();
+            mRatedCombinations.clear();
         }
         loadCombinations(null);
     }
 
     private void loadCombinations(String nodeId) {
-        DatabaseProvider.getInstance().getLikedCombinations(nodeId, likedCombinations,
+        DatabaseProvider.getInstance().getRatedCombinations(nodeId, mRatedCombinations,
                 this, super.currORDER);
     }
 
     private void loadMoreCombinations(){
-        String nodeId = likedCombinations.get(likedCombinations.size() - 1).getCombinationKey();
+        String nodeId = mRatedCombinations.get(mRatedCombinations.size() - 1).getCombinationKey();
         loadCombinations(nodeId);
     }
 
     public void onDataGathered(ArrayList<Combination> combinations) {
-        if(adapter == null) {
-            likedCombinations = combinations;
+        if(mAdapter == null) {
+            mRatedCombinations = combinations;
             instantiateRecyclerView();
         } else {
-            adapter.setNewData(combinations);
+            mAdapter.setNewData(combinations);
         }
     }
 
@@ -75,7 +75,7 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
     protected void instantiateRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CombinationsRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, likedCombinations, new OnClickViewHolder() {
+        mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, mRatedCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
                 ((MainActivity) getActivity())
@@ -88,7 +88,7 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
                         .replaceFragment(CombinationDetailsFragment.newInstance(MyProfileActivity.class.getSimpleName(), combination));
             }
         });
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
@@ -100,12 +100,12 @@ public class LikedCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void startFilteringContent() {
-        adapter.setNewData(likedCombinations);
-        adapter.filterData(searchBar.getText().toString());
+        mAdapter.setNewData(mRatedCombinations);
+        mAdapter.filterData(searchBar.getText().toString());
     }
 
     @Override
     public void notifyAdapterOnSearchCancel() {
-        adapter.setNewData(likedCombinations);
+        mAdapter.setNewData(mRatedCombinations);
     }
 }

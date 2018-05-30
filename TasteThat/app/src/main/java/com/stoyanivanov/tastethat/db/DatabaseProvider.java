@@ -15,13 +15,11 @@ import com.stoyanivanov.tastethat.constants.DatabaseReferences;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
-import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
+import com.stoyanivanov.tastethat.ui.fragments.RatedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinationRating;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableCombinations;
@@ -104,7 +102,7 @@ public class DatabaseProvider {
             Query query;
             switch(orderCriteria) {
                 case HIGHEST_RATING:
-                    query = getQueryOrderByLikes(tableCombinations, nodeId, combinations);
+                    query = getQueryOrderByRating(tableCombinations, nodeId, combinations);
                     break;
 
                 default: query = getQueryOrderByTimestamp(tableCombinations, nodeId, combinations);
@@ -144,8 +142,8 @@ public class DatabaseProvider {
         return query;
     }
 
-    private Query getQueryOrderByLikes(DatabaseReference tableReference,
-                                           String nodeId, final ArrayList<Combination> combinations) {
+    private Query getQueryOrderByRating(DatabaseReference tableReference,
+                                        String nodeId, final ArrayList<Combination> combinations) {
         Query query;
 
         if(nodeId == null) {
@@ -181,8 +179,8 @@ public class DatabaseProvider {
                 });
     }
 
-    public void getLikedCombinations(final String nodeId, final ArrayList<Combination> likedCombinations,
-                                     final LikedCombinationsFragment fragment, final ContentOrder orderCriteria) {
+    public void getRatedCombinations(final String nodeId, final ArrayList<Combination> ratedCombinations,
+                                     final RatedCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
         final DatabaseReference userLikedCombinations = tableUsers.child(FirebaseAuth.getInstance()
                         .getCurrentUser().getUid()).child(Constants.USER_RATED_COMBINATIONS);
@@ -190,11 +188,11 @@ public class DatabaseProvider {
         Query query;
         switch(orderCriteria) {
             case HIGHEST_RATING:
-                query = getQueryOrderByLikes(userLikedCombinations, nodeId, likedCombinations);
+                query = getQueryOrderByRating(userLikedCombinations, nodeId, ratedCombinations);
                 break;
 
             default:
-                query = getQueryOrderByTimestamp(userLikedCombinations, nodeId, likedCombinations);
+                query = getQueryOrderByTimestamp(userLikedCombinations, nodeId, ratedCombinations);
         }
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -203,10 +201,10 @@ public class DatabaseProvider {
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Combination currCombination = dataSnapshot.getValue(Combination.class);
-                    likedCombinations.add(currCombination);
+                    ratedCombinations.add(currCombination);
                 }
 
-                fragment.onDataGathered(likedCombinations);
+                fragment.onDataGathered(ratedCombinations);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -224,7 +222,7 @@ public class DatabaseProvider {
         Query query;
         switch(orderCriteria) {
             case HIGHEST_RATING:
-                query = getQueryOrderByLikes(userUploadedCombinations, nodeId, uploadedCombinations);
+                query = getQueryOrderByRating(userUploadedCombinations, nodeId, uploadedCombinations);
                 break;
 
             default:

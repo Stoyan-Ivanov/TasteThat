@@ -3,15 +3,12 @@ package com.stoyanivanov.tastethat.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
-import com.stoyanivanov.tastethat.ui.fragments.LikedCombinationsFragment;
+import com.stoyanivanov.tastethat.ui.fragments.RatedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 
 public class MyProfileActivity extends BaseFragmentContainerActivity {
@@ -38,7 +35,7 @@ public class MyProfileActivity extends BaseFragmentContainerActivity {
         Fragment fragment = null;
 
         switch(fragmentTag) {
-            case FragmentTags.LIKED_FRAGMENT : fragment = new LikedCombinationsFragment(); break;
+            case FragmentTags.RATED_COMBINATIONS_FRAGMENT: fragment = new RatedCombinationsFragment(); break;
 
             case FragmentTags.UPLOADS_FRAGMENT : fragment = new UploadedCombinationsFragment(); break;
         }

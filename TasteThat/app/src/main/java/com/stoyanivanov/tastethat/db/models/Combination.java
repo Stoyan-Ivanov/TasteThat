@@ -63,6 +63,10 @@ public class Combination implements Parcelable {
         return rating;
     }
 
+    public float getNegativeRating() {
+        return negativeRating;
+    }
+
     public String getDescription() {
         return description;
     }

@@ -43,8 +43,8 @@ public class NetworkManager {
         api = retrofit.create(QwantAPI.class);
     }
 
-    public void getNextImages(final String component, final ChooseImageFragment fragment) {
-        Call<NextImagesResponse> call = api.getNextImages(component);
+    public void getNextImages(final String component, final ChooseImageFragment fragment, int offset) {
+        Call<NextImagesResponse> call = api.getNextImages(component, offset);
 
         call.enqueue(new Callback<NextImagesResponse>() {
             @Override
