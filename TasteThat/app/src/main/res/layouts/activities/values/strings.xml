@@ -11,4 +11,9 @@
     <string name="rated_button_title">Rated</string>
     <string name="logout_button_title">Logout</string>
 
+    <string name="discard_dialog_title">Discard</string>
+    <string name="discard_dialog_message">Are you sure you want to discard all changes?</string>
+    <string name="discard_dialog_accept_button">Yes</string>
+    <string name="discard_dialog_deny_button">No</string>
+
 </resources>

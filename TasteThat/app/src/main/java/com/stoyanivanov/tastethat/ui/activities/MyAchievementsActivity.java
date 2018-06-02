@@ -2,14 +2,11 @@ package com.stoyanivanov.tastethat.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -29,16 +26,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
 public class MyAchievementsActivity extends BaseBottomNavigationActivity {
-    private ArrayList<Achievement> achievements;
-    private MyAchievementsRecyclerViewAdapter adapter;
-    private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+    private ArrayList<Achievement> mAchievements;
+    private MyAchievementsRecyclerViewAdapter mAdapter;
 
-    @BindView(R.id.iv_achievements_profile_picture)
-    CircleImageView ivProfilePic;
-    @BindView(R.id.ctv_achievements_username)
-    CustomTextView ctvUserName;
-    @BindView(R.id.rv_achievements)
-    RecyclerView recyclerView;
+    @BindView(R.id.iv_achievements_profile_picture) CircleImageView mIvProfilePic;
+    @BindView(R.id.ctv_achievements_username) CustomTextView mCtvUserName;
+    @BindView(R.id.rv_achievements) RecyclerView mRecyclerView;
 
     public static Intent getIntent(Context context, int bottomNavOption) {
         Intent intent = new Intent(context, MyAchievementsActivity.class);
@@ -59,8 +52,8 @@ public class MyAchievementsActivity extends BaseBottomNavigationActivity {
     }
 
     private void getAchievements() {
-        achievements = new ArrayList<>();
-        tableUsers.child(currUser.getUid())
+        mAchievements = new ArrayList<>();
+        tableUsers.child(mCurrentUser.getUid())
                 .child(Constants.USER_ACHIEVEMENTS)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -68,9 +61,9 @@ public class MyAchievementsActivity extends BaseBottomNavigationActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Achievement currAchievement = snapshot.getValue(Achievement.class);
-                            achievements.add(currAchievement);
+                            mAchievements.add(currAchievement);
                         }
-                        adapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -82,29 +75,26 @@ public class MyAchievementsActivity extends BaseBottomNavigationActivity {
 
     private void displayUserInfo() {
         String userPhotoUrl = "";
-        if(currUser.getPhotoUrl() != null) {
-            userPhotoUrl = currUser.getPhotoUrl().toString();
+        if(mCurrentUser.getPhotoUrl() != null) {
+            userPhotoUrl = mCurrentUser.getPhotoUrl().toString();
         }
 
-        if(userPhotoUrl.isEmpty()) {
-            ivProfilePic.setImageResource(R.drawable.default_user_picture);
-        } else {
-            Glide.with(this)
-                    .load(userPhotoUrl)
-                    .into(ivProfilePic);
-        }
+        Glide.with(this)
+                .load(userPhotoUrl)
+                .placeholder(R.drawable.default_user_picture)
+                .into(mIvProfilePic);
 
-        if(currUser != null) {
-            ctvUserName.setText(currUser.getDisplayName());
+        if(mCurrentUser != null) {
+            mCtvUserName.setText(mCurrentUser.getDisplayName());
         }
     }
 
     private void instantiateRV() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAchievementsRecyclerViewAdapter(achievements);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new MyAchievementsRecyclerViewAdapter(mAchievements);
+        mRecyclerView.setAdapter(mAdapter);
 
         RVScrollController scrollController = new RVScrollController();
-        scrollController.addControlToBottomNavigation(recyclerView);
+        scrollController.addControlToBottomNavigation(mRecyclerView);
     }
 }

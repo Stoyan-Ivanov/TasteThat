@@ -11,14 +11,14 @@ import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseActivity;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
+public abstract class BaseBottomNavigationActivity extends BaseActivity {
 
     public static BottomNavigationView bottomNavigationView;
     public static String fragmentTag;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,6 @@ public abstract class BaseBottomNavigationActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-
-        ButterKnife.bind(this);
 
         initBottomNavigation();
         addControlToBottomNavigation();

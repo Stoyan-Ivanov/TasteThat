@@ -32,7 +32,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityPrese
         String email = etEmail.getText().toString().trim();
         String password  = etPassword.getText().toString().trim();
 
-        presenter.checkIfPasswordIsCorrect(email, password);
+        mPresenter.checkIfPasswordIsCorrect(email, password);
 
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -55,7 +55,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityPrese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        presenter = new RegistrationActivityPresenter(this);
+        mPresenter = new RegistrationActivityPresenter(this);
 
         Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), Constants.LOGIN_HEADER_TV_FONT);
         header.setTypeface(custom_font);

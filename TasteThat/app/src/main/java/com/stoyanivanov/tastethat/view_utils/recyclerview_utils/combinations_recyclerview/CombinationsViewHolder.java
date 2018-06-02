@@ -39,25 +39,26 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.btn_rate) TextView rateCombination;
     @BindView(R.id.combination_vh_rating_bar) RatingBar combinationRatingBar;
 
-    private String combinationKey;
-    private String rvTag;
-    private CombinationsRecyclerViewAdapter adapter;
+    private Combination mCombination;
+    private String mRvTag;
+    private CombinationsRecyclerViewAdapter mAdapter;
 
     public CombinationsViewHolder(View itemView, String rvTag, CombinationsRecyclerViewAdapter adapter) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
 
-        this.rvTag = rvTag;
-        this.adapter = adapter;
+        this.mRvTag = rvTag;
+        this.mAdapter = adapter;
     }
 
     public void bind(final Combination combination, final OnClickViewHolder listener, final int position) {
         ArrayList<Component> components = combination.getComponents();
-        combinationKey = combination.getCombinationKey();
+        mCombination = combination;
+        combinationRatingBar.setRating(0);
 
-        username.setText(itemView.getContext().getString(R.string.author_field_viewholder, combination.getUsername()));
-        combinationName.setText(combination.toString());
+        setUsername();
+        setCombinationName();
         loadImage(leftImg, components.get(0).getComponentImageUrl());
         loadImage(rightImg, components.get(1).getComponentImageUrl());
 
@@ -74,6 +75,14 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    private void setUsername() {
+        username.setText(itemView.getContext().getString(R.string.author_field_viewholder, mCombination.getUsername()));
+    }
+
+    private void setCombinationName() {
+        combinationName.setText(mCombination.toString());
+    }
+
     public void setRating(float rating) {
         combinationRatingBar.setRating(rating);
     }
@@ -86,16 +95,16 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void deleteViewHolderFromRV(final int position) {
-        adapter.deleteViewHolderFromRV(position);
+        mAdapter.deleteViewHolderFromRV(position);
     }
 
     public void setPopUpMenu(final int position) {
         options.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(v.getContext(), options);
 
-            PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, rvTag,
+            PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, mRvTag,
                                                         CombinationsViewHolder.this);
-            popUpMenuController.inflatePopupMenu(position, combinationKey);
+            popUpMenuController.inflatePopupMenu(position, mCombination.getCombinationKey());
         });
     }
 }

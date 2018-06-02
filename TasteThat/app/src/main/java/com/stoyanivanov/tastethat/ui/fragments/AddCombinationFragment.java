@@ -1,6 +1,7 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,16 +28,16 @@ import butterknife.OnClick;
 
 public class AddCombinationFragment extends BaseFragment {
 
-    @BindView(R.id.ll_add_fields_container) LinearLayout addFieldsContainer;
-    @BindView(R.id.btn_add_combination) Button addCombination;
-    @BindView(R.id.btn_add_discard) ImageView discardChanges;
-    @BindView(R.id.view_first_ingredient) View firstIngredientField;
-    @BindView(R.id.view_second_ingredient) View secondIngredientField;
-    @BindView(R.id.iv_back_arrow) ImageView backArrow;
-    @BindView(R.id.et_description) EditText etDescription;
+    @BindView(R.id.ll_add_fields_container) LinearLayout mAddFieldsContainer;
+    @BindView(R.id.btn_add_combination) Button mAddCombination;
+    @BindView(R.id.btn_add_discard) ImageView mIvDiscardChanges;
+    @BindView(R.id.view_first_ingredient) View mFirstIngredientField;
+    @BindView(R.id.view_second_ingredient) View mSecondIngredientField;
+    @BindView(R.id.iv_back_arrow) ImageView mBackArrow;
+    @BindView(R.id.et_description) EditText mEtDescription;
 
-    private ArrayList<View> allFields = new ArrayList<>();
-    private ViewGroup container;
+    private ArrayList<View> mAllFields = new ArrayList<>();
+    private ViewGroup mContainer;
 
     public static AddCombinationFragment newInstance() {
         return new AddCombinationFragment();
@@ -57,18 +58,27 @@ public class AddCombinationFragment extends BaseFragment {
 
     @OnClick(R.id.btn_add_discard)
         void discardChanges(View view) {
-            discardUserChanges();
             TasteThatApplication.hideVirtualKeyboard(view);
+            showConfirmationDialog();
         }
+
+    private void showConfirmationDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(getString(R.string.discard_dialog_title))
+                .setMessage(getString(R.string.discard_dialog_message))
+                .setPositiveButton(getString(R.string.discard_dialog_accept_button), (dialog, which) -> discardUserChanges())
+                .setNegativeButton(getString(R.string.discard_dialog_deny_button), (dialog, which) -> {})
+                .show();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflateCurrentView(R.layout.fragment_add_combination, inflater, container);
 
-        this.container = container;
+        this.mContainer = container;
 
-        allFields.clear();
+        mAllFields.clear();
         configureFirstTwoFields();
         configureBackButton();
 
@@ -76,30 +86,29 @@ public class AddCombinationFragment extends BaseFragment {
     }
 
     private void configureBackButton() {
-        backArrow.setOnClickListener(view -> getFragmentManager().popBackStack());
+        mBackArrow.setOnClickListener(view -> getFragmentManager().popBackStack());
     }
-
-
+    
     private void discardUserChanges() {
-        for(View field : allFields) {
+        for(View field : mAllFields) {
             EditText componentField =  field.findViewById(R.id.et_component);
             componentField.setText("");
         }
 
-        allFields.get(0).requestFocus();
+        mAllFields.get(0).requestFocus();
     }
 
     private void configureFirstTwoFields() {
-        Button newFieldBtnFirst =  firstIngredientField.findViewById(R.id.btn_add_new_et);
-        CustomTextView fieldCounterFirst = firstIngredientField.findViewById(R.id.ctv_et_counter);
-        allFields.add(firstIngredientField);
+        Button newFieldBtnFirst =  mFirstIngredientField.findViewById(R.id.btn_add_new_et);
+        CustomTextView fieldCounterFirst = mFirstIngredientField.findViewById(R.id.ctv_et_counter);
+        mAllFields.add(mFirstIngredientField);
 
         newFieldBtnFirst.setVisibility(View.INVISIBLE);
         fieldCounterFirst.setText(generateStringForFieldCounter());
 
-        Button newFieldBtnSecond = secondIngredientField.findViewById(R.id.btn_add_new_et);
-        CustomTextView fieldCounterSecond = secondIngredientField.findViewById(R.id.ctv_et_counter);
-        allFields.add(secondIngredientField);
+        Button newFieldBtnSecond = mSecondIngredientField.findViewById(R.id.btn_add_new_et);
+        CustomTextView fieldCounterSecond = mSecondIngredientField.findViewById(R.id.ctv_et_counter);
+        mAllFields.add(mSecondIngredientField);
 
         newFieldBtnSecond.setOnClickListener(newFieldBtnOnclick);
         fieldCounterSecond.setText(generateStringForFieldCounter());
@@ -114,11 +123,11 @@ public class AddCombinationFragment extends BaseFragment {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
 
-        View newField = inflater.inflate(R.layout.add_field_inflatable, container,false);
+        View newField = inflater.inflate(R.layout.add_field_inflatable, mContainer,false);
         if (newField != null) {
-            allFields.add(newField);
+            mAllFields.add(newField);
             configureNewField(newField);
-            addFieldsContainer.addView(newField);
+            mAddFieldsContainer.addView(newField);
         }
     }
 
@@ -128,7 +137,7 @@ public class AddCombinationFragment extends BaseFragment {
 
         newField.findViewById(R.id.et_component).requestFocus();
 
-        if (allFields.size() >= Constants.MAX_ADD_FIELDS) {
+        if (mAllFields.size() >= Constants.MAX_ADD_FIELDS) {
             newFieldBtn.setVisibility(View.INVISIBLE);
         } else {
             newFieldBtn.setOnClickListener(newFieldBtnOnclick);
@@ -141,13 +150,13 @@ public class AddCombinationFragment extends BaseFragment {
 
     @NonNull
     private String generateStringForFieldCounter() {
-        return Integer.toString(allFields.size()) + "/" + Integer.toString(Constants.MAX_ADD_FIELDS);
+        return Integer.toString(mAllFields.size()) + "/" + Integer.toString(Constants.MAX_ADD_FIELDS);
     }
 
     private ArrayList<Component> getAllComponents() {
         ArrayList<Component> components = new ArrayList<>();
 
-        for (View field: allFields) {
+        for (View field: mAllFields) {
             EditText editText = field.findViewById(R.id.et_component);
             String componentName =  editText.getText().toString();
 
@@ -160,7 +169,7 @@ public class AddCombinationFragment extends BaseFragment {
     }
 
     public String getDescription() {
-        String description = etDescription.getText().toString();
+        String description = mEtDescription.getText().toString();
 
         if(description.equals("")) {
             description = "Missing combination description!";
