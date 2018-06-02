@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 
 public class Combination implements Parcelable {
+    private String combinationName;
     private String combinationKey;
     private String userId;
     private String username;
@@ -24,6 +25,7 @@ public class Combination implements Parcelable {
 
         this.combinationKey = combinationName;
         this.components = components;
+        this.combinationName = createCombinationName();
         this.userId = userId;
         this.username = username;
         this.timestamp = timestamp;
@@ -33,6 +35,10 @@ public class Combination implements Parcelable {
     }
 
     public Combination() {
+    }
+
+    public String getCombinationName() {
+        return combinationName;
     }
 
     public String getCombinationKey() {
@@ -77,6 +83,10 @@ public class Combination implements Parcelable {
 
     @Override
     public String toString() {
+        return combinationName;
+    }
+
+    private String createCombinationName() {
         StringBuilder builder = new StringBuilder();
 
         for(int i = 0; i < components.size() - 2; i++ ) {
@@ -89,6 +99,7 @@ public class Combination implements Parcelable {
     }
 
     protected Combination(Parcel in) {
+        combinationName = in.readString();
         combinationKey = in.readString();
         userId = in.readString();
         username = in.readString();
@@ -111,6 +122,7 @@ public class Combination implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(combinationName);
         dest.writeString(combinationKey);
         dest.writeString(userId);
         dest.writeString(username);

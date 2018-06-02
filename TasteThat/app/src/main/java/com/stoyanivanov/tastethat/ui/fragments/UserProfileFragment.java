@@ -149,7 +149,7 @@ public class UserProfileFragment extends BaseFragment {
 
         recyclerViewCombinations.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapter = new CombinationsRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
+        adapter = new CombinationsRecyclerViewAdapter(Constants.RV_RATED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
 

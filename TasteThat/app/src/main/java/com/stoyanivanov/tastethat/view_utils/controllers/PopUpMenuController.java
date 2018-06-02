@@ -1,12 +1,7 @@
 package com.stoyanivanov.tastethat.view_utils.controllers;
 
 import android.support.v7.widget.PopupMenu;
-import android.view.MenuItem;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
@@ -14,12 +9,6 @@ import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
-
-import java.util.Map;
-import java.util.Set;
-import java.util.function.BiConsumer;
-
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.*;
 
 
 /**
@@ -54,7 +43,7 @@ public class PopUpMenuController {
                 uploadedCombinationsVHPopup(position);
                 break;
 
-            case Constants.RV_LIKED_COMBINATIONS:
+            case Constants.RV_RATED_COMBINATIONS:
                 likedCombinationsVHPopup();
                 break;
         }

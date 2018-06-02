@@ -18,16 +18,16 @@ import java.util.ArrayList;
 
 public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<CombinationsViewHolder> {
     private ArrayList<Combination> mData;
-    private OnClickViewHolder listener;
-    private String rvTag;
+    private OnClickViewHolder mOnClickListener;
+    private String mRvTag;
     private CustomFilter customFilter;
 
     public CombinationsRecyclerViewAdapter(String rvTag, ArrayList<Combination> data, OnClickViewHolder listener) {
-        this.rvTag = rvTag;
+        this.mRvTag = rvTag;
         this.mData = data;
-        this.listener = listener;
+        this.mOnClickListener = listener;
 
-        customFilter = new CustomFilter(this);
+        customFilter = new CustomFilter(this, rvTag);
     }
 
     public void setNewData(ArrayList<Combination> data) {
@@ -41,12 +41,12 @@ public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<Combin
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.viewholder_combination, parent, false);
 
-        return new CombinationsViewHolder(view, rvTag, this);
+        return new CombinationsViewHolder(view, mRvTag, this);
     }
 
     @Override
     public void onBindViewHolder(CombinationsViewHolder holder, int position) {
-        holder.bind(mData.get(position), listener, position);
+        holder.bind(mData.get(position), mOnClickListener, position);
         holder.setPopUpMenu(position);
     }
 
@@ -62,6 +62,6 @@ public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<Combin
     }
 
     public void filterData(String searched) {
-        customFilter.filter(mData, searched);
+        customFilter.filter(searched);
     }
 }

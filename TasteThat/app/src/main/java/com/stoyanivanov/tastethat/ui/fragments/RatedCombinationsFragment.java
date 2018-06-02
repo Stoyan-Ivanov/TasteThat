@@ -75,7 +75,7 @@ public class RatedCombinationsFragment extends BaseRecyclerViewFragment {
     protected void instantiateRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_LIKED_COMBINATIONS, mRatedCombinations, new OnClickViewHolder() {
+        mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_RATED_COMBINATIONS, mRatedCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
                 ((MainActivity) getActivity())
