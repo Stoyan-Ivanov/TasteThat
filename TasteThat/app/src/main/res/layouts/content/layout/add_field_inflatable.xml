@@ -2,14 +2,13 @@
 <android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="110dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/prl_edittext_holder"
         android:layout_width="match_parent"
-        app:layout_heightPercent = "50%"
-        >
+        app:layout_heightPercent = "50%">
 
         <EditText
             android:id="@+id/et_component"

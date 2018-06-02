@@ -1,6 +1,7 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.db.models.Component;
@@ -20,17 +23,17 @@ import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.models.Picture;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.images_recyclerview.ImagesRecyclerViewAdapter;
-import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class ChooseImageFragment extends BaseFragment {
 
-    @BindView(R.id.tv_image_selection_header) CustomTextView header;
+    @BindView(R.id.tv_image_selection_header) TextView mTitleBar;
     @BindView(R.id.rv_images) RecyclerView recyclerView;
 
     private ArrayList<Component> mComponents;
@@ -52,6 +55,11 @@ public class ChooseImageFragment extends BaseFragment {
         return fragment;
     }
 
+    @OnClick(R.id.iv_back_arrow)
+    void onBackArrowPressed() {
+        ((ImageActivity) getActivity()).finishByBackButton();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,7 +75,7 @@ public class ChooseImageFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        header.setText(mComponentName);
+        mTitleBar.setText(mComponentName);
     }
 
     private void getExtras() {

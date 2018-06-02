@@ -17,13 +17,10 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     protected P mPresenter;
-    protected FirebaseUser mCurrentUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override

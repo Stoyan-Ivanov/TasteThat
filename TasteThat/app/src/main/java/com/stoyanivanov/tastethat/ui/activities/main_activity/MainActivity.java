@@ -22,9 +22,9 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseFragmentContainerActivity {
 
-    @BindView(R.id.view_pager) ViewPager viewPager;
-    private MenuItem prevMenuItem;
-    private MainActivityPresenter presenter;
+    @BindView(R.id.view_pager) ViewPager mViewPager;
+    private MenuItem mPrevMenuItem;
+    private MainActivityPresenter mPresenter;
 
     public static Intent getIntent(Context context, int bottomNavOption, String fragmentTag) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -40,11 +40,11 @@ public class MainActivity extends BaseFragmentContainerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new MainActivityPresenter();
+        mPresenter = new MainActivityPresenter();
 
         addControlToBottomNavigation();
         instantiateViewPager();
-        viewPager.setCurrentItem(presenter.determineViewPagerBeginPage(fragmentTag));
+        mViewPager.setCurrentItem(mPresenter.determineViewPagerBeginPage(fragmentTag));
     }
 
     @Override
@@ -57,42 +57,42 @@ public class MainActivity extends BaseFragmentContainerActivity {
 
                     switch (item.getItemId()) {
                         case R.id.nav_button_home:
-                            viewPager.setCurrentItem(ViewPagerPages.HOME); break;
+                            mViewPager.setCurrentItem(ViewPagerPages.HOME); break;
 
                         case R.id.nav_button_profile:
-                            viewPager.setCurrentItem(ViewPagerPages.MY_PROFILE); break;
+                            mViewPager.setCurrentItem(ViewPagerPages.MY_PROFILE); break;
 
                         case R.id.nav_button_options:
-                            viewPager.setCurrentItem(ViewPagerPages.OPTIONS); break;
+                            mViewPager.setCurrentItem(ViewPagerPages.OPTIONS); break;
                     }
                     return true;
                 });
     }
 
     private void instantiateViewPager () {
-        ArrayList<Fragment> fragments = presenter.getFragments();
+        ArrayList<Fragment> fragments = mPresenter.getFragments();
         FragmentPagerAdapter fragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
 
-        viewPager.setAdapter(fragmentPagerAdapter);
-        viewPager.setOffscreenPageLimit(fragments.size());
+        mViewPager.setAdapter(fragmentPagerAdapter);
+        mViewPager.setOffscreenPageLimit(fragments.size());
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                TasteThatApplication.hideVirtualKeyboard(viewPager);
+                TasteThatApplication.hideVirtualKeyboard(mViewPager);
                 bottomNavVisibilityCheck();
             }
 
             @Override
             public void onPageSelected(int position) {
 
-                if (prevMenuItem != null) {
-                    prevMenuItem.setChecked(false);
+                if (mPrevMenuItem != null) {
+                    mPrevMenuItem.setChecked(false);
                 } else {
                     bottomNavigationView.getMenu().getItem(0).setChecked(false);
                 }
                 bottomNavigationView.getMenu().getItem(position).setChecked(true);
-                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
+                mPrevMenuItem = bottomNavigationView.getMenu().getItem(position);
             }
 
             @Override

@@ -1,9 +1,11 @@
 package com.stoyanivanov.tastethat.ui.activities.image_activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,5 +55,25 @@ public class ImageActivity extends BaseFragmentContainerActivity implements  Ima
     public void saveCombinationToDB(ArrayList<Component> components) {
         mPresenter.saveCombinationToDB(components);
         startActivity(MainActivity.getIntent(this, BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishByBackButton();
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void finishByBackButton() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle(getString(R.string.image_discard_dialog_title))
+                .setMessage(getString(R.string.image_discard_dialog_message))
+                .setPositiveButton(getString(R.string.image_discard_dialog_accept_button), (dialog, which) -> finish())
+                .setNegativeButton(getString(R.string.image_discard_dialog_deny_button), (dialog, which) -> {})
+                .show();
     }
 }

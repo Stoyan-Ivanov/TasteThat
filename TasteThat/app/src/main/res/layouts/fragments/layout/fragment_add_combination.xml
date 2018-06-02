@@ -128,13 +128,13 @@
                     android:id="@+id/view_first_ingredient"
                     layout="@layout/add_field_inflatable"
                     android:layout_width="wrap_content"
-                    android:layout_height="100dp" />
+                    android:layout_height="110dp" />
 
                 <include
                     android:id="@+id/view_second_ingredient"
                     layout="@layout/add_field_inflatable"
                     android:layout_width="wrap_content"
-                    android:layout_height="100dp" />
+                    android:layout_height="110dp" />
             </LinearLayout>
 
             <EditText
@@ -161,10 +161,11 @@
                 android:layout_centerHorizontal="true"
 
                 android:layout_marginBottom="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/custom_button_shape"
-                android:text="Add Combination"
+                android:text="@string/btn_add_combination"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

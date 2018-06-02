@@ -59,10 +59,10 @@ public class AddCombinationFragment extends BaseFragment {
     @OnClick(R.id.btn_add_discard)
         void discardChanges(View view) {
             TasteThatApplication.hideVirtualKeyboard(view);
-            showConfirmationDialog();
+            showWarningDialog();
         }
 
-    private void showConfirmationDialog() {
+    private void showWarningDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle(getString(R.string.discard_dialog_title))
                 .setMessage(getString(R.string.discard_dialog_message))
