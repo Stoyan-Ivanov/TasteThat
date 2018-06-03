@@ -1,5 +1,6 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -119,9 +120,17 @@ public class MyProfileFragment extends BaseFragment {
     };
 
     private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getActivity(), LoginActivity.class));
-        getActivity().finish();
+        new AlertDialog.Builder(getContext())
+                .setCancelable(false)
+                .setTitle(getString(R.string.sign_out_dialog_title))
+                .setMessage(getString(R.string.sign_out_dialog_message))
+                .setPositiveButton(getString(R.string.sign_out_dialog_accept_button), (dialog, which) -> {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    getActivity().finish();
+                })
+                .setNegativeButton(getString(R.string.sign_out_dialog_deny_button), (dialog, which) -> {})
+                .show();
     }
 
     public void onAchievementsGathered(ArrayList<Achievement> mAchievements) {

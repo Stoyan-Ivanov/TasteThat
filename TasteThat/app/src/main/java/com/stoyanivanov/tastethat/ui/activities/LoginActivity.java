@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
         facebookCallbackManager = CallbackManager.Factory.create();
 
-        facebookSignInButton.setReadPermissions("email");
+        facebookSignInButton.setReadPermissions("email", "public_profile");
 
         facebookSignInButton.registerCallback(facebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
