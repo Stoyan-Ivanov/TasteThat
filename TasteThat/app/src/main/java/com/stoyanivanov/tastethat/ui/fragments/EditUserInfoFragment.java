@@ -68,7 +68,9 @@ public class EditUserInfoFragment extends BaseFragment {
     private void saveChanges() {
         String displayName = mEtUsername.getText().toString();
 
-        if(!displayName.equals("")) {
+        if(displayName.equals("") || displayName.equals(mCurrentUser.getDisplayName())) {
+            popCurrentFragment();
+        } else {
             UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
             builder.setDisplayName(displayName);
             mCurrentUser.updateProfile(builder.build()).addOnCompleteListener(task -> {

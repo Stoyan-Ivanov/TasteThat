@@ -98,6 +98,8 @@
         android:drawableStart="@drawable/ic_profile_colored"
         android:drawableTint="@color/colorPrimary"
         android:drawablePadding="8dp"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_upload_picture"
