@@ -21,18 +21,20 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
+import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.decoration.SpacesItemDecoration;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.user_achievements_recyclerview.UserAchievementsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends BaseFragment {
 
     @BindView(R.id.iv_profile_picture) CircleImageView mIvProfilePic;
-    @BindView(R.id.tv_username) TextView mTvUsername;
+    @BindView(R.id.et_username) TextView mTvUsername;
     @BindView(R.id.btn_rated_combinations) Button mBtnLiked;
     @BindView(R.id.btn_uploaded_combinations) Button mBtnUploaded;
     @BindView(R.id.btn_logout) Button mBtnLogout;
@@ -40,6 +42,16 @@ public class MyProfileFragment extends BaseFragment {
 
     private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
     private UserAchievementsRecyclerViewAdapter mAdapter;
+
+    @OnClick(R.id.iv_edit_profile)
+    void onEditProfileClicked() {
+        ((MainActivity) getActivity()).replaceFragment(EditUserInfoFragment.newInstance());
+    }
+
+//    @OnClick(R.id.iv_about)
+//    void onAboutClicked() {
+//        ((MainActivity) getActivity()).replaceFragment(AboutFragment.newInstance());
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +84,7 @@ public class MyProfileFragment extends BaseFragment {
             mIvProfilePic.setImageResource(R.drawable.default_user_picture);
         } else {
             Glide.with(getActivity()
-                    .getApplicationContext())
+                    .getBaseContext())
                     .load(userPhotoUrl)
                     .into(mIvProfilePic);
         }

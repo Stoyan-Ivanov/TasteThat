@@ -64,9 +64,9 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
 
         DatabaseProvider.getInstance().getCombinationRating(combination, this);
 
-        //if (!combination.getUserId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+        if (!combination.getUserId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             rateCombination.setOnClickListener(v -> listener.onRateButtonClicked(combination));
-       // }
+        }
 
         itemView.setOnClickListener(view -> listener.onItemClick(combination));
 

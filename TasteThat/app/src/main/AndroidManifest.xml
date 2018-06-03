@@ -48,6 +48,7 @@
         </activity>
         <activity
             android:name=".ui.activities.main_activity.MainActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.MyProfileActivity"
