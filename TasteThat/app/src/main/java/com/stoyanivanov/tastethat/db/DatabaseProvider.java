@@ -12,9 +12,12 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.constants.DatabaseReferences;
+import com.stoyanivanov.tastethat.db.models.Achievement;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.TasteThatApplication;
+import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.ui.fragments.AllCombinationsFragment;
+import com.stoyanivanov.tastethat.ui.fragments.MyProfileFragment;
 import com.stoyanivanov.tastethat.ui.fragments.RatedCombinationsFragment;
 import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
@@ -176,6 +179,27 @@ public class DatabaseProvider {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
+                });
+    }
+
+    public void getAchievements(MyProfileFragment fragment) {
+        ArrayList<Achievement> mAchievements = new ArrayList<>();
+        tableUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.USER_ACHIEVEMENTS)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Achievement currAchievement = snapshot.getValue(Achievement.class);
+                            mAchievements.add(currAchievement);
+                        }
+                       fragment.onAchievementsGathered(mAchievements);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
                 });
     }
 

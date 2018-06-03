@@ -2,36 +2,44 @@ package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.stoyanivanov.tastethat.db.DatabaseProvider;
+import com.stoyanivanov.tastethat.db.models.Achievement;
 import com.stoyanivanov.tastethat.ui.activities.LoginActivity;
 import com.stoyanivanov.tastethat.R;
-import com.stoyanivanov.tastethat.ui.activities.MyAchievementsActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
-import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.decoration.SpacesItemDecoration;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.user_achievements_recyclerview.UserAchievementsRecyclerViewAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends BaseFragment {
 
-    @BindView(R.id.iv_profile_picture) CircleImageView ivProfilePic;
-    @BindView(R.id.tv_username) CustomTextView tvUsername;
-    @BindView(R.id.btn_liked_combinations) Button btnLiked;
-    @BindView(R.id.btn_uploaded_combinations) Button btnUploaded;
-    @BindView(R.id.btn_achievements) Button btnAchievements;
-    @BindView(R.id.btn_logout) Button btnLogout;
+    @BindView(R.id.iv_profile_picture) CircleImageView mIvProfilePic;
+    @BindView(R.id.tv_username) TextView mTvUsername;
+    @BindView(R.id.btn_rated_combinations) Button mBtnLiked;
+    @BindView(R.id.btn_uploaded_combinations) Button mBtnUploaded;
+    @BindView(R.id.btn_logout) Button mBtnLogout;
+    @BindView(R.id.rv_my_achievements) RecyclerView mRecyclerView;
 
     private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+    private UserAchievementsRecyclerViewAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,20 +47,20 @@ public class MyProfileFragment extends BaseFragment {
         View view = inflateCurrentView(R.layout.fragment_my_profile, inflater, container);
 
         loadUserData();
+        DatabaseProvider.getInstance().getAchievements(this);
 
-        btnLiked.setOnClickListener(clickListener);
-        btnUploaded.setOnClickListener(clickListener);
-        btnAchievements.setOnClickListener(clickListener);
-        btnLogout.setOnClickListener(clickListener);
+        mBtnLiked.setOnClickListener(clickListener);
+        mBtnUploaded.setOnClickListener(clickListener);
+        mBtnLogout.setOnClickListener(clickListener);
 
         return view;
     }
 
     private void loadUserData() {
         if(currUser.getDisplayName() != null) {
-            tvUsername.setText(currUser.getDisplayName());
+            mTvUsername.setText(currUser.getDisplayName());
         } else {
-            tvUsername.setText(currUser.getEmail());
+            mTvUsername.setText(currUser.getEmail());
         }
 
         String userPhotoUrl = "";
@@ -61,18 +69,25 @@ public class MyProfileFragment extends BaseFragment {
         }
 
         if(userPhotoUrl.isEmpty()) {
-            ivProfilePic.setImageResource(R.drawable.default_user_picture);
+            mIvProfilePic.setImageResource(R.drawable.default_user_picture);
         } else {
             Glide.with(getActivity()
                     .getApplicationContext())
                     .load(userPhotoUrl)
-                    .into(ivProfilePic);
+                    .into(mIvProfilePic);
         }
+    }
+
+    private void instantiateRecyclerView(ArrayList<Achievement> achievements) {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(8, SpacesItemDecoration.HORIZONTAL));
+        mAdapter = new UserAchievementsRecyclerViewAdapter(achievements);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     View.OnClickListener clickListener = v -> {
         switch(v.getId()) {
-            case R.id.btn_liked_combinations:
+            case R.id.btn_rated_combinations:
                 startActivity(MyProfileActivity.getIntent(getActivity(),
                         BottomNavigationOptions.MY_PROFILE, FragmentTags.RATED_COMBINATIONS_FRAGMENT));
                 break;
@@ -80,11 +95,6 @@ public class MyProfileFragment extends BaseFragment {
             case R.id.btn_uploaded_combinations:
                 startActivity(MyProfileActivity.getIntent(getActivity(),
                         BottomNavigationOptions.MY_PROFILE, FragmentTags.UPLOADS_FRAGMENT));
-                break;
-
-            case R.id.btn_achievements:
-                startActivity(MyAchievementsActivity.getIntent(getActivity(),
-                        BottomNavigationOptions.MY_PROFILE));
                 break;
 
             case R.id.btn_logout:
@@ -100,5 +110,13 @@ public class MyProfileFragment extends BaseFragment {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
+    }
+
+    public void onAchievementsGathered(ArrayList<Achievement> mAchievements) {
+        if(mAdapter == null) {
+            instantiateRecyclerView(mAchievements);
+        } else {
+            mAdapter.setNewData(mAchievements);
+        }
     }
 }

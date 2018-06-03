@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_add_combination_header"
+                android:id="@+id/tv_profile_header"
 
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

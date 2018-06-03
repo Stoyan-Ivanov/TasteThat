@@ -18,19 +18,6 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            res.srcDirs =
-                    [
-                            'src/main/res/layouts/activities',
-                            'src/main/res/layouts/fragments',
-                            'src/main/res/layouts/content',
-                            'src/main/res/layouts',
-                            'src/main/res'
-                    ]
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -42,12 +29,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    //firebase
-
-    //recyclerview
-
-    //retrofit
 
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:26.1.0'

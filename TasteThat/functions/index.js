@@ -32,7 +32,7 @@ exports.profileInit = functions.auth.user().onCreate(event => {
 		If he does the function adds the achievement to the user's achievements node.
 */
 exports.likeAchievementsChecker = functions.database
-.ref('users/{uid}/ratingCombinations').onWrite(event => {
+.ref('users/{uid}/ratedCombinations').onWrite(event => {
 	
 	const uid = event.params.uid;
 	const numberOfLikes = event.data.numChildren();

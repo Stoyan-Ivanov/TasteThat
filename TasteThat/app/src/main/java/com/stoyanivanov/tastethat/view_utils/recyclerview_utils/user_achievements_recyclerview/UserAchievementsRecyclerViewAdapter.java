@@ -16,16 +16,15 @@ import java.util.ArrayList;
  */
 
 public class UserAchievementsRecyclerViewAdapter extends RecyclerView.Adapter<UserAchievementViewHolder> {
-    private LayoutInflater inflater;
-    private ArrayList<Achievement> data;
+    private ArrayList<Achievement> mAchievements;
 
     public UserAchievementsRecyclerViewAdapter(ArrayList<Achievement> data) {
-        this.data = data;
+        this.mAchievements = data;
     }
 
     @Override
     public UserAchievementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rv_user_achievement_holder, parent, false);
 
         return new UserAchievementViewHolder(view);
@@ -33,16 +32,16 @@ public class UserAchievementsRecyclerViewAdapter extends RecyclerView.Adapter<Us
 
     @Override
     public void onBindViewHolder(UserAchievementViewHolder holder, int position) {
-        holder.bind(data.get(position));
+        holder.bind(mAchievements.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return mAchievements.size();
     }
 
     public void setNewData(ArrayList<Achievement> achievements) {
-        data = new ArrayList<>(achievements);
+        mAchievements = new ArrayList<>(achievements);
         notifyDataSetChanged();
     }
 }
