@@ -18,6 +18,7 @@ import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.StartConstants;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.db.models.Achievement;
 import com.stoyanivanov.tastethat.db.models.Combination;
@@ -28,24 +29,25 @@ import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.user_achievement
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
 
 public class UserProfileFragment extends BaseFragment {
 
-    @BindView(R.id.rv_horizontal_achievements) RecyclerView recyclerViewAchievements;
-    @BindView(R.id.rv_user_combinations) RecyclerView recyclerViewCombinations;
-    @BindView(R.id.ctv_user_uploads) CustomTextView uploadsBtn;
-    @BindView(R.id.ctv_user_likes) CustomTextView likesBtn;
-    @BindView(R.id.ctv_username) CustomTextView username;
+    @BindView(R.id.rv_horizontal_achievements) RecyclerView mRecyclerViewAchievements;
+    @BindView(R.id.rv_user_combinations) RecyclerView mRecyclerViewCombinations;
+    @BindView(R.id.ctv_user_uploads) CustomTextView mUploadsBtn;
+    @BindView(R.id.ctv_user_rated) CustomTextView mLikesBtn;
+    @BindView(R.id.ctv_username) TextView mUsername;
 
-    private String userId;
-    private Combination currCombination;
-    private String activityName;
+    private String mUserId;
+    private Combination mCurrCombination;
+    private String mActivityName;
 
-    private ArrayList<Combination> uploadedCombinations;
-    private ArrayList<Combination> likedCombinations;
-    private ArrayList<Achievement> achievements = new ArrayList<>();
+    private ArrayList<Combination> mUploadedCombinations;
+    private ArrayList<Combination> mRatedCombinations;
+    private ArrayList<Achievement> mAchievements = new ArrayList<>();
 
     private CombinationsRecyclerViewAdapter adapter;
     private UserAchievementsRecyclerViewAdapter achievementsAdapter;
@@ -61,6 +63,10 @@ public class UserProfileFragment extends BaseFragment {
         return fragment;
     }
 
+    @OnClick(R.id.iv_back_arrow)
+    void onBackArrowPressed() {
+         popCurrentFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,70 +74,70 @@ public class UserProfileFragment extends BaseFragment {
         View view = inflateCurrentView(R.layout.fragment_user_profile, inflater, container);
 
         getExtraArguments();
-        userId = currCombination.getUserId();
+        mUserId = mCurrCombination.getUserId();
 
         instantiateButtons();
         populateAchievementsRV();
         populateCombinationsRV();
 
-        username.setText(currCombination.getUsername());
+        mUsername.setText(mCurrCombination.getUsername());
 
         return view;
     }
 
     private void instantiateButtons() {
-        uploadsBtn.setOnClickListener(v -> {
-            if(uploadedCombinations == null) {
+        mUploadsBtn.setOnClickListener(v -> {
+            if(mUploadedCombinations == null) {
                 getUserUploadedCombinations();
             }
 
-            setPurpleColorToText(uploadsBtn);
-            setBlackColorToText(likesBtn);
+            setPurpleColorToText(mUploadsBtn);
+            setBlackColorToText(mLikesBtn);
 
-            adapter.setNewData(uploadedCombinations);
+            adapter.setNewData(mUploadedCombinations);
         });
 
-        likesBtn.setOnClickListener(v -> {
-            if(likedCombinations == null) {
-                getUserLikedCombinations();
+        mLikesBtn.setOnClickListener(v -> {
+            if(mRatedCombinations == null) {
+                getUserRatedCombinations();
             }
 
-            setPurpleColorToText(likesBtn);
-            setBlackColorToText(uploadsBtn);
+            setPurpleColorToText(mLikesBtn);
+            setBlackColorToText(mUploadsBtn);
 
-            adapter.setNewData(likedCombinations);
+            adapter.setNewData(mRatedCombinations);
         });
     }
 
     private void getExtraArguments() {
-        activityName = getArguments().getString(StartConstants.EXTRA_ACTIVITY_NAME);
-        currCombination = getArguments().getParcelable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
+        mActivityName = getArguments().getString(StartConstants.EXTRA_ACTIVITY_NAME);
+        mCurrCombination = getArguments().getParcelable(StartConstants.EXTRA_FRAGMENT_COMBINATION);
     }
 
     private void populateAchievementsRV() {
         getUserAchievements();
 
-        recyclerViewAchievements.setLayoutManager(new LinearLayoutManager(getActivity(),
+        mRecyclerViewAchievements.setLayoutManager(new LinearLayoutManager(getActivity(),
                                     LinearLayoutManager.HORIZONTAL, false));
 
-        achievementsAdapter = new UserAchievementsRecyclerViewAdapter(achievements);
-        recyclerViewAchievements.setAdapter(achievementsAdapter);
+        achievementsAdapter = new UserAchievementsRecyclerViewAdapter(mAchievements);
+        mRecyclerViewAchievements.setAdapter(achievementsAdapter);
     }
 
     private void getUserAchievements() {
-        achievements.clear();
+        mAchievements.clear();
 
-        if(userId != null) {
-            tableUsers.child(userId)
+        if(mUserId != null) {
+            tableUsers.child(mUserId)
                     .child(Constants.USER_ACHIEVEMENTS)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 Achievement currAchievement = dataSnapshot.getValue(Achievement.class);
-                                achievements.add(currAchievement);
+                                mAchievements.add(currAchievement);
                             }
-                            achievementsAdapter.setNewData(achievements);
+                            achievementsAdapter.setNewData(mAchievements);
                         }
 
                         @Override
@@ -147,7 +153,7 @@ public class UserProfileFragment extends BaseFragment {
     private void populateCombinationsRV() {
         ArrayList<Combination> defaultCombinations = defaultClickedSection();
 
-        recyclerViewCombinations.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerViewCombinations.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_RATED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
             @Override
@@ -157,45 +163,45 @@ public class UserProfileFragment extends BaseFragment {
 
             @Override
             public void onItemClick(Combination combination) {
-                if(activityName.equals(MainActivity.class.getSimpleName())) {
+                if(mActivityName.equals(MainActivity.class.getSimpleName())) {
                     ((MainActivity) getActivity())
-                            .replaceFragment(CombinationDetailsFragment.newInstance(activityName, currCombination));
+                            .replaceFragment(CombinationDetailsFragment.newInstance(mActivityName, mCurrCombination));
                 } else {
-                    if(activityName.equals(MyProfileActivity.class.getSimpleName())) {
+                    if(mActivityName.equals(MyProfileActivity.class.getSimpleName())) {
                         ((MyProfileActivity) getActivity())
-                                .replaceFragment(CombinationDetailsFragment.newInstance(activityName, currCombination));
+                                .replaceFragment(CombinationDetailsFragment.newInstance(mActivityName, mCurrCombination));
                     }
                 }
             }
         });
 
-        recyclerViewCombinations.setAdapter(adapter);
+        mRecyclerViewCombinations.setAdapter(adapter);
     }
 
     private ArrayList<Combination> defaultClickedSection() {
         getUserUploadedCombinations();
 
-        setPurpleColorToText(uploadsBtn);
-        setBlackColorToText(likesBtn);
+        setPurpleColorToText(mUploadsBtn);
+        setBlackColorToText(mLikesBtn);
 
-        return uploadedCombinations;
+        return mUploadedCombinations;
     }
 
     private void getUserUploadedCombinations() {
-        uploadedCombinations = new ArrayList<>();
+        mUploadedCombinations = new ArrayList<>();
 
-        tableUsers.child(userId)
+        tableUsers.child(mUserId)
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        uploadedCombinations.clear();
+                        mUploadedCombinations.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Combination currCombination = dataSnapshot.getValue(Combination.class);
-                            uploadedCombinations.add(currCombination);
+                            mUploadedCombinations.add(currCombination);
                         }
 
-                        adapter.setNewData(uploadedCombinations);
+                        adapter.setNewData(mUploadedCombinations);
                     }
 
                     @Override
@@ -205,10 +211,10 @@ public class UserProfileFragment extends BaseFragment {
                 });
     }
 
-    private void getUserLikedCombinations() {
-        likedCombinations = new ArrayList<>();
+    private void getUserRatedCombinations() {
+        mRatedCombinations = new ArrayList<>();
 
-        tableUsers.child(userId)
+        tableUsers.child(mUserId)
                 .child(Constants.USER_RATED_COMBINATIONS)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -216,9 +222,9 @@ public class UserProfileFragment extends BaseFragment {
                     public void onDataChange(DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                             Combination currCombination = dataSnapshot.getValue(Combination.class);
-                            likedCombinations.add(currCombination);
+                            mRatedCombinations.add(currCombination);
                         }
-                        adapter.setNewData(likedCombinations);
+                        adapter.setNewData(mRatedCombinations);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

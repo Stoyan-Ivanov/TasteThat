@@ -85,10 +85,19 @@
     <string name="save_changes_dialog_message">Are you sure you want to save those changes?</string>
     <string name="save_changes_dialog_accept_button">Yes</string>
     <string name="save_changes_dialog_deny_button">No</string>
+
     <string name="btn_uploads">Uploads</string>
+
     <string name="sign_out_dialog_title">Warning!</string>
     <string name="sign_out_dialog_message">Are you sure that you want to sign out?</string>
     <string name="sign_out_dialog_accept_button">Yes</string>
     <string name="sign_out_dialog_deny_button">No</string>
+
+    <string name="app_name_tastethat">App name: TasteThat</string>
+    <string name="app_version">Version: %s</string>
+    <string name="rated">Rated</string>
+    <string name="email_contact">For any questions or problems please contact me at: stoyaniviv@gmail.com</string>
+    <string name="developer_name">Developed by: Stoyan Ivanov</string>
+    <string name="about_fragment_header">About app</string>
 
 </resources>

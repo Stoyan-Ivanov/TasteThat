@@ -1,11 +1,7 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +13,7 @@ import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Combination;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;

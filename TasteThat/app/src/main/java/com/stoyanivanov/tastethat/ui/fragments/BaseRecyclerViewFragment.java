@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.TasteThatApplication;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.view_utils.controllers.PopUpMenuController;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 

@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.TasteThatApplication;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 
 import butterknife.BindView;
 

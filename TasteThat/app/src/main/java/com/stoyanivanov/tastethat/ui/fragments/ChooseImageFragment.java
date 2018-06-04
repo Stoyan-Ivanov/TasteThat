@@ -1,7 +1,6 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stoyanivanov.tastethat.R;
@@ -21,7 +19,7 @@ import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.network.NetworkManager;
 import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.network.models.Picture;
-import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.images_recyclerview.ImagesRecyclerViewAdapter;
 import com.stoyanivanov.tastethat.view_utils.views_behaviour.EndlessRecyclerOnScrollListener;
 

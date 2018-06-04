@@ -7,16 +7,56 @@
     tools:context=".ui.fragments.UserProfileFragment"
     android:background="@color/white">
 
-        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-            android:id="@+id/ctv_username"
-            app:layout_heightPercent="8%"
-            app:layout_widthPercent="70%"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/abl_header_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="4dp"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            app:layout_marginTopPercent="2%"
-            android:layout_centerHorizontal="true"
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            android:gravity="center"
-            />
+                        <TextView
+                            android:id="@+id/ctv_username"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginBottom="8dp"
+
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toEndOf="@+id/iv_back_arrow"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_back_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_centerVertical="true"
+
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/ic_arrow_left"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+        </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_horizontal_achievements"
@@ -25,7 +65,7 @@
             android:orientation="horizontal"
 
             app:layout_marginTopPercent="1%"
-            android:layout_below="@+id/ctv_username"
+            android:layout_below="@+id/abl_header_bar"
             android:layout_centerHorizontal="true"
 
             android:background="@color/blue_grey"
@@ -35,7 +75,7 @@
 
 
         <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-        android:id="@+id/ctv_user_likes"
+        android:id="@+id/ctv_user_rated"
         android:layout_below="@+id/rv_horizontal_achievements"
 
         app:layout_heightPercent="10%"
@@ -47,15 +87,15 @@
         app:layout_marginLeftPercent="3%"
 
         android:gravity="center"
-        android:text="Likes"
+        android:text="@string/rated"
         />
 
         <View
-            android:id="@+id/divider_user_likes"
+            android:id="@+id/divider_user_rated"
             android:layout_height="1dp"
             app:layout_widthPercent="30%"
 
-            android:layout_below="@+id/ctv_user_likes"
+            android:layout_below="@+id/ctv_user_rated"
 
             app:layout_marginLeftPercent="10%"
 

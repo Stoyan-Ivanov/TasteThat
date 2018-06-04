@@ -19,6 +19,7 @@ import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.ui.activities.image_activity.ImageActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 
 import java.util.ArrayList;

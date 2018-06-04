@@ -1,36 +1,44 @@
 package com.stoyanivanov.tastethat.ui.base_ui;
 
+
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * Created by stoyan.ivanov on 3/26/2018.
- */
+public abstract class BaseFragment extends Fragment {
+    Unbinder unbinder;
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment{
-    protected P presenter;
-    private Unbinder unbinder;
-
-    protected View inflateCurrentView(LayoutInflater inflater, int layoutId, ViewGroup container) {
-        View view = inflater.inflate(layoutId, container, false);
+    protected View inflateCurrentView(int layoutResID, LayoutInflater inflater, ViewGroup container) {
+        View view  = inflater.inflate(layoutResID, container, false);
 
         unbinder = ButterKnife.bind(this, view);
 
         return view;
     }
 
+    protected void popCurrentFragment(){
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager != null) {
+            fragmentManager.popBackStack();
+        }
+    }
+
+    protected String  getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+
     @Override
     public void onDestroyView() {
-        if(presenter != null) {
-            presenter.onViewDestroy();
-        }
-        unbinder.unbind();
         super.onDestroyView();
+
+        unbinder.unbind();
     }
 }

@@ -23,6 +23,7 @@ import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.BottomNavigationOptions;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.decoration.SpacesItemDecoration;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.user_achievements_recyclerview.UserAchievementsRecyclerViewAdapter;
 
@@ -49,10 +50,10 @@ public class MyProfileFragment extends BaseFragment {
         ((MainActivity) getActivity()).replaceFragment(EditUserInfoFragment.newInstance());
     }
 
-//    @OnClick(R.id.iv_about)
-//    void onAboutClicked() {
-//        ((MainActivity) getActivity()).replaceFragment(AboutFragment.newInstance());
-//    }
+    @OnClick(R.id.iv_about)
+    void onAboutClicked() {
+        ((MainActivity) getActivity()).replaceFragment(AboutFragment.newInstance());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
