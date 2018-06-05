@@ -105,7 +105,7 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
 
             PopUpMenuController popUpMenuController = new PopUpMenuController(popupMenu, mRvTag,
                                                         CombinationsViewHolder.this);
-            popUpMenuController.inflatePopupMenu(position, mCombination.getCombinationKey());
+            popUpMenuController.inflatePopupMenu(position, mCombination);
         });
     }
 }

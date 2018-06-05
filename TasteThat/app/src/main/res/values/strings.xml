@@ -100,4 +100,12 @@
     <string name="developer_name">Developed by: Stoyan Ivanov</string>
     <string name="about_fragment_header">About app</string>
 
+    <string name="hint_password">Password (min 6 symbols)</string>
+    <string name="hint_email">Email</string>
+
+    <string name="btn_register">Register</string>
+    <string name="registration_login_alternative">Already have an account? Sign in!</string>
+
+    <string name="order_option_rating">Ordering by rating&#8230</string>
+    <string name="order_option_timestamp">Ordering by timestamp...</string>
 </resources>

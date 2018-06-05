@@ -35,7 +35,7 @@
         android:backgroundTint="@color/colorPrimary"
 
         android:inputType="textEmailAddress"
-        android:hint="Email"
+        android:hint="@string/hint_email"
         android:layout_below="@+id/tv_intro_title"
         />
 
@@ -52,7 +52,7 @@
         android:backgroundTint="@color/colorPrimary"
 
         android:inputType="textPassword"
-        android:hint="Password"
+        android:hint="@string/hint_password"
         android:layout_below="@+id/et_register_email"
         />
 
@@ -65,7 +65,7 @@
         android:layout_centerHorizontal="true"
 
         android:background="@drawable/custom_button_shape"
-        android:text="Register"
+        android:text="@string/btn_register"
         android:textSize="18sp"
         android:textColor="@color/white"
 
@@ -82,7 +82,7 @@
 
         android:gravity="center"
         android:textColor="@color/colorThunderbirdRed"
-        android:text="Already have an account? Sign in!"
+        android:text="@string/registration_login_alternative"
         android:layout_below="@+id/btn_register"
         />
 
