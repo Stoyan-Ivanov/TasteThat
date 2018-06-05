@@ -32,17 +32,17 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityPrese
         String email = etEmail.getText().toString().trim();
         String password  = etPassword.getText().toString().trim();
 
-        mPresenter.checkIfPasswordIsCorrect(email, password);
-
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if(task.isSuccessful()){
-                        startNewActivity(MainActivity.getIntent(getBaseContext(),
-                                BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
-                    }else{
-                        showToast(R.string.toast_unable_to_register_user);
-                    }
-                });
+        if(mPresenter.checkIfPasswordAndEmailAreCorrect(email, password)) {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            startNewActivity(MainActivity.getIntent(getBaseContext(),
+                                    BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
+                        } else {
+                            showToast(R.string.toast_unable_to_register_user);
+                        }
+                    });
+        }
     }
 
     @OnClick(R.id.ctv_login_trigger)

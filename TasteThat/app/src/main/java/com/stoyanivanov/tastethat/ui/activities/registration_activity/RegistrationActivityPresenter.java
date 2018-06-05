@@ -15,23 +15,25 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
         setView(view);
     }
 
-    public void checkIfPasswordIsCorrect(String email, String password) {
+    public boolean checkIfPasswordAndEmailAreCorrect(String email, String password) {
         final int MIN_SYMBOLS_FOR_A_VALID_PASSWORD = 6;
 
-        if(TextUtils.isEmpty(email)){
+        if(email.equals("")){
            view.showToast(R.string.toast_provide_email);
-            return;
+            return false;
         }
 
-        if(TextUtils.isEmpty(password)){
+        if(password.equals("")){
             view.showToast(R.string.toast_provide_password);
-            return;
+            return false;
         }
 
         if(password.length() < MIN_SYMBOLS_FOR_A_VALID_PASSWORD) {
             view.showToast(R.string.toast_not_long_enough_password);
-            return;
+            return false;
         }
+
+        return true;
     }
 
 }
