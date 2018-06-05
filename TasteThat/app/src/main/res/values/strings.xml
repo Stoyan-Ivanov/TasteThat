@@ -106,6 +106,9 @@
     <string name="btn_register">Register</string>
     <string name="registration_login_alternative">Already have an account? Sign in!</string>
 
-    <string name="order_option_rating">Ordering by rating&#8230</string>
+    <string name="order_option_rating">Ordering by rating...</string>
     <string name="order_option_timestamp">Ordering by timestamp...</string>
+
+    <string name="image_selection_dialog_title">"Select Picture"</string>
+    <string name="error_while_uploading_profile_picture">"Something went wrong while uploading"</string>
 </resources>
