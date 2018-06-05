@@ -14,8 +14,8 @@ public class Combination implements Parcelable {
     private String combinationKey;
     private String userId;
     private String username;
-    private float rating;
-    private float negativeRating;
+    private double rating;
+    private double negativeRating;
     private ArrayList<Component> components;
     private Object timestamp;
     private String description;
@@ -65,11 +65,11 @@ public class Combination implements Parcelable {
         this.timestamp = timestamp;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public float getNegativeRating() {
+    public double getNegativeRating() {
         return negativeRating;
     }
 
@@ -126,8 +126,8 @@ public class Combination implements Parcelable {
         dest.writeString(combinationKey);
         dest.writeString(userId);
         dest.writeString(username);
-        dest.writeFloat(rating);
-        dest.writeFloat(negativeRating);
+        dest.writeDouble(rating);
+        dest.writeDouble(negativeRating);
         if (components == null) {
             dest.writeByte((byte) (0x00));
         } else {

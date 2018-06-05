@@ -128,7 +128,7 @@ public class MyProfileFragment extends BaseFragment {
                 .setPositiveButton(getString(R.string.sign_out_dialog_accept_button), (dialog, which) -> {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(getActivity(), LoginActivity.class));
-                    getActivity().finish();
+                    ((MainActivity) getActivity()).finish();
                 })
                 .setNegativeButton(getString(R.string.sign_out_dialog_deny_button), (dialog, which) -> {})
                 .show();

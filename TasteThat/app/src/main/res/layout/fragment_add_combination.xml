@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:focusable="true"
+    android:clickable="true"
     android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

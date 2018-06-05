@@ -55,6 +55,7 @@ public class ImageActivity extends BaseFragmentContainerActivity implements  Ima
     public void saveCombinationToDB(ArrayList<Component> components) {
         mPresenter.saveCombinationToDB(components);
         startActivity(MainActivity.getIntent(this, BottomNavigationOptions.HOME, FragmentTags.HOME_FRAGMENT));
+        finish();
     }
 
     @Override

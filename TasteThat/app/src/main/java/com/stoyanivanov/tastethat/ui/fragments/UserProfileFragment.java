@@ -158,18 +158,24 @@ public class UserProfileFragment extends BaseFragment {
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_RATED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
-
+                if(mActivityName.equals(MainActivity.class.getSimpleName())) {
+                    ((MainActivity) getActivity()).replaceFragment(RateCombinationFragment.newInstance(combination));
+                } else {
+                    if(mActivityName.equals(MyProfileActivity.class.getSimpleName())) {
+                        ((MyProfileActivity) getActivity()).replaceFragment(RateCombinationFragment.newInstance(combination));
+                    }
+                }
             }
 
             @Override
             public void onItemClick(Combination combination) {
                 if(mActivityName.equals(MainActivity.class.getSimpleName())) {
                     ((MainActivity) getActivity())
-                            .replaceFragment(CombinationDetailsFragment.newInstance(mActivityName, mCurrCombination));
+                            .replaceFragment(CombinationDetailsFragment.newInstance(mActivityName, combination));
                 } else {
                     if(mActivityName.equals(MyProfileActivity.class.getSimpleName())) {
                         ((MyProfileActivity) getActivity())
-                                .replaceFragment(CombinationDetailsFragment.newInstance(mActivityName, mCurrCombination));
+                                .replaceFragment(CombinationDetailsFragment.newInstance(mActivityName, combination));
                     }
                 }
             }

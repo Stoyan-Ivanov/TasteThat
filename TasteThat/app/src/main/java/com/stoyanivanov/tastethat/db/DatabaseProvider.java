@@ -1,5 +1,6 @@
 package com.stoyanivanov.tastethat.db;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -170,15 +171,17 @@ public class DatabaseProvider {
                 .addValueEventListener(new ValueEventListener() {
 
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Long rating = (Long)dataSnapshot.getValue();
-                        if (rating != null) {
-                            viewHolder.setRating(rating.intValue());
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.getValue() != null) {
+                            double rating = dataSnapshot.getValue(Double.class);
+                            viewHolder.setRating(rating);
+                        } else {
+                            viewHolder.setRating(0);
                         }
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {}
+                    public void onCancelled(@NonNull DatabaseError databaseError) {}
                 });
     }
 
@@ -188,7 +191,7 @@ public class DatabaseProvider {
                 .child(Constants.USER_ACHIEVEMENTS)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Achievement currAchievement = snapshot.getValue(Achievement.class);
                             mAchievements.add(currAchievement);
@@ -197,9 +200,7 @@ public class DatabaseProvider {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
+                    public void onCancelled(@NonNull DatabaseError databaseError) {}
                 });
     }
 

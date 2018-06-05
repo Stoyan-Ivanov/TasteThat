@@ -97,9 +97,6 @@ public class CustomFilter {
                 }
             }
         }
-
-        if(!filteredCombinations.isEmpty()) {
-            mAdapter.setNewData(filteredCombinations);
-        }
+        mAdapter.setNewData(filteredCombinations);
     }
 }

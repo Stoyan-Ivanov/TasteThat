@@ -78,7 +78,7 @@ public class RatedCombinationsFragment extends BaseRecyclerViewFragment {
         mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_RATED_COMBINATIONS, mRatedCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
-                ((MainActivity) getActivity())
+                ((MyProfileActivity) getActivity())
                         .replaceFragment(RateCombinationFragment.newInstance(combination));
             }
 

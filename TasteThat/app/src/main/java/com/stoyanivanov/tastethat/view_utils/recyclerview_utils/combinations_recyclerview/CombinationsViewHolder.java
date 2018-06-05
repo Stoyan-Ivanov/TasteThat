@@ -65,7 +65,8 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
         DatabaseProvider.getInstance().getCombinationRating(combination, this);
 
         if (!combination.getUserId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            rateCombination.setOnClickListener(v -> listener.onRateButtonClicked(combination));
+            rateCombination.setOnClickListener(view -> listener.onRateButtonClicked(combination));
+            combinationRatingBar.setOnClickListener(view -> listener.onRateButtonClicked(combination));
         }
 
         itemView.setOnClickListener(view -> listener.onItemClick(combination));
@@ -83,8 +84,8 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
         combinationName.setText(mCombination.toString());
     }
 
-    public void setRating(float rating) {
-        combinationRatingBar.setRating(rating);
+    public void setRating(double rating) {
+        combinationRatingBar.setRating((float) rating);
     }
 
     private void loadImage(ImageView imageView, String url) {

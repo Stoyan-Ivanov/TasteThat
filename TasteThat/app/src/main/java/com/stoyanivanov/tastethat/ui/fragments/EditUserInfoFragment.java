@@ -91,6 +91,7 @@ public class EditUserInfoFragment extends BaseFragment {
         Glide.with(getActivity()
                 .getBaseContext())
                 .load(mCurrentUser.getPhotoUrl())
+                .placeholder(R.drawable.default_user_picture)
                 .into(mProfilePicture);
     }
 }
