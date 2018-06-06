@@ -31,6 +31,7 @@ import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
+import com.stoyanivanov.tastethat.view_utils.custom_views.ProgessDialog;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -50,6 +51,7 @@ public class EditUserInfoFragment extends BaseFragment {
     private final int PICK_IMAGE_REQUEST = 71;
     private FirebaseStorage mStorage = FirebaseStorage.getInstance();
     private StorageReference mStorageReference = mStorage.getReference();
+    private ProgessDialog mProgessDialog;
 
     public static EditUserInfoFragment newInstance() {
         return new EditUserInfoFragment();
@@ -111,9 +113,14 @@ public class EditUserInfoFragment extends BaseFragment {
     }
 
     private void uploadImage(String displayName) {
+        mProgessDialog = new ProgessDialog(getContext());
+        mProgessDialog.show();
+
         if(filePath != null) {
             StorageReference ref = mStorageReference.child(Constants.STORAGE_PROFILE_PICTURES + UUID.randomUUID().toString());
             UploadTask uploadTask = ref.putFile(filePath);
+
+
 
             uploadTask.continueWithTask(task -> {
                 if (!task.isSuccessful()) {
@@ -143,6 +150,7 @@ public class EditUserInfoFragment extends BaseFragment {
             builder.setPhotoUri(downloadUri);
         }
         mCurrentUser.updateProfile(builder.build()).addOnCompleteListener(task -> {
+            mProgessDialog.dismiss();
             TasteThatApplication.showToast(getString(R.string.toast_picture_uploaded));
             startActivity(MainActivity.getIntent(getContext(), BottomNavigationOptions.OPTIONS, FragmentTags.MY_PROFILE_FRAGMENT));
         });
