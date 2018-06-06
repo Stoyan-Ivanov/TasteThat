@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.stoyanivanov.tastethat.constants.DatabaseReferences.tableUsers;
+import static com.stoyanivanov.tastethat.constants.DatabaseReferences.nodeUsers;
 
 public class UserProfileFragment extends BaseFragment {
 
@@ -128,7 +128,7 @@ public class UserProfileFragment extends BaseFragment {
         mAchievements.clear();
 
         if(mUserId != null) {
-            tableUsers.child(mUserId)
+            nodeUsers.child(mUserId)
                     .child(Constants.USER_ACHIEVEMENTS)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -196,7 +196,7 @@ public class UserProfileFragment extends BaseFragment {
     private void getUserUploadedCombinations() {
         mUploadedCombinations = new ArrayList<>();
 
-        tableUsers.child(mUserId)
+        nodeUsers.child(mUserId)
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -220,7 +220,7 @@ public class UserProfileFragment extends BaseFragment {
     private void getUserRatedCombinations() {
         mRatedCombinations = new ArrayList<>();
 
-        tableUsers.child(mUserId)
+        nodeUsers.child(mUserId)
                 .child(Constants.USER_RATED_COMBINATIONS)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 

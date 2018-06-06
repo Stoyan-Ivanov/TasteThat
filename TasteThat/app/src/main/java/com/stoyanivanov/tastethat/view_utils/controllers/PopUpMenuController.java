@@ -46,7 +46,7 @@ public class PopUpMenuController {
                 break;
 
             case Constants.RV_RATED_COMBINATIONS:
-                likedCombinationsVHPopup();
+                ratedCombinationsVHPopup();
                 break;
         }
     }
@@ -90,7 +90,7 @@ public class PopUpMenuController {
                         break;
 
                     case R.id.pm_rv_all_report:
-                        showNotAvailableToast();
+                        reportCombination();
                         break;
                 }
                 return true;
@@ -101,10 +101,6 @@ public class PopUpMenuController {
             mPopupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.pm_rv_all_share:
-                        showNotAvailableToast();
-                        break;
-
-                    case R.id.pm_rv_all_report:
                         showNotAvailableToast();
                         break;
 
@@ -138,8 +134,8 @@ public class PopUpMenuController {
 
     }
 
-    private void likedCombinationsVHPopup() {
-        showPopup(R.menu.popup_menu_liked_combinations);
+    private void ratedCombinationsVHPopup() {
+        showPopup(R.menu.popup_menu_rated_combinations);
 
         mPopupMenu.setOnMenuItemClickListener(item -> {
             switch(item.getItemId()) {
@@ -158,6 +154,10 @@ public class PopUpMenuController {
 
     private void deleteCombinationFromDB() {
         DatabaseProvider.getInstance().deleteCombination(mCombination.getCombinationKey());
+    }
+
+    private void reportCombination() {
+        DatabaseProvider.getInstance().submitReport(mCombination.getCombinationKey());
     }
 
     private void showNotAvailableToast() {

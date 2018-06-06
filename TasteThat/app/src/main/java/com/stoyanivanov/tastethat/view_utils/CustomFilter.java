@@ -1,8 +1,5 @@
 package com.stoyanivanov.tastethat.view_utils;
 
-import android.widget.Filter;
-import android.widget.Filterable;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +36,7 @@ public class CustomFilter {
     }
 
     private void filterAllCombinations() {
-        DatabaseReferences.tableCombinations.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReferences.nodeCombinations.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 filter(dataSnapshot);
@@ -53,7 +50,7 @@ public class CustomFilter {
     private void filterUploadedCombinations() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DatabaseReferences.tableUsers
+        DatabaseReferences.nodeUsers
                 .child(userId)
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .addValueEventListener(new ValueEventListener() {
@@ -70,7 +67,7 @@ public class CustomFilter {
     private void filterRatedCombinations() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DatabaseReferences.tableUsers
+        DatabaseReferences.nodeUsers
                 .child(userId)
                 .child(Constants.USER_RATED_COMBINATIONS)
                 .addValueEventListener(new ValueEventListener() {

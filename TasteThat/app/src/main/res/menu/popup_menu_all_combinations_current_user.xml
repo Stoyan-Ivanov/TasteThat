@@ -6,10 +6,6 @@
         android:title="Share"/>
 
     <item
-        android:id="@+id/pm_rv_all_report"
-        android:title="Report"/>
-
-    <item
         android:id="@+id/pm_rv_all_delete"
         android:title="Delete"/>
 

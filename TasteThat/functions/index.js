@@ -109,4 +109,35 @@ function updateRatingField(average_rating, pushId, users) {
 	admin.database().ref('combinations').child(pushId).child("negativeRating").set(0 - average_rating);
 }
 
+exports.onReportSubmitted = functions.database.ref('reports/{pushId}').onWrite(event =>{
+
+	const pushId = event.params.pushId;
+	const numberOfReports = event.data.numChildren();
+
+	console.log("pushId: " + pushId);
+	console.log("nor: " + numberOfReports);
+
+
+	if(numberOfReports > 0) {
+
+		return admin.database().ref('combinations/' + pushId).child('userId').once('value').then(snapshot => {
+			var userId = snapshot.val();
+			console.log("userId: " + userId);
+			admin.database().ref('users/').child(userId).child("/uploadedCombinations").child(pushId).remove();
+			admin.database().ref('combinations').child(pushId).remove();
+
+			return admin.database().ref('combination_ratings/' + pushId +'/users').once('value').then( snapshot => {
+				snapshot.forEach(combination_rating => {
+					currUserId = combination_rating.key;
+					admin.database().ref('users/').child(currUserId).child("/ratedCombinations").child(pushId).remove();
+				});
+				
+				admin.database().ref('combination_ratings').child(pushId).remove();
+				admin.database().ref('reports/').child(pushId).remove();
+
+			});
+		});
+	}
+});
+
 
