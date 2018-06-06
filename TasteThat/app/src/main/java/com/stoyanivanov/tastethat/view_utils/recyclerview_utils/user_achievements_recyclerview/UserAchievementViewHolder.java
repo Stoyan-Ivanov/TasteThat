@@ -17,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class UserAchievementViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.iv_user_achievement) CircleImageView ivAchievement;
+    @BindView(R.id.iv_user_achievement) CircleImageView mIvAchievement;
 
     public UserAchievementViewHolder(View itemView) {
         super(itemView);
@@ -29,6 +29,8 @@ public class UserAchievementViewHolder extends RecyclerView.ViewHolder {
         Glide.with(TasteThatApplication.getStaticContext())
                 .load(achievement.getImageUrl())
                 .fitCenter()
-                .into(ivAchievement);
+                .into(mIvAchievement);
+
+        itemView.setOnClickListener(view -> TasteThatApplication.showToast(achievement.getName()));
     }
 }
