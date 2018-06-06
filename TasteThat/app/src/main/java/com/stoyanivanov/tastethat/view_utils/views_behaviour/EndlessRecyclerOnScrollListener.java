@@ -4,9 +4,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.stoyanivanov.tastethat.ui.activities.BaseBottomNavigationActivity;
+import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 
 /**
  * Created by Stoyan on 20.1.2018 г..
@@ -15,7 +17,7 @@ import com.stoyanivanov.tastethat.ui.activities.BaseBottomNavigationActivity;
 public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
     private int previousTotal = 0; // The total number of items in the dataset after the last load
     private boolean loading = true; // True if we are still waiting for the last set of data to load.
-    private final int visibleThreshold = 2; // The minimum amount of items to have below your current scroll position before loading more.
+    private final int visibleThreshold = 1; // The minimum amount of items to have below your current scroll position before loading more.
     private int firstVisibleItem, visibleItemCount, totalItemCount;
 
 
@@ -36,20 +38,8 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
         super.onScrolled(recyclerView, dx, dy);
 
         // show and hide bottom navigation and FAB
-        BottomNavigationView bottomNavigationView = BaseBottomNavigationActivity.bottomNavigationView;
-
-        if (dy > 0 && bottomNavigationView.isShown()) {
-            bottomNavigationView.setVisibility(View.GONE);
-            if(floatingActionButton != null) {
-                floatingActionButton.setVisibility(View.GONE);
-            }
-        } else if (dy < 0 || dy == 0) {
-            bottomNavigationView.setVisibility(View.VISIBLE);
-            if(floatingActionButton != null) {
-                floatingActionButton.setVisibility(View.VISIBLE);
-            }
-        }
-        //
+        RVScrollController controller = new RVScrollController();
+        controller.addControlToBottomNavigation(recyclerView, floatingActionButton);
 
         visibleItemCount = recyclerView.getChildCount();
         totalItemCount = mLinearLayoutManager.getItemCount();
@@ -63,7 +53,6 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
         }
         if (!loading && ((totalItemCount - visibleItemCount)
                 <= (firstVisibleItem + visibleThreshold))) {
-
             onLoadMore();
             loading = true;
         }

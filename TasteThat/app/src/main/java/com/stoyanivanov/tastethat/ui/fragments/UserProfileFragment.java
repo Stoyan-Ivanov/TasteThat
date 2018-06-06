@@ -19,11 +19,12 @@ import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
 import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
+import com.stoyanivanov.tastethat.view_utils.controllers.RVScrollController;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.db.models.Achievement;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsRecyclerViewAdapter;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.decoration.SpacesItemDecoration;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.user_achievements_recyclerview.UserAchievementsRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -37,8 +38,8 @@ public class UserProfileFragment extends BaseFragment {
 
     @BindView(R.id.rv_horizontal_achievements) RecyclerView mRecyclerViewAchievements;
     @BindView(R.id.rv_user_combinations) RecyclerView mRecyclerViewCombinations;
-    @BindView(R.id.ctv_user_uploads) CustomTextView mUploadsBtn;
-    @BindView(R.id.ctv_user_rated) CustomTextView mLikesBtn;
+    @BindView(R.id.tv_user_uploads) TextView mUploadsBtn;
+    @BindView(R.id.tv_user_rated) TextView mLikesBtn;
     @BindView(R.id.ctv_username) TextView mUsername;
 
     private String mUserId;
@@ -122,6 +123,7 @@ public class UserProfileFragment extends BaseFragment {
 
         achievementsAdapter = new UserAchievementsRecyclerViewAdapter(mAchievements);
         mRecyclerViewAchievements.setAdapter(achievementsAdapter);
+        mRecyclerViewAchievements.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.HORIZONTAL));
     }
 
     private void getUserAchievements() {
@@ -153,7 +155,8 @@ public class UserProfileFragment extends BaseFragment {
     private void populateCombinationsRV() {
         ArrayList<Combination> defaultCombinations = defaultClickedSection();
 
-        mRecyclerViewCombinations.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerViewCombinations.setLayoutManager(linearLayoutManager);
 
         adapter = new CombinationsRecyclerViewAdapter(Constants.RV_RATED_COMBINATIONS, defaultCombinations, new OnClickViewHolder() {
             @Override
@@ -182,6 +185,9 @@ public class UserProfileFragment extends BaseFragment {
         });
 
         mRecyclerViewCombinations.setAdapter(adapter);
+        mRecyclerViewCombinations.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
+        RVScrollController controller = new RVScrollController();
+        controller.addControlToBottomNavigation(mRecyclerViewCombinations);
     }
 
     private ArrayList<Combination> defaultClickedSection() {

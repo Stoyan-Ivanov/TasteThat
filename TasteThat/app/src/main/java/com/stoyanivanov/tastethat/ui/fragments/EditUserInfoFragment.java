@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -31,7 +30,7 @@ import com.stoyanivanov.tastethat.constants.Constants;
 import com.stoyanivanov.tastethat.constants.FragmentTags;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
-import com.stoyanivanov.tastethat.view_utils.custom_views.ProgessDialog;
+import com.stoyanivanov.tastethat.view_utils.custom_views.ProgressDialog;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -51,7 +50,7 @@ public class EditUserInfoFragment extends BaseFragment {
     private final int PICK_IMAGE_REQUEST = 71;
     private FirebaseStorage mStorage = FirebaseStorage.getInstance();
     private StorageReference mStorageReference = mStorage.getReference();
-    private ProgessDialog mProgessDialog;
+    private ProgressDialog mProgressDialog;
 
     public static EditUserInfoFragment newInstance() {
         return new EditUserInfoFragment();
@@ -113,8 +112,8 @@ public class EditUserInfoFragment extends BaseFragment {
     }
 
     private void uploadImage(String displayName) {
-        mProgessDialog = new ProgessDialog(getContext());
-        mProgessDialog.show();
+        mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.show();
 
         if(filePath != null) {
             StorageReference ref = mStorageReference.child(Constants.STORAGE_PROFILE_PICTURES + UUID.randomUUID().toString());
@@ -150,7 +149,7 @@ public class EditUserInfoFragment extends BaseFragment {
             builder.setPhotoUri(downloadUri);
         }
         mCurrentUser.updateProfile(builder.build()).addOnCompleteListener(task -> {
-            mProgessDialog.dismiss();
+            mProgressDialog.dismiss();
             TasteThatApplication.showToast(getString(R.string.toast_picture_uploaded));
             startActivity(MainActivity.getIntent(getContext(), BottomNavigationOptions.OPTIONS, FragmentTags.MY_PROFILE_FRAGMENT));
         });

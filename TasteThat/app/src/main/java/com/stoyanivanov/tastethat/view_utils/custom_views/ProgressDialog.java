@@ -10,12 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-public class ProgessDialog {
+public class ProgressDialog {
 
     private Dialog mDialog;
     private ProgressBar mProgressBar;
 
-    public ProgessDialog(Context context) {
+    public ProgressDialog(Context context) {
 
         mDialog = new Dialog(context);
         mDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -45,7 +45,6 @@ public class ProgessDialog {
     public void show() {
         if (!mDialog.isShowing() && mDialog != null) {
             mDialog.show();
-
         }
     }
 
@@ -69,7 +68,6 @@ public class ProgessDialog {
     }
 
     public boolean isShowing() {
-
         return mDialog.isShowing();
     }
 }

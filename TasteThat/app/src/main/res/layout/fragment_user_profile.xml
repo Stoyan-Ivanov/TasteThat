@@ -1,8 +1,8 @@
-<android.support.percent.PercentRelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.UserProfileFragment"
     android:background="@color/white">
@@ -60,87 +60,98 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_horizontal_achievements"
-            app:layout_heightPercent="15%"
-            app:layout_widthPercent="94%"
-            android:orientation="horizontal"
-
-            app:layout_marginTopPercent="1%"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/abl_header_bar"
-            android:layout_centerHorizontal="true"
 
-            android:background="@color/blue_grey"
-            >
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rv_my_achievements_border_background"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/abl_header_bar"
+            app:layout_marginTopPercent="1%">
 
         </android.support.v7.widget.RecyclerView>
 
 
-        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-        android:id="@+id/ctv_user_rated"
-        android:layout_below="@+id/rv_horizontal_achievements"
+        <TextView
+            android:id="@+id/tv_user_rated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
 
-        app:layout_heightPercent="10%"
-        app:layout_widthPercent="44%"
+            android:layout_below="@+id/rv_horizontal_achievements"
 
-        android:layout_alignParentStart="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="24dp"
 
-        app:layout_marginTopPercent="1%"
-        app:layout_marginLeftPercent="3%"
-
-        android:gravity="center"
-        android:text="@string/rated"
-        />
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/rated"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_user_uploads"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_horizontal_achievements"
+            app:layout_marginLeftPercent="3%"
+            app:layout_marginTopPercent="1%" />
 
         <View
             android:id="@+id/divider_user_rated"
+            android:layout_width="0dp"
             android:layout_height="1dp"
-            app:layout_widthPercent="30%"
 
-            android:layout_below="@+id/ctv_user_rated"
+            android:layout_below="@+id/tv_user_rated"
 
-            app:layout_marginLeftPercent="10%"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/aluminum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_rated"
+            app:layout_marginLeftPercent="10%" />
 
-            android:background="@color/aluminum"/>
+        <TextView
+            android:id="@+id/tv_user_uploads"
+            android:layout_width="0dp"
 
-        <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
-            android:id="@+id/ctv_user_uploads"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+
             android:layout_below="@+id/rv_horizontal_achievements"
 
-            app:layout_heightPercent="10%"
-            app:layout_widthPercent="44%"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
 
-            android:layout_alignParentEnd="true"
-
-            app:layout_marginRightPercent="3%"
-            app:layout_marginTopPercent= "1%"
-
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/btn_uploads"
-             />
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_user_rated"
+            app:layout_constraintTop_toBottomOf="@+id/rv_horizontal_achievements"
+            app:layout_marginRightPercent="3%"
+            app:layout_marginTopPercent="1%" />
 
-        <View
-            android:id="@+id/divider_user_uploads"
-            android:layout_height="1dp"
-            app:layout_widthPercent="30%"
-
-            android:layout_below="@+id/ctv_user_uploads"
-
-            android:layout_alignParentEnd="true"
-            app:layout_marginRightPercent="10%"
-
-            android:background="@color/aluminum"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_user_combinations"
-            app:layout_heightPercent="80%"
-            app:layout_widthPercent="90%"
-
-            android:layout_below="@+id/divider_user_uploads"
-            android:layout_centerHorizontal="true"
-
-            app:layout_marginTopPercent="1%"
-            android:background="@color/blue_grey"
-            >
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_user_rated">
 
         </android.support.v7.widget.RecyclerView>
 
-</android.support.percent.PercentRelativeLayout>
+</android.support.constraint.ConstraintLayout>

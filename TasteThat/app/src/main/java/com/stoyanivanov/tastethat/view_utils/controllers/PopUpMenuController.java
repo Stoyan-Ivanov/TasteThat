@@ -61,7 +61,7 @@ public class PopUpMenuController {
 
         mPopupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
-                case R.id.order_by_likes:
+                case R.id.order_by_rating:
                     fragment.currORDER = ContentOrder.HIGHEST_RATING;
                     fragment.startLoadingCombinations();
                     TasteThatApplication.showToast("Ordering by rating...");

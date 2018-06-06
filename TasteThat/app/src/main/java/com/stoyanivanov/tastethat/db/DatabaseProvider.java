@@ -103,7 +103,7 @@ public class DatabaseProvider {
 
     public void getAllCombinations(final String nodeId, final ArrayList<Combination> combinations,
                                    final AllCombinationsFragment fragment, final ContentOrder orderCriteria) {
-
+        Log.d("SII", "getAllCombinations: " + orderCriteria.toString());
             Query query;
             switch(orderCriteria) {
                 case HIGHEST_RATING:
@@ -118,12 +118,13 @@ public class DatabaseProvider {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(!dataSnapshot.hasChildren()){
                         TasteThatApplication.showToast("No more combinations");
+                    } else {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Combination currCombination = snapshot.getValue(Combination.class);
+                            combinations.add(currCombination);
+                        }
+                        fragment.onDataGathered(combinations);
                     }
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Combination currCombination = snapshot.getValue(Combination.class);
-                        combinations.add(currCombination);
-                    }
-                    fragment.onDataGathered(combinations);
                 }
 
                 @Override public void onCancelled(DatabaseError databaseError) {}});
