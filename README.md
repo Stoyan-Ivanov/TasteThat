@@ -34,3 +34,7 @@ Android app developed with Android and Firebase Realtime Database and Firebase C
   - View My (your) rated combinations (by clicking on the "Rated" button in profile screen).
   - Delete uploaded combination (by clicking on the 3-dot menu of a combination card in Uploads screen).
   - Enable offline data caching (by clicking on the switch in options screen).
+
+---
+
+Launcher icons and logo are designed by: [zularizal](https://github.com/zularizal)
