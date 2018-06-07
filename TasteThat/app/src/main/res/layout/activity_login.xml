@@ -5,34 +5,27 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.activities.LoginActivity"
+    android:background="@color/white"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tv_intro_title"
-
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-
-        android:layout_marginBottom="24dp"
+    <ImageView
+        android:id="@+id/iv_tastethat_logo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_marginEnd="8dp"
-
         android:layout_marginStart="8dp"
-        android:gravity="center"
-        android:text="@string/login_header"
-        android:textColor="@color/colorThunderbirdRed"
-        android:textSize="48sp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/vertical_adjusted"
         app:layout_constraintBottom_toTopOf="@+id/et_login_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_login_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
-        android:layout_below="@+id/tv_intro_title"
 
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
@@ -82,12 +75,12 @@
         android:background="@drawable/custom_button_shape"
         android:text="Sign In"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/ctv_login_alternative"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView
+    <TextView
         android:id="@+id/ctv_registration_trigger"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -98,8 +91,8 @@
 
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="No account yet? Create one!"
-        android:textColor="@color/colorThunderbirdRed"
+        android:text="@string/no_account_yet_create_one"
+        android:textColor="@color/colorSecondaryPurple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -148,4 +141,5 @@
         app:layout_constraintBottom_toTopOf="@id/ctv_registration_trigger"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -152,7 +152,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/custom_button_shape"
         android:text="@string/logout_button_title"
-        android:textColor="#FAF448"
+        android:textColor="@color/lightyellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_uploaded_combinations" />

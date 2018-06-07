@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -55,11 +56,11 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.google_sign_in_button) SignInButton googleSignInBtn;
-    @BindView(R.id.tv_intro_title) TextView title;
+    @BindView(R.id.iv_tastethat_logo) ImageView mIvLogo;
     @BindView(R.id.facebook_login_button) LoginButton facebookSignInButton;
     @BindView(R.id.et_login_email) EditText etEmail;
     @BindView(R.id.et_login_password) EditText etPassword;
-    @BindView(R.id.ctv_registration_trigger) CustomTextView registrationTrigger;
+    @BindView(R.id.ctv_registration_trigger) TextView registrationTrigger;
     @BindView(R.id.btn_sign_in) Button btnSignIn;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -121,15 +122,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
-
-
-        Typeface custom_font =Typeface.createFromAsset(getResources().getAssets(), Constants.LOGIN_HEADER_TV_FONT);
-        title.setTypeface(custom_font);
 
 
         facebookCallbackManager = CallbackManager.Factory.create();
