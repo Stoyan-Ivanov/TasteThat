@@ -1,4 +1,9 @@
-# TasteThat
+# Taste That
+
+<h1 align=center>
+<img src="Logo/horizontal.png" width=70%>
+</h1>
+
 Android app developed with Android and Firebase Realtime Database and Firebase Cloud Functions
 
 - Free APIs that have been used:
