@@ -123,7 +123,7 @@ public class UserProfileFragment extends BaseFragment {
 
         achievementsAdapter = new UserAchievementsRecyclerViewAdapter(mAchievements);
         mRecyclerViewAchievements.setAdapter(achievementsAdapter);
-        mRecyclerViewAchievements.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.HORIZONTAL));
+        mRecyclerViewAchievements.addItemDecoration(new SpacesItemDecoration(8, SpacesItemDecoration.HORIZONTAL));
     }
 
     private void getUserAchievements() {

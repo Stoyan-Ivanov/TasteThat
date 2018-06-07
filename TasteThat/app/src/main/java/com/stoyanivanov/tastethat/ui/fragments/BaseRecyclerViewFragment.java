@@ -31,7 +31,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
     @BindView(R.id.rv) RecyclerView recyclerView;
     @BindView(R.id.iv_options_menu) ImageView optionsMenu;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
-
+    protected boolean isLoading = false;
     public ContentOrder currORDER = ContentOrder.TIMESTAMP;
 
     @Override
@@ -46,7 +46,9 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
-                startLoadingCombinations();
+                if(!isLoading) {
+                    startLoadingCombinations();
+                }
             }, 500);
         });
     }

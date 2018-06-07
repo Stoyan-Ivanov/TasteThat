@@ -32,6 +32,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     private CombinationsRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
 
+
     @OnClick(R.id.fab_add_combination)
         void inflateNewAddCombinationFragment() {
         ((MainActivity) getActivity()).replaceFragment(AddCombinationFragment.newInstance());
@@ -58,6 +59,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         } else {
             allCombinations.clear();
         }
+        isLoading = true;
         loadCombinations(null);
     }
 
@@ -67,8 +69,10 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     }
 
     private void loadMoreCombinations(){
-        String nodeId = allCombinations.get(allCombinations.size() - 1).getCombinationKey();
-        loadCombinations(nodeId);
+        if((allCombinations.size() - 1) > 0) {
+            String nodeId = allCombinations.get(allCombinations.size() - 1).getCombinationKey();
+            loadCombinations(nodeId);
+        }
     }
 
     public void onDataGathered(ArrayList<Combination> combinations) {
@@ -78,6 +82,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
         } else {
             adapter.setNewData(combinations);
         }
+        isLoading = false;
     }
 
     @Override
