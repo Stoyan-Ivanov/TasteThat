@@ -47,6 +47,7 @@ import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.registration_activity.RegistrationActivity;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
+import com.stoyanivanov.tastethat.view_utils.custom_views.ProgressDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     private FirebaseAuth.AuthStateListener authStateListener;
     private CallbackManager facebookCallbackManager;
+    private ProgressDialog mProgressDialog;
 
     @OnClick(R.id.ctv_registration_trigger)
     void startRegistrationActivity() {
@@ -122,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-
+        mProgressDialog = new ProgressDialog(this);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         if (BuildConfig.DEBUG) {
@@ -175,6 +177,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        mProgressDialog.show();
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -199,8 +202,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
 
+                        mProgressDialog.dismiss();
                         startMainActivity();
                     } else {
+                        mProgressDialog.dismiss();
                         showFailedLogin();
                     }
                 });

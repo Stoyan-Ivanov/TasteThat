@@ -16,9 +16,11 @@ import android.widget.ImageView;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.TasteThatApplication;
+import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.view_utils.controllers.PopUpMenuController;
 import com.stoyanivanov.tastethat.view_utils.custom_views.CustomTextView;
+import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsRecyclerViewAdapter;
 
 import butterknife.BindView;
 
@@ -33,6 +35,8 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
     protected boolean isLoading = false;
     public ContentOrder currORDER = ContentOrder.TIMESTAMP;
+
+    protected CombinationsRecyclerViewAdapter mAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

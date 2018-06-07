@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class RatedCombinationsFragment extends BaseRecyclerViewFragment {
 
     private ArrayList<Combination> mRatedCombinations;
-    private CombinationsRecyclerViewAdapter mAdapter;
 
     @Override
     public void onResume() {

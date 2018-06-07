@@ -95,8 +95,8 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
                 .into(imageView);
     }
 
-    public void deleteViewHolderFromRV(final int position) {
-        mAdapter.deleteViewHolderFromRV(position);
+    public void deleteViewHolderFromRV(Combination combination, final int position) {
+        mAdapter.deleteViewHolderFromRV(combination, position);
     }
 
     public void setPopUpMenu(final int position) {

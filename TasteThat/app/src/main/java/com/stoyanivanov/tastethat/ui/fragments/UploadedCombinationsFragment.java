@@ -20,8 +20,7 @@ import java.util.ArrayList;
 
 public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
-    private ArrayList<Combination> uploadedCombinations;
-    private CombinationsRecyclerViewAdapter adapter;
+    private ArrayList<Combination> mUploadedCombinations;
 
     @Override
     public void onResume() {
@@ -43,30 +42,30 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void startLoadingCombinations() {
-        if(uploadedCombinations == null) {
-            uploadedCombinations = new ArrayList<>();
+        if(mUploadedCombinations == null) {
+            mUploadedCombinations = new ArrayList<>();
         } else {
-            uploadedCombinations.clear();
+            mUploadedCombinations.clear();
         }
         loadCombinations(null);
     }
 
     private void loadCombinations(String nodeId) {
-        DatabaseProvider.getInstance().getUploadedCombinations(nodeId, uploadedCombinations,
+        DatabaseProvider.getInstance().getUploadedCombinations(nodeId, mUploadedCombinations,
                 this, super.currORDER);
     }
 
     private void loadMoreCombinations(){
-        String nodeId = uploadedCombinations.get(uploadedCombinations.size() - 1).getCombinationKey();
+        String nodeId = mUploadedCombinations.get(mUploadedCombinations.size() - 1).getCombinationKey();
         loadCombinations(nodeId);
     }
 
     public void onDataGathered(ArrayList<Combination> combinations) {
-        if(adapter == null) {
-            uploadedCombinations = combinations;
+        if(mAdapter == null) {
+            mUploadedCombinations = combinations;
             instantiateRecyclerView();
         } else {
-            adapter.setNewData(combinations);
+            mAdapter.setNewData(combinations);
         }
     }
 
@@ -74,7 +73,7 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
     protected void instantiateRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CombinationsRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, uploadedCombinations, new OnClickViewHolder() {
+        mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_UPLOADED_COMBINATIONS, mUploadedCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
                 ((MyProfileActivity) getActivity())
@@ -89,7 +88,7 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
             }
         });
 
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
@@ -102,12 +101,12 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     protected void startFilteringContent() {
-        adapter.setNewData(uploadedCombinations);
-        adapter.filterData(searchBar.getText().toString());
+        mAdapter.setNewData(mUploadedCombinations);
+        mAdapter.filterData(searchBar.getText().toString());
     }
 
     @Override
     protected void notifyAdapterOnSearchCancel() {
-        adapter.setNewData(uploadedCombinations);
+        mAdapter.setNewData(mUploadedCombinations);
     }
 }

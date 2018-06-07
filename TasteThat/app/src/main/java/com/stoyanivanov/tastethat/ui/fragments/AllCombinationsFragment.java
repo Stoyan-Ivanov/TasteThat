@@ -1,10 +1,8 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +27,6 @@ import butterknife.OnClick;
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     @BindView(R.id.fab_add_combination) FloatingActionButton fabAddCombination;
 
-    private CombinationsRecyclerViewAdapter adapter;
     private ArrayList<Combination> allCombinations;
 
 
@@ -76,11 +73,11 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     }
 
     public void onDataGathered(ArrayList<Combination> combinations) {
-        if(adapter == null) {
+        if(mAdapter == null) {
             allCombinations = combinations;
             instantiateRecyclerView();
         } else {
-            adapter.setNewData(combinations);
+            mAdapter.setNewData(combinations);
         }
         isLoading = false;
     }
@@ -91,7 +88,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new CombinationsRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
+        mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
                 ((MainActivity) getActivity())
@@ -104,7 +101,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                         .replaceFragment(CombinationDetailsFragment.newInstance(MainActivity.class.getSimpleName(), combination));
             }
         });
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager, fabAddCombination) {
@@ -117,12 +114,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void startFilteringContent() {
-        adapter.setNewData(allCombinations);
-        adapter.filterData(searchBar.getText().toString());
+        mAdapter.setNewData(allCombinations);
+        mAdapter.filterData(searchBar.getText().toString());
     }
 
     @Override
     public void notifyAdapterOnSearchCancel() {
-        adapter.setNewData(allCombinations);
+        mAdapter.setNewData(allCombinations);
     }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.OnClickViewHolder;
 import com.stoyanivanov.tastethat.R;
 import com.stoyanivanov.tastethat.db.models.Combination;
@@ -55,10 +56,12 @@ public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<Combin
         return mData.size();
     }
 
-    public void deleteViewHolderFromRV(final int position) {
+    public void deleteViewHolderFromRV(Combination combination, final int position) {
         mData.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getItemCount());
+
+        DatabaseProvider.getInstance().deleteCombination(combination.getCombinationKey());
     }
 
     public void filterData(String searched) {

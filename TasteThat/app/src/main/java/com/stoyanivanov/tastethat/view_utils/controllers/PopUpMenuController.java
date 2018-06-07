@@ -1,6 +1,7 @@
 package com.stoyanivanov.tastethat.view_utils.controllers;
 
 import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.constants.Constants;
@@ -9,6 +10,7 @@ import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Combination;
+import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
@@ -105,8 +107,7 @@ public class PopUpMenuController {
                         break;
 
                     case R.id.pm_rv_all_delete:
-                        mViewHolder.deleteViewHolderFromRV(position);
-                        deleteCombinationFromDB();
+                        mViewHolder.deleteViewHolderFromRV(mCombination, position);
                 }
                 return true;
             });
@@ -124,8 +125,7 @@ public class PopUpMenuController {
                     break;
 
                 case R.id.pm_rv_uploaded_delete:
-                    mViewHolder.deleteViewHolderFromRV(position);
-                    deleteCombinationFromDB();
+                    mViewHolder.deleteViewHolderFromRV(mCombination, position);
                     break;
 
             }
@@ -150,10 +150,6 @@ public class PopUpMenuController {
     private void showPopup(int menuId) {
         mPopupMenu.getMenuInflater().inflate(menuId, mPopupMenu.getMenu());
         mPopupMenu.show();
-    }
-
-    private void deleteCombinationFromDB() {
-        DatabaseProvider.getInstance().deleteCombination(mCombination.getCombinationKey());
     }
 
     private void reportCombination() {
