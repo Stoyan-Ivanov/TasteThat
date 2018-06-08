@@ -24,6 +24,7 @@ import com.stoyanivanov.tastethat.ui.fragments.UploadedCombinationsFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.nodeCombinationRating;
 import static com.stoyanivanov.tastethat.constants.DatabaseReferences.nodeCombinations;
@@ -35,17 +36,20 @@ import static com.stoyanivanov.tastethat.constants.DatabaseReferences.nodeUsers;
  */
 
 public class DatabaseProvider {
-    private static DatabaseProvider instance;
+    private static DatabaseProvider sInstance;
     private final int TOTAL_COMBINATIONS_FOR_ONE_LOAD = 5;
+    private String mUserId;
 
     public static DatabaseProvider getInstance() {
-        if(instance == null) {
-            instance = new DatabaseProvider();
+        if(sInstance == null) {
+            sInstance = new DatabaseProvider();
         }
-        return instance;
+        return sInstance;
     }
 
-    private DatabaseProvider() { }
+    private DatabaseProvider() {
+        mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
 
     public void saveCombination(final Combination newCombination) {
         String combinationKey = newCombination.getCombinationKey();
@@ -84,7 +88,7 @@ public class DatabaseProvider {
 
     private void saveCombinationToMyUploads(Combination newCombination) {
         DatabaseReferences.nodeUsers
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(mUserId)
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .child(newCombination.getCombinationKey())
                 .setValue(newCombination);
@@ -92,11 +96,10 @@ public class DatabaseProvider {
 
     public void saveRatingForCombination(Combination combination, float rating) {
         if(combination != null) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReferences.nodeCombinationRating
                     .child(combination.getCombinationKey())
                     .child("users")
-                    .child(userId)
+                    .child(mUserId)
                     .setValue(rating);
         }
     }
@@ -189,7 +192,7 @@ public class DatabaseProvider {
 
     public void getAchievements(MyProfileFragment fragment) {
         ArrayList<Achievement> mAchievements = new ArrayList<>();
-        nodeUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        nodeUsers.child(mUserId)
                 .child(Constants.USER_ACHIEVEMENTS)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -209,8 +212,7 @@ public class DatabaseProvider {
     public void getRatedCombinations(final String nodeId, final ArrayList<Combination> ratedCombinations,
                                      final RatedCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
-        final DatabaseReference userLikedCombinations = nodeUsers.child(FirebaseAuth.getInstance()
-                        .getCurrentUser().getUid()).child(Constants.USER_RATED_COMBINATIONS);
+        final DatabaseReference userLikedCombinations = nodeUsers.child(mUserId).child(Constants.USER_RATED_COMBINATIONS);
 
         Query query;
         switch(orderCriteria) {
@@ -243,8 +245,7 @@ public class DatabaseProvider {
     public void getUploadedCombinations(final String nodeId, final ArrayList<Combination> uploadedCombinations,
                                         final UploadedCombinationsFragment fragment, final ContentOrder orderCriteria) {
 
-        final DatabaseReference userUploadedCombinations = nodeUsers.child(FirebaseAuth.getInstance()
-                .getCurrentUser().getUid()).child(Constants.USER_UPLOADED_COMBINATIONS);
+        final DatabaseReference userUploadedCombinations = nodeUsers.child(mUserId).child(Constants.USER_UPLOADED_COMBINATIONS);
 
         Query query;
         switch(orderCriteria) {
@@ -273,7 +274,7 @@ public class DatabaseProvider {
     }
 
     public void saveCombinationToUserRated(Combination combination) {
-        nodeUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        nodeUsers.child(mUserId)
                 .child(Constants.USER_RATED_COMBINATIONS)
                 .child(combination.getCombinationKey())
                 .setValue(combination);
@@ -282,7 +283,7 @@ public class DatabaseProvider {
     public void deleteCombination(String combinationKey) {
         nodeCombinations.child(combinationKey).removeValue();
 
-        nodeUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        nodeUsers.child(mUserId)
                 .child(Constants.USER_UPLOADED_COMBINATIONS)
                 .child(combinationKey).removeValue();
 
@@ -308,6 +309,15 @@ public class DatabaseProvider {
     }
 
     public void submitReport(String combinationKey) {
-       nodeReports.child(combinationKey).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(ServerValue.TIMESTAMP);
+       nodeReports.child(combinationKey).child(mUserId).setValue(ServerValue.TIMESTAMP);
+    }
+
+    public void updateCombinationDescription(Combination currCombination) {
+
+        nodeUsers.child(mUserId)
+                .child(Constants.USER_UPLOADED_COMBINATIONS)
+                .child(currCombination.getCombinationKey())
+                .child("description")
+                .setValue(currCombination.getDescription());
     }
 }

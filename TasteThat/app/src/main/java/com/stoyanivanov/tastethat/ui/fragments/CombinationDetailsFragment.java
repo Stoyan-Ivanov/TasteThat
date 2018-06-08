@@ -1,12 +1,14 @@
 package com.stoyanivanov.tastethat.ui.fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Component;
 import com.stoyanivanov.tastethat.ui.activities.main_activity.MainActivity;
 import com.stoyanivanov.tastethat.ui.activities.MyProfileActivity;
@@ -23,6 +26,7 @@ import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.models.Combination;
 import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
+import com.stoyanivanov.tastethat.view_utils.custom_views.EditCombinationDescriptionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +71,16 @@ public class CombinationDetailsFragment extends BaseFragment {
         replaceFragment(UserProfileFragment.newInstance(mActivityName, mCurrCombination));
     }
 
-    private void replaceFragment(BaseFragment fragment) {
+    @OnClick(R.id.iv_edit_combination)
+    void onEditCombinationClicked() {
+        Log.d("SII", "onEditCombinationClicked: " + mCurrCombination.getDescription());
+        EditCombinationDescriptionFragment fragment = EditCombinationDescriptionFragment.newInstance(mCurrCombination.getDescription());
+        fragment.setTargetFragment(this, getFragmentManager());
+        fragment.show();
+
+    }
+
+    private void replaceFragment(Fragment fragment) {
         if(mActivityName.equals(MainActivity.class.getSimpleName())) {
             ((MainActivity) getActivity()).replaceFragment(fragment);
         } else {
@@ -135,6 +148,21 @@ public class CombinationDetailsFragment extends BaseFragment {
 
     private void loadDescription() {
         mTvCombinationDescription.setText(mCurrCombination.getDescription());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case EditCombinationDescriptionFragment.REQUEST_CODE_DESCRIPTION:
+                Log.d("SII", "onActivityResult: " + data.getStringExtra(StartConstants.EXTRA_DESCRIPTION));
+                mCurrCombination.setDescription(data.getStringExtra(StartConstants.EXTRA_DESCRIPTION));
+                mTvCombinationDescription.setText(mCurrCombination.getDescription());
+
+                DatabaseProvider.getInstance().updateCombinationDescription(mCurrCombination);
+                break;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //ToDo: REFACTOR AS SOON AS POSSIBLE

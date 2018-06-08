@@ -112,4 +112,8 @@
     <string name="image_selection_dialog_title">"Select Picture"</string>
     <string name="error_while_uploading_profile_picture">"Something went wrong while uploading"</string>
     <string name="no_account_yet_create_one">No account yet? Create one!</string>
+
+    <string name="btn_done">Done</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="dialog_edit_combination_title">Edit description</string>
 </resources>

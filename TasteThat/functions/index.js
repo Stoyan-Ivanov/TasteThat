@@ -140,4 +140,29 @@ exports.onReportSubmitted = functions.database.ref('reports/{pushId}').onWrite(e
 	}
 });
 
+exports.onDescriptionUpdated = functions.database.ref('users/{uid}/uploadedCombinations/{pushId}').onUpdate(event => {
+	const userId = event.params.uid;
+	const combinationId = event.params.pushId;
+
+	console.log("userId " + userId);
+	console.log("combId " + combinationId);
+
+	return admin.database().ref('users/' + userId +'/uploadedCombinations/' + combinationId).once('value').then(combination => {
+		const combinationDescription = combination.val().description;
+		console.log("description " + combinationDescription);
+
+		admin.database().ref('combinations').child(combinationId).child("description").set(combinationDescription);
+
+		return admin.database().ref('combination_ratings/' + combinationId +'/users').once('value').then( snapshot => {
+			snapshot.forEach(combination_rating => {
+				currUserId = combination_rating.key;
+
+				admin.database().ref('users/').child(currUserId).child("/ratedCombinations").child(combinationId).child("description").set(combinationDescription);
+
+			});
+		});
+	});
+});
+
+
 
