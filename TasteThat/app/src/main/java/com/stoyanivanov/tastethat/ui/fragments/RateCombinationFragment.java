@@ -10,6 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.stoyanivanov.tastethat.R;
+import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.constants.StartConstants;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Combination;
@@ -32,6 +33,7 @@ public class RateCombinationFragment extends BaseFragment {
 
         DatabaseProvider.getInstance().saveRatingForCombination(mCombination, rating);
         DatabaseProvider.getInstance().saveCombinationToUserRated(mCombination);
+        TasteThatApplication.showToast(getString(R.string.successful_rating_submit));
         popCurrentFragment();
     }
     

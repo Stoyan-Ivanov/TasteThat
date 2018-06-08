@@ -55,6 +55,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
 
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
     testImplementation 'junit:junit:4.12'
 }
 

@@ -116,4 +116,7 @@
     <string name="btn_done">Done</string>
     <string name="btn_cancel">Cancel</string>
     <string name="dialog_edit_combination_title">Edit description</string>
+
+    <string name="successful_rating_submit">Rating submitted!</string>
+    <string name="report_submitted">Report submitted!</string>
 </resources>

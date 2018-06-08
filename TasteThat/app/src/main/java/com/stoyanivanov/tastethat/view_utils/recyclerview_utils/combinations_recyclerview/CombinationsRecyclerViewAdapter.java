@@ -32,7 +32,7 @@ public class CombinationsRecyclerViewAdapter extends RecyclerView.Adapter<Combin
     }
 
     public void setNewData(ArrayList<Combination> data) {
-        this.mData = new ArrayList<>(data);
+        mData = data;
         notifyDataSetChanged();
     }
 

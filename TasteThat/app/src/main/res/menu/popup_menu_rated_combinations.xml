@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/pm_rv_liked_share"
+        android:id="@+id/pm_rv_rated_share"
         android:title="Share">
     </item>
 </menu>

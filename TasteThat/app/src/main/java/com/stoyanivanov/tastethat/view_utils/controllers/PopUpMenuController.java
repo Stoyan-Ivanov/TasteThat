@@ -1,7 +1,6 @@
 package com.stoyanivanov.tastethat.view_utils.controllers;
 
 import android.support.v7.widget.PopupMenu;
-import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.stoyanivanov.tastethat.constants.Constants;
@@ -10,7 +9,6 @@ import com.stoyanivanov.tastethat.constants.ContentOrder;
 import com.stoyanivanov.tastethat.TasteThatApplication;
 import com.stoyanivanov.tastethat.db.DatabaseProvider;
 import com.stoyanivanov.tastethat.db.models.Combination;
-import com.stoyanivanov.tastethat.ui.base_ui.BaseFragment;
 import com.stoyanivanov.tastethat.ui.fragments.BaseRecyclerViewFragment;
 import com.stoyanivanov.tastethat.view_utils.recyclerview_utils.combinations_recyclerview.CombinationsViewHolder;
 
@@ -139,7 +137,7 @@ public class PopUpMenuController {
 
         mPopupMenu.setOnMenuItemClickListener(item -> {
             switch(item.getItemId()) {
-                case R.id.pm_rv_liked_share:
+                case R.id.pm_rv_rated_share:
                     showNotAvailableToast();
                     break;
             }
@@ -154,6 +152,7 @@ public class PopUpMenuController {
 
     private void reportCombination() {
         DatabaseProvider.getInstance().submitReport(mCombination.getCombinationKey());
+        TasteThatApplication.showToast(TasteThatApplication.getStringFromId(R.string.report_submitted));
     }
 
     private void showNotAvailableToast() {

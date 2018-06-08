@@ -36,7 +36,7 @@ public class TasteThatApplication extends Application {
 
     public static void showToast(String message) {
         Toast toast=Toast.makeText(applicationContext, message,Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 240);
         toast.show();
     }
 

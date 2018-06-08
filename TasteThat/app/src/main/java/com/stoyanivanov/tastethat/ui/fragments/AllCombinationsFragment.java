@@ -27,7 +27,8 @@ import butterknife.OnClick;
 public class AllCombinationsFragment extends BaseRecyclerViewFragment {
     @BindView(R.id.fab_add_combination) FloatingActionButton fabAddCombination;
 
-    private ArrayList<Combination> allCombinations;
+    private ArrayList<Combination> mAllCombinations;
+    private boolean mAddDecoration = true;
 
 
     @OnClick(R.id.fab_add_combination)
@@ -51,34 +52,34 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void startLoadingCombinations() {
-        if(allCombinations == null) {
-            allCombinations = new ArrayList<>();
+        if(mAllCombinations == null) {
+            mAllCombinations = new ArrayList<>();
         } else {
-            allCombinations.clear();
+            mAllCombinations.clear();
         }
         isLoading = true;
         loadCombinations(null);
     }
 
     public void loadCombinations(String nodeId) {
-        DatabaseProvider.getInstance().getAllCombinations(nodeId, allCombinations,
+        DatabaseProvider.getInstance().getAllCombinations(nodeId, mAllCombinations,
                                                 this, super.currORDER);
     }
 
     private void loadMoreCombinations(){
-        if((allCombinations.size() - 1) > 0) {
-            String nodeId = allCombinations.get(allCombinations.size() - 1).getCombinationKey();
+        if((mAllCombinations.size() - 1) > 0) {
+            String nodeId = mAllCombinations.get(mAllCombinations.size() - 1).getCombinationKey();
             loadCombinations(nodeId);
         }
     }
 
     public void onDataGathered(ArrayList<Combination> combinations) {
-        if(mAdapter == null) {
-            allCombinations = combinations;
+//        if(mAdapter == null) {
+            mAllCombinations = combinations;
             instantiateRecyclerView();
-        } else {
-            mAdapter.setNewData(combinations);
-        }
+//        } else {
+//            mAdapter.setNewData(combinations);
+//        }
         isLoading = false;
     }
 
@@ -88,7 +89,7 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, allCombinations, new OnClickViewHolder() {
+        mAdapter = new CombinationsRecyclerViewAdapter(Constants.RV_ALL_COMBINATIONS, mAllCombinations, new OnClickViewHolder() {
             @Override
             public void onRateButtonClicked(Combination combination) {
                 ((MainActivity) getActivity())
@@ -102,7 +103,11 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
             }
         });
         recyclerView.setAdapter(mAdapter);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
+
+        if(mAddDecoration) {
+            recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));
+            mAddDecoration = false;
+        }
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager, fabAddCombination) {
             @Override
@@ -114,12 +119,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
 
     @Override
     public void startFilteringContent() {
-        mAdapter.setNewData(allCombinations);
+        mAdapter.setNewData(mAllCombinations);
         mAdapter.filterData(searchBar.getText().toString());
     }
 
     @Override
     public void notifyAdapterOnSearchCancel() {
-        mAdapter.setNewData(allCombinations);
+        mAdapter.setNewData(mAllCombinations);
     }
 }
