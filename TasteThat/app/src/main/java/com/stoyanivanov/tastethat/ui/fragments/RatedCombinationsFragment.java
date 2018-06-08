@@ -86,6 +86,12 @@ public class RatedCombinationsFragment extends BaseRecyclerViewFragment {
                 ((MyProfileActivity) getActivity())
                         .replaceFragment(CombinationDetailsFragment.newInstance(MyProfileActivity.class.getSimpleName(), combination));
             }
+
+            @Override
+            public void onUserNameClicked(Combination combination) {
+                ((MyProfileActivity) getActivity())
+                        .replaceFragment(UserProfileFragment.newInstance(MyProfileActivity.class.getSimpleName(), combination));
+            }
         });
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(16, SpacesItemDecoration.VERTICAL));

@@ -13,4 +13,6 @@ public interface OnClickViewHolder {
     void onRateButtonClicked(Combination combination);
 
     void onItemClick(Combination combination);
+
+    void onUserNameClicked(Combination combination);
 }

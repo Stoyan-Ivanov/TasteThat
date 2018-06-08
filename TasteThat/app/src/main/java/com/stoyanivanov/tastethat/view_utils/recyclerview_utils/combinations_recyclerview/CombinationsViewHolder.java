@@ -70,6 +70,7 @@ public class CombinationsViewHolder extends RecyclerView.ViewHolder {
         }
 
         itemView.setOnClickListener(view -> listener.onItemClick(combination));
+        username.setOnClickListener(view -> listener.onUserNameClicked(combination));
 
         if(components.size() > Constants.MIN_REQUIRED_COMPONENTS) {
             expandCombination.setVisibility(View.VISIBLE);

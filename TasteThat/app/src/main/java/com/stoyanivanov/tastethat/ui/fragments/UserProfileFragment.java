@@ -182,6 +182,19 @@ public class UserProfileFragment extends BaseFragment {
                     }
                 }
             }
+
+            @Override
+            public void onUserNameClicked(Combination combination) {
+                if(mActivityName.equals(MainActivity.class.getSimpleName())) {
+                    ((MainActivity) getActivity())
+                            .replaceFragment(UserProfileFragment.newInstance(mActivityName, combination));
+                } else {
+                    if(mActivityName.equals(MyProfileActivity.class.getSimpleName())) {
+                        ((MyProfileActivity) getActivity())
+                                .replaceFragment(UserProfileFragment.newInstance(mActivityName, combination));
+                    }
+                }
+            }
         });
 
         mRecyclerViewCombinations.setAdapter(adapter);
@@ -247,11 +260,9 @@ public class UserProfileFragment extends BaseFragment {
 
     private void setPurpleColorToText(TextView textView) {
         textView.setTextColor(getResources().getColor(R.color.colorSecondaryPurple));
-        textView.setBackgroundColor(getResources().getColor(R.color.lightyellow));
     }
 
     private void setBlackColorToText(TextView textView) {
         textView.setTextColor(getResources().getColor(R.color.black));
-        textView.setBackgroundColor(getResources().getColor(R.color.white));
     }
 }

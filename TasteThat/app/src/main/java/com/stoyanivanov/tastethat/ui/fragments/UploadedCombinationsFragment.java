@@ -86,6 +86,12 @@ public class UploadedCombinationsFragment extends BaseRecyclerViewFragment {
                         .replaceFragment(CombinationDetailsFragment
                             .newInstance(MyProfileActivity.class.getSimpleName(), combination));
             }
+
+            @Override
+            public void onUserNameClicked(Combination combination) {
+                ((MyProfileActivity) getActivity())
+                        .replaceFragment(UserProfileFragment.newInstance(MyProfileActivity.class.getSimpleName(), combination));
+            }
         });
 
         recyclerView.setAdapter(mAdapter);

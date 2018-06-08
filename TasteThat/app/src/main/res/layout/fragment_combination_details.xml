@@ -52,7 +52,7 @@
                 android:layout_toEndOf="@+id/iv_back_arrow"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/iv_edit_combination"
                 app:layout_constraintStart_toEndOf="@+id/iv_back_arrow"

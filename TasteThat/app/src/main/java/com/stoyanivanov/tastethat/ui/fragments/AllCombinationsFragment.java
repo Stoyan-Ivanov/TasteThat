@@ -101,6 +101,12 @@ public class AllCombinationsFragment extends BaseRecyclerViewFragment {
                 ((MainActivity) getActivity())
                         .replaceFragment(CombinationDetailsFragment.newInstance(MainActivity.class.getSimpleName(), combination));
             }
+
+            @Override
+            public void onUserNameClicked(Combination combination) {
+                ((MainActivity) getActivity())
+                        .replaceFragment(UserProfileFragment.newInstance(MainActivity.class.getSimpleName(), combination));
+            }
         });
         recyclerView.setAdapter(mAdapter);
 
